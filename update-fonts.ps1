@@ -1,0 +1,2 @@
+Invoke-WebRequest https://build-oracc.museum.upenn.edu/fonts/Oracc-LAK.ttf -OutFile Oracc-LAK.ttf
+Invoke-WebRequest https://github.com/eggrobin/Nabu-ninua-ihsus/raw/refs/heads/master/Nabuninuaihsus.ttf -OutFile Nabuninuaihsus.ttf
