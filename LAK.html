@@ -102,8 +102,28 @@
       font-family: Nabu-ninua-ihsus;
     }
 
-    th.page {
+    tr.page-footer {
+      /* These rows are just here to prevent the bottom half of the border of
+         the last row from showing up on the next page when printing */
+      font-size: 0;
+    }
+
+    tr.page-header {
       break-before: page;
+    }
+
+    .signlist>tbody>tr>td.facsimile {
+      border: none;
+    }
+
+    td.facsimile img {
+      width: 35em;
+    }
+
+    @media print {
+      td.facsimile {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -112,7 +132,7 @@
 
 <table class="signlist">
   <tbody>
-    <tr><th class="page" colspan="4">1</th></tr>
+    <tr class="page-header"><th colspan="4">1</th></tr>
     <tr>
       <th>1</th>
       <td><span class="R">𒀸</span><br>„Zahleinheit“<br>&<br>„junges Fischchen“</td>
@@ -141,6 +161,8 @@
       <td>
         𒀸, 𒁹
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK001.png"></td>
     </tr>
 
     <tr>
@@ -152,6 +174,8 @@
       </td>
       <td>
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK002.png"></td>
     </tr>
 
     <tr>
@@ -172,6 +196,8 @@
       </td>
       <td>
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK003.png"></td>
     </tr>
 
     <tr>
@@ -237,6 +263,8 @@
       </td>
       <td>
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK004.png"></td>
     </tr>
 
     <tr>
@@ -251,6 +279,8 @@
       <td>
         𒄬
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK005.png"></td>
     </tr>
 
     <tr>
@@ -264,6 +294,8 @@
       <td>
         𒄈
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK006.png"></td>
     </tr>
 
     <tr>
@@ -278,6 +310,8 @@
       <td>
         𒄉
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK007.png"></td>
     </tr>
 
     <tr>
@@ -301,8 +335,11 @@
       <td>
         𒀭
       </td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK008.png"></td>
     </tr>
-    <tr><th class="page" colspan="4">2</th></tr>
+    <tr class="page-footer"><th></th>
+    <tr class="page-header"><th colspan="4">2</th></tr>
     <tr>
       <th>9</th>
       <td><span class="R">𒀮</span><br>
@@ -323,6 +360,7 @@
         Editor’s note: the ᵈ from 12806 is one third of a 𒀯, and the ??? is the remainder of 𒀯𒁇.
         All ED tilla₂ are stacked like this (also <a href="http://oracc.org/epsd2/P010566.527">P010566</a>, <a href="http://oracc.org/epsd2/P324826.5">P324826</a>).
       </td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK009.png"></td>
     </tr>
 
     <tr>
@@ -334,6 +372,8 @@
         9124,10; 𒀯𒀭, 12426,7
       </td>
       <td>𒀯</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK010.png"></td>
     </tr>
 
     <tr>
@@ -344,6 +384,8 @@
         = n. 12? s. n. 285.
       </td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK011.png"></td>
     </tr>
 
     <tr>
@@ -356,6 +398,8 @@
         R(=numun)-na, CT 32,16,2,8 u.o.
       </td>
       <td>𒆰</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK011.png"></td>
     </tr> 
 
     <tr>
@@ -368,6 +412,8 @@
         R(=numun)-na, CT 32,16,2,8 u.o.
       </td>
       <td>𒆰</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK012.png"></td>
     </tr>
 
     <tr>
@@ -378,6 +424,7 @@
       </td>
       <td></td>
       <td class="ednote">The one from 9110 is transliterated as 𒀸𒆜 in ePSD2.</td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK013.png"></td>
     </tr>
 
     <tr>
@@ -389,6 +436,8 @@
         𒈬 12524 pass.
       </td>
       <td>𒈬</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK014.png"></td>
     </tr>
 
     <tr>
@@ -399,6 +448,8 @@
         𒈭 REC59.
       </td>
       <td>𒈭</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK015.png"></td>
     </tr>
 
     <tr>
@@ -421,6 +472,8 @@
         fallen. <sup>giš</sup>R-è-gi-muš, DP ;436,5; vgl. CT 5,3,3 CT 7,4a,1.
       </td>
       <td>𒁁</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK016.png"></td>
     </tr>
 
     <tr>
@@ -437,9 +490,12 @@
         </table>
       </td>
       <td>𒌀</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK017.png"></td>
     </tr>
 
-    <tr><th class="page" colspan="4">3</th></tr>
+    <tr class="page-footer"><th></th>
+    <tr class="page-header"><th colspan="4">3</th></tr>
     <tr>
       <th></th>
       <td></td>
@@ -459,6 +515,8 @@
         352,1; STH 1, 18,8 u. pass in den spät. arch. Texten.
       </td>
       <td>𒋾</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK018.png"></td>
     </tr>
     <tr>
       <th>19</th>
@@ -469,6 +527,8 @@
         vgl. CT 3,28,89. 𒁄, 12650,8 u.ö.; kur-𒁄<sup>ki</sup>, 12599.
       </td>
       <td>𒁄</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK019.png"></td>
     </tr>
     <tr>
       <th>20</th>
@@ -478,6 +538,8 @@
         <sup>kùš</sup>an-ti(l)𒁄, <a href="http://oracc.org/dcclt/ebla/P010627">12650</a>,6
       </td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK020.png"></td>
     </tr>
 
     <tr>
@@ -494,6 +556,8 @@
       <td>R, Brit. Mus. N 86260, 1,9; <span class="LAK salt1">𒈾</span> pass. in den arch. T.<br>
       𒈾 12443R1; 𒈾 pass. in den arch. T.</td>
       <td>𒈾</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK022.png"></td>
     </tr>
 
     <tr>
@@ -503,6 +567,8 @@
       <td>R-R, R-ezen, aš-R, 9131,2; 12430,3; 12526,5; 12574,5 u.o<br>
       𒋓, TDT2, 2892; REC14.</td>
       <td>𒋓</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK023.png"></td>
     </tr>
 
     <tr>
@@ -513,6 +579,8 @@
       R-BUR<sup>ḫu</sup>La<sup>ki</sup>, 12454,2; R, 12645,4, vgl. 12606,9f.<br>
       pi 𒋔 12625,5.</td>
       <td>𒉢</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK024.png"></td>
     </tr>
 
     <tr>
@@ -520,6 +588,8 @@
       <td><span class="R">𒓗</span></td>
       <td>R<sup>ḫa</sup>,12693,2; 12751,1.</td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK025.png"></td>
     </tr>
 
     <tr>
@@ -535,9 +605,12 @@
         ud-R-𒈫(=a), 12775,7; R-bi(l)-lal(?)-𒈫, 12775,8.
       </td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK026.png"></td>
     </tr>
 
-    <tr><th class="page" colspan="4">4</th></tr>
+    <tr class="page-footer"><th></th>
+    <tr class="page-header"><th colspan="4">4</th></tr>
 
     <tr>
       <th>27</th>
@@ -590,6 +663,7 @@
         From the photo, <a href="http://cdli.earth/P011070">VAT 12753</a> doesn’t seem to actually have the little 𒉽s
         at the ends of the « legs », so we might have LAK028=LAK029.
       </td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK029.png"></td>
     </tr>
 
     <tr>
@@ -600,6 +674,8 @@
         <span class="LAK salt1" style="border-right:solid">𒓘</span> R-en, 12587,5.
       </td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK030.png"></td>
     </tr>
 
     <tr>
@@ -628,6 +704,8 @@
         323,2; Nik. 18,3; 310R2f; TSA 2,7; STH1,28R5.
       </td>
       <td>𒌶</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK031.png"></td>
     </tr>
 
     <tr>
@@ -639,6 +717,8 @@
         12426,8 u.ö. 𒋀, Ean. REC, 8
       </td>
       <td>𒋀</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK032.png"></td>
     </tr>
 
     <tr>
@@ -650,6 +730,8 @@
         𒋀𒆠 pass. in d. spät. arch. T.
       </td>
       <td>𒋀𒆠</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK033.png"></td>
     </tr>
 
     <tr>
@@ -663,9 +745,12 @@
         nicht zu unterscheiden von 𒆪=ku.
       </td>
       <td>𒈠</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK034.png"></td>
     </tr>
 
-    <tr><th class="page" colspan="4">5</th></tr>
+    <tr class="page-footer"><th></th>
+    <tr class="page-header"><th colspan="4">5</th></tr>
 
     <tr>
       <th>35</th>
@@ -678,6 +763,8 @@
         vgl. Amherst 50; 𒈢 CT9,18,4; 7,16,3f.
       </td>
       <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK035.png"></td>
     </tr>
 
 
@@ -699,6 +786,8 @@
         </p>
       </td>
       <td>𒉡</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK036.png"></td>
     </tr>
 
     <tr>
@@ -713,6 +802,7 @@
       </td>
       <td></td>
       <td class="ednote">Editor’s note: the one in 12760 is transliterated <sup>mušen</sup> in dcclt. The ones in 9124, buru₅; the ug-a-<span class="LAK">𒕁</span>, az.</td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK037.png"></td>
     </tr>
 
 
@@ -731,6 +821,8 @@
           DP 418,5; 419,1ff. Sarg. & Gud., REC 118; RTC 221R3
       </td>
       <td>𒉼</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK038.png"></td>
     </tr>
 
     <tr>
@@ -743,6 +835,8 @@
         s. ᵈNin-R, Panth.
       </td>
       <td>𒋚</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK039.png"></td>
     </tr>
 
     <tr>
@@ -765,9 +859,12 @@
       </p>
       </td>
       <td>𒂄</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK040.png"></td>
     </tr>
 
-    <tr><th class="page" colspan="4">5</th></tr>
+    <tr class="page-footer"><th></th>
+    <tr class="page-header"><th colspan="4">5</th></tr>
 
     <tr>
       <th>41</th>
@@ -798,6 +895,7 @@
       </td>
       <td>𒁆</td>
       <td class="ednote">Editor’s note: dcclt transliterates VAT 12693 with za rather than za₇.</td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK041.png"></td>
     </tr>
 
     <tr>
@@ -809,6 +907,7 @@
       </td>
       <td>𒈦</td>
       <td class="ednote">Curviform maš, really? Or is this just 1/2(aš@c), LAK816 <span class="LAK">𒖓</span>?</td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK042.png"></td>
     </tr>
     <tr>
       <th>43</th>
@@ -824,6 +923,8 @@
         vgl. R(𒈧)-nita-ša(g)-du(g), CT 9,29.
       </td>
       <td>𒈧</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="http://oracc.org/osl/images/lak/rows/LAK043.png"></td>
     </tr>
   </tbody>
 </table>
