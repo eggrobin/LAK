@@ -133,9 +133,16 @@
       max-width:15em;
     }
 
+    .close .LAK {
+      font-family: LFD-lak;
+      font-size: 150%;
+      line-height: inherit;
+    }
+
     table.signlist>tbody>tr>td:nth-child(4) {
       font-size: 150%;
       font-family: Nabu-ninua-ihsus;
+      line-height: 1em;
     }
 
     tr.page-footer {
@@ -154,6 +161,22 @@
 
     td.facsimile img {
       width: 35em;
+    }
+
+    /*For |X&Y|.*/
+    table.over {
+      display: inline;
+      vertical-align: middle;
+      line-height: 55%;
+    }
+
+    table.inline-tablet {
+      display: inline;
+      vertical-align: middle;
+    }
+
+    table.close {
+      line-height: 70%;
     }
 
     @media print {
@@ -251,7 +274,7 @@
         „Zahlz.(=1¼ gan)“<br>
         und ?
       <td>
-        ᵈR, 12760,13; <table style="display:inline;vertical-align:middle">
+        ᵈR, 12760,13; <table class="over">
           <tr>
             <td>R</td>
           </tr>
@@ -259,7 +282,7 @@
             <td>ub</td>
           </tr>
         </table>-ud-ub, 12503,1; R …… ku, 12503,4<br>
-        <table style="display:inline;vertical-align:middle">
+        <table class="inline-tablet">
           <tr>
             <td rowspan="2" style="border-right: solid;">gan-R</td>
             <td>d</td>
@@ -271,7 +294,7 @@
             <td>R</td>
           </tr>
         </table>, 9124,2;
-        <table style="display:inline;vertical-align:middle">
+        <table class="inline-tablet">
           <tr>
             <td>R-nun-ud</td>
           </tr>
@@ -280,7 +303,7 @@
           </tr>
         </table>, 12582,3.<br>
         igi-R-kur <span class="LAK salt1">𒂞</span>, 9112,9;
-        <table style="display:inline;vertical-align:text-top">
+        <table class="inline-tablet">
           <tr>
             <td>R-kur ???</td>
           </tr>
@@ -288,7 +311,7 @@
             <td>nun-túg-ru</td>
           </tr>
         </table>12606,3<br>
-        <table style="display:inline;vertical-align:bottom">
+        <table class="inline-tablet">
           <tr>
             <td>R-kur <span class="LAK">𒃰</span></td>
           </tr>
@@ -382,11 +405,11 @@
         wie n. 8
       <td>
         9124,2; 12573,1 u.ö. in allen arch. T. 𒀭𒀭, 12426,8/12. <span style="display:inline-block;vertical-align:sub;max-width:0;">u.</span><span style="vertical-align:super;">ö.</span><br>
-        <table style="display:inline;vertical-align:middle">
+        <table class="inline-tablet">
         <tr><td></td><td>𒀭</td></tr>
         <tr><td>𒀭</td><td></td></tr>
         </table>, DP 33,4 (Fara-Text!); ᵈ???, 12806, <a href="http://oracc.org/dcclt/P010677.13">1</a>/<a href="http://oracc.org/dcclt/P010677.41">3</a>; ???,<br>
-        9112,5; <table style="display:inline;vertical-align:middle;line-height: 55%;">
+        9112,5; <table class="over">
         <tr><td>𒀸</td><td><span style="color: transparent;">𒈬</span></td></tr>
         <tr><td>𒀭</td><td></td><td>𒀭</td></tr></table>, 9124, <a href="http://oracc.org/dcclt/P010649.66">3</a>; 
         𒀭𒀸𒀭, 12573, <a href="http://oracc.org/dcclt/P010600.69">4</a>. s. Panth. 1557.
@@ -506,7 +529,7 @@
         vgl. lù+𒌀(=Leiche), Geierst. 7,21; Urukag. Keg. A5,5.<br>
         𒌀, pass. in den Texten Urukag. u. später in der Formel<br>
         ba-R(-gi); vgl. uš|𒌀|mi-i-tu(=tot), Poebel, AGT 102,5;
-        <table style="display:inline;vertical-align:middle">
+        <table class="inline-tablet">
           <tr><td>ú-gu=</td></tr>
           <tr><td>mu-tum,</td></tr>
         </table>
@@ -618,7 +641,7 @@
       <th id="26">26</th>
       <td><span class="R">𒆲</span></td>
       <td>
-        R-R/<table style="display:inline;vertical-align:middle;line-height: 55%;"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9133,9; 9079,13; 9078,4; aš-<table style="display:inline;vertical-align:middle;line-height: 55%;"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9109,5;<br>
+        R-R/<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9133,9; 9079,13; 9078,4; aš-<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9109,5;<br>
         R-dul od. dul-R, PN, 9070,3; 12729,10, STH1,1(𒆲)<br>
         R-dul-dul, PN, 12497,4; R-é, 12515,1 ; R-dù, 9078,6;<br>
         te-R, 9124,2; bi(l)-R-ba, 12524,7; R-gà, 9116,4; 12567,1;<br>
@@ -666,15 +689,13 @@
         kur-igi-ḫar-ud-R; kur-urudu-ud-R; nimgir-a-ud-R;<br>
         mé-ud-R;
         <span class="LAK">𒓞</span>-ud-R; <span class="LAK">𒋖𒄑</span>-ku-ud-R; <span class="LAK saltTODO">𒓚</span>-eš-mar-ud-R,<br>
-        <table style="display:inline;vertical-align:middle;">
-          <tr><td>12680,12f;</td></tr>
-          <tr><td>12755R3 (Duplic. von 12680):</td></tr>
-        </table> 𒆛;
-        <table style="display:inline;vertical-align:middle;">
+        12680,12f;<br>
+        12755R3 (Duplic. von 12680): 𒆛;
+        <table class="inline-tablet">
           <tr><td>túg-lù+𒀸</td></tr>
           <tr><td>ud 𒆛</td></tr>
         </table>, 12766,R3;<br>
-        <table style="display:inline;vertical-align:middle;">
+        <table class="inline-tablet">
           <tr><td>𒈫𒆛</td></tr>
           <tr><td>zi <span class="LAK">𒒙</span></td></tr>
         </table>, <a href="http://cdli.earth/P011070">12753</a>,3; ᵈSU.KUR.RU 𒆛, 9076,7 (4×);<br>
@@ -692,7 +713,7 @@
       <th id="30">30</th>
       <td><span class="R">𒓘</span></td>
       <td>
-        muš-gir <table style="display:inline;vertical-align:middle;line-height: 55%;"><tr><td>R</td></tr><tr><td>R</td></tr></table>, 12503,1/3;
+        muš-gir <table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, 12503,1/3;
         <span class="LAK salt1" style="border-right:solid">𒓘</span> R-en, 12587,5.
       </td>
       <td></td>
@@ -748,7 +769,7 @@
       <td><span class="R">𒋀𒆠</span><br>
       32+ki</td>
       <td>
-        12784,1. 𒋀𒆠, 12760,1; 9108,13; 𒋀𒆠<table style="display:inline;vertical-align:middle;line-height: 55%;"><tr><td>-áb</td></tr><tr><td>mun</td></tr></table> 12806,7.<br>
+        12784,1. 𒋀𒆠, 12760,1; 9108,13; 𒋀𒆠<table class="inline-tablet"><tr><td>-áb</td></tr><tr><td>mun</td></tr></table> 12806,7.<br>
         𒋀𒆠 pass. in d. spät. arch. T.
       </td>
       <td>𒋀𒆠</td>
@@ -832,7 +853,7 @@
       <th id="38">38</th>
       <td><span class="R">𒉼</span></td>
       <td>
-        R-é, <table style="display:inline;vertical-align:middle">
+        R-é, <table class="inline-tablet">
           <tr>
             <td>igi-R-asar</td>
           </tr>
@@ -980,12 +1001,12 @@
       <td>
         <table>
           <tr>
-            <td>𒕓<table style="display:inline;vertical-align:middle;line-height: 50%">
+            <td>𒕓<table class="over LAK salt1">
               <tr>
-                <td><span class="LAK salt1">𒃰</span></td>
+                <td>𒃰</td>
               </tr>
               <tr>
-                <td><span class="LAK salt1">𒃰</span></td>
+                <td>𒃰</td>
               </tr>
             </table>
             </td>
@@ -995,12 +1016,12 @@
             <td>, NN</td>
           </tr>
           <tr>
-            <td>𒕔<table style="display:inline;vertical-align:middle;line-height: 50%">
+            <td>𒕔<table class="over LAK salt1">
               <tr>
-                <td><span class="LAK salt1">𒃰</span></td>
+                <td>𒃰</td>
               </tr>
               <tr>
-                <td><span class="LAK salt1">𒃰</span></td>
+                <td>𒃰</td>
               </tr>
             </table></td>
             <td>anšu</td>
@@ -1010,7 +1031,7 @@
             <td>, NN <span style="display:inline-block;vertical-align:text-bottom;transform: rotate(90deg);">𒕺</span>𒕷𒕫(?)</td>
           <tr>
             <td colspan="3">
-              anšu 14<table style="display:inline;vertical-align:text-top; font-size: 50%; line-height: 75%">
+              anšu 14<table class="over LAK salt5 close" style="vertical-align:text-top; font-size: 75%;">
               <tr>
                 <td><span class="LAK salt5">𒃰</span></td>
               </tr>
@@ -1023,28 +1044,28 @@
         </table>
         <span class="LAK salt5">𒃰</span>-na (=na-gíd, Rinderhirt), 12424,7 u. pass.<br>
         3<span class="LAK salt5">𒃰</span> 4 gu, NN, 12572, pass. <span class="LAK salt5">𒃰</span>-sukal 9108,2; 9130,1.<br>
-        <table style="display:inline;vertical-align:middle;line-height: 75%;">
+        <table class="inline-tablet close">
         <tr>
           <td>ᵈkud-dŭ</td>
         </tr>
         <tr>
           <td><span class="LAK salt3">𒃰</span>-unug,</td>
         </tr>
-        </table> 12760,13; <table style="display:inline;vertical-align:middle;line-height: 75%;">
+        </table> 12760,13; <table class="inline-tablet close">
         <tr>
           <td class="LAK">𒅂</td>
         </tr>
         <tr>
           <td>nun</td>
         </tr>
-        </table>kur<table style="display:inline;vertical-align:middle;line-height: 75%;">
+        </table>kur<table class="inline-tablet close">
         <tr>
           <td class="LAK salt2">𒃰</td>
         </tr>
         <tr>
           <td>mu;</td>
         </tr>
-        </table><table style="display:inline;vertical-align:middle;line-height: 75%;">
+        </table><table class="inline-tablet close">
         <tr>
           <td>tir-gug <span class="LAK salt2">𒃰</span></td>
         </tr>
@@ -1053,7 +1074,7 @@
         </tr>
         </table>
         <br>
-        <table style="display:inline;vertical-align:middle;line-height: 75%;">
+        <table class="inline-tablet close">
         <tr>
           <td>ᵈlam <span class="LAK salt2">𒃰</span></td>
         </tr>
@@ -1061,7 +1082,7 @@
           <td>asar túg,</td>
         </tr>
         </table> 12680,7;
-        <table style="display:inline;vertical-align:middle;line-height: 75%;text-align: center;">
+        <table class="inline-tablet close" style="text-align: center;">
         <tr>
           <td>bur-šir-ḫu</td>
         </tr>
@@ -1069,7 +1090,7 @@
           <td><span class="LAK salt2">𒃰</span></td>
         </tr>
         </table>, 12425,6;
-        <table style="display:inline;vertical-align:middle;line-height: 75%;">
+        <table class="inline-tablet close">
         <tr>
           <td><span class="LAK salt2">𒃰</span> Unug<sup>ki</sup></td>
         </tr>
@@ -1078,7 +1099,7 @@
         </tr>
         </table><br>
         12503,4; <span class="LAK salt3">𒃰</span>-dul-sar, 9124,5;
-        <table style="display:inline;vertical-align:middle;line-height: 75%;">
+        <table class="inline-tablet close">
         <tr>
           <td>sug-ta <span class="LAK salt2">𒃰</span></td>
         </tr>
