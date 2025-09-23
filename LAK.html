@@ -196,9 +196,13 @@
       white-space: pre;
     }
 
-    .presentation-column {
+    .diplomatic-column {
       display: inline-block;
       vertical-align: text-top;
+    }
+
+    .diplomatic-space {
+      display: inline-block;
     }
 
     .middle {
@@ -228,11 +232,12 @@
     for (const tr of document.querySelectorAll("td.facsimile")) {
       tr.style.display = facsimile ? "" : "none";
     }
-    for (const tr of document.querySelectorAll(".presentation-column")) {
+    document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
+    for (const tr of document.querySelectorAll(".diplomatic-column")) {
       tr.style.display = reflow ? "inline" : "";
       tr.style["vertical-align"] = reflow ? "baseline" : "";
     }
-    for (const tr of document.querySelectorAll(".presentation-space")) {
+    for (const tr of document.querySelectorAll(".diplomatic-space")) {
       tr.style.display = reflow ? "none" : "";
     }
     for (const td of document.querySelectorAll(".signlist>tbody>tr>td")) {
@@ -278,14 +283,14 @@
       <th id="1">1</th>
       <td><span class="R">𒀸</span> <br>„Zahleinheit“ <br>& <br>„junges Fischchen“</td>
       <td>
-        <div class="presentation-column">
+        <div class="diplomatic-column">
           R, PN, <a href="http://cdli.earth/P010975">9070</a>,8; <a href="http://cdli.earth/P011035">12729</a>,14; <br>
           R<sup>ḫa</sup>, <a href="http://cdli.earth/P010576">12751</a>,1; <br>
           R<sup>ḫu</sup>, <a href="http://cdli.earth/P010649">9124</a>,8; <br>
           R-mun<sup>ḫu</sup>, <a href="http://cdli.earth/P010649">9124</a>,8; <br>
           R-saḫar<sup>ḫu</sup>, <a href="http://cdli.earth/P010649">9124</a>,9;
         </div>
-        <div class="presentation-column">
+        <div class="diplomatic-column">
           ᵈR-nab, <a href="http://cdli.earth/P010677">12806</a>,1/3. <br>
           ᵈR-nab-áb/gu(d)/amar/am, <a href="http://cdli.earth/P010677">12806</a>; <br>
           R-nab-ab, <a href="http://cdli.earth/P010600">12573</a>,4; <br>
@@ -458,9 +463,9 @@
       <td>
         <div>
         pass. in allen arch. T.; verziertes R: <span class="R salt2" style="display: inline-block; vertical-align: text-top; height: 1rem;">𒀭</span> <br>
-        <span class="presentation-space" style="display:inline-block;width:30%"></span><a href="http://cdli.earth/P010622">12606</a>, R <br>
+        <span class="diplomatic-space" style="width:30%"></span><a href="http://cdli.earth/P010622">12606</a>, R <br>
         <span class="LAK salt1">𒀭</span>, REC 5<sup>bis</sup>; <br>
-        <span class="presentation-space" style="display:inline-block;width:20%"></span>R-na; R-ra/ri/rí, pass.
+        <span class="diplomatic-space" style="width:20%"></span>R-na; R-ra/ri/rí, pass.
         </div>
       </td>
       <td>
@@ -600,7 +605,7 @@
         vgl. lù+𒌀(=Leiche), Geierst. 7,21; Urukag. Keg. A5,5. <br>
         𒌀, pass. in den Texten Urukag. u. später in der Formel <br>
         ba-R(-gi); vgl. uš|𒌀|mi-i-tu(=tot), Poebel, AGT 102,5;
-        <div class="presentation-column middle">
+        <div class="diplomatic-column middle">
           ú-gu = <br>
           mu-tum,
         </div>
