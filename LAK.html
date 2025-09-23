@@ -200,6 +200,10 @@
       display: inline-block;
       vertical-align: text-top;
     }
+
+    .middle {
+      vertical-align: middle;
+    }
   </style>
   <script>
   function update_from_query() {
@@ -226,6 +230,10 @@
     }
     for (const tr of document.querySelectorAll(".presentation-column")) {
       tr.style.display = reflow ? "inline" : "";
+      tr.style["vertical-align"] = reflow ? "baseline" : "";
+    }
+    for (const tr of document.querySelectorAll(".presentation-space")) {
+      tr.style.display = reflow ? "none" : "";
     }
     for (const td of document.querySelectorAll(".signlist>tbody>tr>td")) {
       td.style["white-space"] = reflow ? "inherit" : "";
@@ -450,9 +458,9 @@
       <td>
         <div>
         pass. in allen arch. T.; verziertes R: <span class="R salt2" style="display: inline-block; vertical-align: text-top; height: 1rem;">𒀭</span> <br>
-        <span style="display:inline-block;width:30%"></span><a href="http://cdli.earth/P010622">12606</a>, R <br>
+        <span class="presentation-space" style="display:inline-block;width:30%"></span><a href="http://cdli.earth/P010622">12606</a>, R <br>
         <span class="LAK salt1">𒀭</span>, REC 5<sup>bis</sup>; <br>
-        <span style="display:inline-block;width:20%"></span>R-na; R-ra/ri/rí, pass.
+        <span class="presentation-space" style="display:inline-block;width:20%"></span>R-na; R-ra/ri/rí, pass.
         </div>
       </td>
       <td>
@@ -592,10 +600,10 @@
         vgl. lù+𒌀(=Leiche), Geierst. 7,21; Urukag. Keg. A5,5. <br>
         𒌀, pass. in den Texten Urukag. u. später in der Formel <br>
         ba-R(-gi); vgl. uš|𒌀|mi-i-tu(=tot), Poebel, AGT 102,5;
-        <table class="inline-tablet">
-          <tr><td>ú-gu=</td></tr>
-          <tr><td>mu-tum,</td></tr>
-        </table>
+        <div class="presentation-column middle">
+          ú-gu = <br>
+          mu-tum,
+        </div>
       </td>
       <td>𒌀</td>
       <td class="ednote"></td>
