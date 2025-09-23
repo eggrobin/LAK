@@ -4,18 +4,37 @@ import re
 lines : list[str] = []
 
 refs : dict[str, list[int]] = {}
+vat_to_p : dict[int, str] = {}
 
-with open("../edsl/lak/etc/lak-refs.tsv") as refs_file:
-  for line in csv.reader(refs_file, delimiter="\t"):
+with open("../edsl/lak/etc/lak-refs.tsv") as f:
+  for line in csv.reader(f, delimiter="\t"):
     refs[line[0].removeprefix("LAK").lstrip("0")] = [int(n) for n in line[1:] if n and n != "TSA_6"]
 
-lak_number = None
+with open("../edsl/lak/etc/vat.P") as f:
+  for line in csv.reader(f, delimiter="\t"):
+    _, vat_number = line[0].split()
+    vat_number = int(vat_number)
+    p_number = line[1].removeprefix("cdli:")
+    if p_number:
+      vat_to_p[vat_number] = p_number
+
+lak_number : str|None = None
 numbers_seen : set[int] = set()
 
-with open("LAK.html") as html:
-  for line in html.readlines():
-    for match in re.finditer(r'(\d{4,})', line):
-      numbers_seen.add(int(match.group(1)))
+with open("LAK.html") as f:
+  for line in f.readlines():
+    def linkify(match: re.Match[str]):
+      vat_number = int(match.group("VAT"))
+      numbers_seen.add(vat_number)
+      if match.group("P"):
+        if vat_to_p[vat_number] != match.group("P"):
+          raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
+        return match.group()
+      elif vat_number in refs[lak_number] and vat_number in vat_to_p:
+        return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
+      else:
+        return match.group()
+    line = re.sub(r'(?:<a href="http://cdli.earth/(?P<P>P\d+)">)?(?P<VAT>\d{4,})(?:</a>)?', linkify, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
@@ -29,3 +48,7 @@ with open("LAK.html") as html:
           print(f"--- {len(numbers_seen)} references as expected for {lak_number}")
       lak_number = match.group(1)
       numbers_seen = set()
+    lines.append(line)
+
+with open("LAK.html", "w") as f:
+  f.writelines(lines)
