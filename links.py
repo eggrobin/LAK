@@ -30,11 +30,11 @@ with open("LAK.html") as f:
         if vat_to_p[vat_number] != match.group("P"):
           raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
         return match.group()
-      elif vat_number in refs[lak_number] and vat_number in vat_to_p:
+      elif vat_number in vat_to_p and not match.group("other"):
         return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="http://cdli.earth/(?P<P>P\d+)">)?(?P<VAT>\d{4,})(?:</a>)?', linkify, line)
+    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>.*))">)?(?P<VAT>\d{4,})(?:</a>)?', linkify, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
