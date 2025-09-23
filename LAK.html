@@ -110,6 +110,7 @@
 
     .signlist {
       border-collapse: collapse;
+      hyphens: auto;
     }
 
     .signlist>tbody>tr>td {
@@ -185,12 +186,81 @@
         display: none;
       }
     }
+
+    span.hyphenated-linebreak {
+      --hyphen-newline: "-\A";
+    }
+
+    span.hyphenated-linebreak::before {
+      content: var(--hyphen-newline);
+      white-space: pre;
+    }
+
+    .presentation-column {
+      display: inline-block;
+      vertical-align: text-top;
+    }
   </style>
+  <script>
+  function update_from_query() {
+    params = (new URL(document.location)).searchParams;
+    document.querySelector('input[id="facsimile"]').checked =
+        params.has("facsimile") ? params.get("facsimile") === "true" : true;
+    document.querySelector('input[id="reflow"]').checked =
+        params.has("reflow") ? params.get("reflow") === "true" : false;
+    update(false);
+  }
+
+  function update(push_history = true) {
+    facsimile = document.querySelector('input[id="facsimile"]').checked;
+    reflow = document.querySelector('input[id="reflow"]').checked;
+    if (push_history) {
+      let query = [];
+      query.push(`facsimile=${facsimile}`);
+      query.push(`reflow=${reflow}`);
+      var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + query.join("&");
+      window.history.pushState({ path: newurl }, '', newurl);
+    }
+    for (const tr of document.querySelectorAll("td.facsimile")) {
+      tr.style.display = facsimile ? "" : "none";
+    }
+    for (const tr of document.querySelectorAll(".presentation-column")) {
+      tr.style.display = reflow ? "inline" : "";
+    }
+    for (const td of document.querySelectorAll(".signlist>tbody>tr>td")) {
+      td.style["white-space"] = reflow ? "inherit" : "";
+    }
+    for (const br of document.querySelectorAll("br")) {
+      br.style.display = reflow ? "none" : "";
+    }
+    for (const span of document.querySelectorAll("span.hyphenated-linebreak")) {
+      if (reflow) {
+        span.style.setProperty("--hyphen-newline", "\"\"");
+        span.textContent = "\u00AD";
+      } else {
+        span.style = "";
+        span.textContent = "";
+      }
+    }
+  }
+  window.onload = function () {
+    for (var input of document.getElementsByTagName("input")) {
+      input.onclick = update;
+    }
+    update_from_query();
+  }
+  </script>
 </head>
 
 <p lang="en">
   A work-in-progress diplomatic edition of Deimel’s <cite lang="de">Liste der archaischen Keilschriftzeichen von Fara</cite>,
   based on the <a href="http://oracc.org/listfontdata/lak/">Oracc-LAK</a> font by Steve Tinney.
+</p>
+<p>
+  <input id="facsimile" name="facsimile" type="checkbox" onclick="update()">
+  <label for="facsimile">Side-by-side view with facsimile</label>
+  <input id="reflow" name="reflow" type="checkbox" onclick="update()">
+  <label for="reflow">Reflow</label>
 </p>
 
 <table class="signlist">
@@ -198,27 +268,23 @@
     <tr class="page-header"><th colspan="4">1</th></tr>
     <tr>
       <th id="1">1</th>
-      <td><span class="R">𒀸</span><br>„Zahleinheit“<br>&<br>„junges Fischchen“</td>
+      <td><span class="R">𒀸</span> <br>„Zahleinheit“ <br>& <br>„junges Fischchen“</td>
       <td>
-        <table>
-          <tr>
-            <td>
-              R, PN, 9070,8; 12729,14;<br>
-              R<sup>ḫa</sup>, 12751,1;<br>
-              R<sup>ḫu</sup>, 9124,8;<br>
-              R-mun<sup>ḫu</sup>, 9124,8;<br>
-              R-saḫar<sup>ḫu</sup>, 9124,9;<br>
-            </td>
-            <td>
-              ᵈR-nab, 12806,1/3.<br>
-              ᵈR-nab-áb/gu(d)/amar/am, 12806;<br>
-              R-nab-ab, 12573,4;<br>
-              R-nab-mu, 9124,3; s. 9112,5;<br>
-              s. die Zahlzeichen; lù+R;<br>
-            </td>
-          </tr>
-        </table>
-        Zuweilen R=𒁇; z.B. <sup>giš</sup>R-uš=<sup>giš</sup>bar-uš, 12625,11; 12724;<br>
+        <div class="presentation-column">
+          R, PN, 9070,8; 12729,14; <br>
+          R<sup>ḫa</sup>, 12751,1; <br>
+          R<sup>ḫu</sup>, 9124,8; <br>
+          R-mun<sup>ḫu</sup>, 9124,8; <br>
+          R-saḫar<sup>ḫu</sup>, 9124,9;
+        </div>
+        <div class="presentation-column">
+          ᵈR-nab, 12806,1/3. <br>
+          ᵈR-nab-áb/gu(d)/amar/am, 12806; <br>
+          R-nab-ab, 12573,4; <br>
+          R-nab-mu, 9124,3; s. 9112,5; <br>
+          s. die Zahlzeichen; lù+R;
+        </div> <br>
+        Zuweilen R=𒁇; z.B. <sup>giš</sup>R-uš=<sup>giš</sup>bar-uš, 12625,11; 12724; <br>
         s. auch zabar. ú-R(=rum)-ma, SAK 22,5,12.
       </td>
       <td>
@@ -232,7 +298,7 @@
       <th id="2">2</th>
       <td class="R2">&#x12550;</td>
       <td>
-        R<sup>ḫa</sup>, (Var. von 3), 12751,1; 12693,2; s. 𒀸<sup>ḫa</sup>; s. die Zahlz.<br>
+        R<sup>ḫa</sup>, (Var. von 3), 12751,1; 12693,2; s. 𒀸<sup>ḫa</sup>; s. die Zahlz. <br>
         du-R-da, 12574,10.
       </td>
       <td>
@@ -274,8 +340,8 @@
 
     <tr>
       <th id="4">4</th>
-      <td><span class="R2">𒅂</span>, <span class="R2 salt1">𒅂</span><br>
-        „Zahlz.(=1¼ gan)“<br>
+      <td><span class="R2">𒅂</span>, <span class="R2 salt1">𒅂</span> <br>
+        „Zahlz.(=1¼ gan)“ <br>
         und ?
       <td>
         ᵈR, 12760,13; <table class="over">
@@ -285,7 +351,7 @@
           <tr>
             <td>ub</td>
           </tr>
-        </table>-ud-ub, 12503,1; R …… ku, 12503,4<br>
+        </table>-ud-ub, 12503,1; R …… ku, 12503,4 <br>
         <table class="inline-tablet close">
           <tr>
             <td rowspan="2" style="border-right: solid;vertical-align: middle;">gan-R</td>
@@ -305,7 +371,7 @@
           <tr>
             <td>ᵈŬr</td>
           </tr>
-        </table>, 12582,3.<br>
+        </table>, 12582,3. <br>
         igi-R-kur <span class="LAK salt1">𒂞</span>, 9112,9;
         <table class="inline-tablet close">
           <tr>
@@ -314,7 +380,7 @@
           <tr>
             <td>nun-túg-ru</td>
           </tr>
-        </table>12606,3<br>
+        </table>12606,3 <br>
         <table class="inline-tablet close">
           <tr>
             <td>R-kur <span class="LAK salt1">𒃰</span></td>
@@ -332,11 +398,11 @@
 
     <tr>
       <th id="5">5</th>
-      <td><span class="R">𒄬</span><br>
+      <td><span class="R">𒄬</span> <br>
         „etwas Geteiltes“
       <td>
-        ᵈR, 12737,4; R-la, s. Frauennam. bei Urukag.<br>
-        R-dur-a, 12778,2; gal-R-dur, 9130,6.<br>
+        ᵈR, 12737,4; R-la, s. Frauennam. bei Urukag. <br>
+        R-dur-a, 12778,2; gal-R-dur, 9130,6. <br>
         Zf. in allen arch. T. R (=ḫala(ḫ)?)-ḫa-dam, DP222; RTC58
       </td>
       <td>
@@ -348,8 +414,8 @@
 
     <tr>
       <th id="6">6</th>
-      <td><span class="R">𒄈</span><br>
-        „Lanzenspitze,<br>Messer“.
+      <td><span class="R">𒄈</span> <br>
+        „Lanzenspitze, <br>Messer“.
       <td>
         R, pass. in allen arch. T. ᵈNin <span class="LAK salt1">𒄈</span> (Var. <span class="LAK salt2">𒄈</span>, <span class="LAK salt3">𒄈</span>)-<br>
         su, Déc. ép. p. XXXIV: <span class="LAK salt4">𒄈</span>, Blau (=Brit. Mus. n. 86260).
@@ -363,11 +429,11 @@
 
     <tr>
       <th id="7">7</th>
-      <td><span class="R">𒄉</span><br>
-        „lanzettförmiges<br>(Myrrhen?) Blatt“.
+      <td><span class="R">𒄉</span> <br>
+        „lanzettförmiges <br>(Myrrhen?) Blatt“.
       <td>
-        R, pass. in allen arch. T. iá R-ka-kam, Fö. 123,3;<br>
-        40 ma-na <sup>ším</sup>R, TSA 6,2; 10 ma-na R(!) AmherstZf.<br>
+        R, pass. in allen arch. T. iá R-ka-kam, Fö. 123,3; <br>
+        40 ma-na <sup>ším</sup>R, TSA 6,2; 10 ma-na R(!) AmherstZf. <br>
         Oft Syn. von n. 6
       </td>
       <td>
@@ -379,13 +445,13 @@
 
     <tr>
       <th id="8">8</th>
-      <td><span class="R">𒀭</span><br>
+      <td><span class="R">𒀭</span> <br>
         „Stern“.
       <td>
         <div>
-        pass. in allen arch. T.; verziertes R: <span class="R salt2" style="display: inline-block; vertical-align: text-top; height: 1rem;">𒀭</span><br>
-        <span style="display:inline-block;width:30%"></span>12606, R<br>
-        <span class="LAK salt1">𒀭</span>, REC 5<sup>bis</sup>;<br>
+        pass. in allen arch. T.; verziertes R: <span class="R salt2" style="display: inline-block; vertical-align: text-top; height: 1rem;">𒀭</span> <br>
+        <span style="display:inline-block;width:30%"></span>12606, R <br>
+        <span class="LAK salt1">𒀭</span>, REC 5<sup>bis</sup>; <br>
         <span style="display:inline-block;width:20%"></span>R-na; R-ra/ri/rí, pass.
         </div>
       </td>
@@ -399,14 +465,14 @@
     <tr class="page-header"><th colspan="4">2</th></tr>
     <tr>
       <th id="9">9</th>
-      <td><span class="R">𒀮</span><br>
+      <td><span class="R">𒀮</span> <br>
         wie n. 8
       <td>
-        9124,2; 12573,1 u.ö. in allen arch. T. 𒀭𒀭, 12426,8/12. <span style="display:inline-block;vertical-align:sub;max-width:0;">u.</span><span style="vertical-align:super;">ö.</span><br>
+        9124,2; 12573,1 u.ö. in allen arch. T. 𒀭𒀭, 12426,8/12. <span style="display:inline-block;vertical-align:sub;max-width:0;">u.</span><span style="vertical-align:super;">ö.</span> <br>
         <table class="inline-tablet">
         <tr><td></td><td>𒀭</td></tr>
         <tr><td>𒀭</td><td></td></tr>
-        </table>, DP 33,4 (Fara-Text!); ᵈ???, 12806, <a href="http://oracc.org/dcclt/P010677.13">1</a>/<a href="http://oracc.org/dcclt/P010677.41">3</a>; ???,<br>
+        </table>, DP 33,4 (Fara-Text!); ᵈ???, 12806, <a href="http://oracc.org/dcclt/P010677.13">1</a>/<a href="http://oracc.org/dcclt/P010677.41">3</a>; ???, <br>
         9112,5; <table class="over">
         <tr><td>𒀸</td><td><span style="color: transparent;">𒈬</span></td></tr>
         <tr><td>𒀭</td><td></td><td>𒀭</td></tr></table>, 9124, <a href="http://oracc.org/dcclt/P010649.66">3</a>; 
@@ -422,10 +488,10 @@
 
     <tr>
       <th id="10">10</th>
-      <td><span class="R">𒀯</span><br>
+      <td><span class="R">𒀯</span> <br>
       wie n. 8</td>
       <td>
-        R, 12738,3; <sup>R</sup>𒀭𒈪, 9112,12 ; 12582,10 ; 𒀯ḫu,<br>
+        R, 12738,3; <sup>R</sup>𒀭𒈪, 9112,12 ; 12582,10 ; 𒀯ḫu, <br>
         9124,10; 𒀯𒀭, 12426,7
       </td>
       <td>𒀯</td>
@@ -437,7 +503,7 @@
       <th id="11">11</th>
       <td><span class="R">&#xF009C;</span></td>
       <td>
-        R-𒈫 12778, <a href="http://oracc.org/dcclt/ebla/P010666.135">8</a>; R-kar, 12778, <a href="http://oracc.org/dcclt/ebla/P010666.68">4</a> še 𒆰 12610,2f.<br>
+        R-𒈫 12778, <a href="http://oracc.org/dcclt/ebla/P010666.135">8</a>; R-kar, 12778, <a href="http://oracc.org/dcclt/ebla/P010666.68">4</a> še 𒆰 12610,2f. <br>
         = n. 12? s. n. 285.
       </td>
       <td></td>
@@ -447,11 +513,11 @@
 
     <tr>
       <th id="12">12</th>
-      <td><span class="R">𒆰</span><br>„ein Keim“?</td>
+      <td><span class="R">𒆰</span> <br>„ein Keim“?</td>
       <td>
-        9131,10; 12654 pass. u.o. 𒆰; R-giš-Unug/ab<sup>ki</sup>,<br>
-        12586,12; Var. 𒆰, 9080,10; 12770,2 (ein Gefäß<br>
-        mit 30 Maßeinheiten); R, 12650,2<br>
+        9131,10; 12654 pass. u.o. 𒆰; R-giš-Unug/ab<sup>ki</sup>, <br>
+        12586,12; Var. 𒆰, 9080,10; 12770,2 (ein Gefäß <br>
+        mit 30 Maßeinheiten); R, 12650,2 <br>
         R(=numun)-na, CT 32,16,2,8 u.o.
       </td>
       <td>𒆰</td>
@@ -474,8 +540,8 @@
       <th id="14">14</th>
       <td><span class="R">𒈬</span></td>
       <td>
-        pass. in den Fara-T. 𒈬, selt. in den Fara-T.,<br>
-        pass. in den T. bis Urukag.; von da ab pass. 𒈬;<br>
+        pass. in den Fara-T. 𒈬, selt. in den Fara-T., <br>
+        pass. in den T. bis Urukag.; von da ab pass. 𒈬; <br>
         𒈬 12524 pass.
       </td>
       <td>𒈬</td>
@@ -487,7 +553,7 @@
       <th id="15">15</th>
       <td><span class="R">𒈭</span></td>
       <td>
-        150(udu)-R, 12450 R; 𒈭-ḫa, Nik. 54,2; ???;<br>
+        150(udu)-R, 12450 R; 𒈭-ḫa, Nik. 54,2; ???; <br>
         𒈭 REC59.
       </td>
       <td>𒈭</td>
@@ -508,10 +574,9 @@
       <th id="16">16</th>
       <td><span class="R">𒁁</span></td>
       <td>
-        šu-R(=BAD), 9057 pass.; TSA 23,3; DP 139,3; 191,9; STH 1,42,1f;<br>
-        R-sug-e-a-ušum, 9112,11; nu-sal-R, 9108,TODO(egg):1/9;<br>
-        Diese Zf. wird bis Urukag. einschl. von der folg. unter-<br>
-        schieden; von da an beginnt sie mit ihr zusammenzu<br>
+        šu-R(=BAD), 9057 pass.; TSA 23,3; DP 139,3; 191,9; STH 1,42,1f; <br>
+        R-sug-e-a-ušum, 9112,11; nu-sal-R, 9108,TODO(egg):1/9; <br>
+        Diese Zf. wird bis Urukag. einschl. von der folg. unter<span class="hyphenated-linebreak"></span>schieden; von da an beginnt sie mit ihr zusammenzu <br>
         fallen. <sup>giš</sup>R-è-gi-muš, DP ;436,5; vgl. CT 5,3,3 CT 7,4a,1.
       </td>
       <td>𒁁</td>
@@ -523,9 +588,9 @@
       <th id="17">17</th>
       <td><span class="R">𒌀</span></td>
       <td>
-        R(=IDIM), Ean. Geierst. 16,24; R 4,3; R, Ean. Feldst. A 4,15;<br>
-        vgl. lù+𒌀(=Leiche), Geierst. 7,21; Urukag. Keg. A5,5.<br>
-        𒌀, pass. in den Texten Urukag. u. später in der Formel<br>
+        R(=IDIM), Ean. Geierst. 16,24; R 4,3; R, Ean. Feldst. A 4,15; <br>
+        vgl. lù+𒌀(=Leiche), Geierst. 7,21; Urukag. Keg. A5,5. <br>
+        𒌀, pass. in den Texten Urukag. u. später in der Formel <br>
         ba-R(-gi); vgl. uš|𒌀|mi-i-tu(=tot), Poebel, AGT 102,5;
         <table class="inline-tablet">
           <tr><td>ú-gu=</td></tr>
@@ -543,9 +608,9 @@
       <th></th>
       <td></td>
       <td>
-        VAT 10613 R u-v Z.39; K8312, Z 8(!); lù-𒌀𒌀-ga-me, TDT 1, 1222<br>
-        itu…𒌀(=til)-la-ba/a, DP 152,11(!); 315; 333,5; TDT 1, 1445 u.o.<br>
-        su-mu-un|𒌀|la-bi-i-ru, Poeb. HGT 102,5; vgl Brün. 1484;<br>
+        VAT 10613 R u-v Z.39; K8312, Z 8(!); lù-𒌀𒌀-ga-me, TDT 1, 1222 <br>
+        itu…𒌀(=til)-la-ba/a, DP 152,11(!); 315; 333,5; TDT 1, 1445 u.o. <br>
+        su-mu-un|𒌀|la-bi-i-ru, Poeb. HGT 102,5; vgl Brün. 1484; <br>
         še-R(=sumun oder sun), opp. še-bi(l), CT 1,5,3 u.o.
       </td>
       <td></td>
@@ -554,7 +619,7 @@
       <th id="18">18</th>
       <td><span class="R">𒋾</span></td>
       <td>
-        pass. in den Fara-T.; STH 1, 17R3,6; 20R2f; 𒋾,<br>
+        pass. in den Fara-T.; STH 1, 17R3,6; 20R2f; 𒋾, <br>
         352,1; STH 1, 18,8 u. pass in den spät. arch. Texten.
       </td>
       <td>𒋾</td>
@@ -565,8 +630,8 @@
       <th id="19">19</th>
       <td><span class="R">𒁄</span></td>
       <td>
-        pass. in den Fara-T. 𒁄, Nik. 39,6; 𒁄, Entem.<br>
-        Keg. 3,4; 𒁄, STH, 1, 46R1; 𒁄, TDT 3 II 6031 u.o.,<br>
+        pass. in den Fara-T. 𒁄, Nik. 39,6; 𒁄, Entem. <br>
+        Keg. 3,4; 𒁄, STH, 1, 46R1; 𒁄, TDT 3 II 6031 u.o., <br>
         vgl. CT 3,28,89. 𒁄, 12650,8 u.ö.; kur-𒁄<sup>ki</sup>, 12599.
       </td>
       <td>𒁄</td>
@@ -577,7 +642,7 @@
       <th id="20">20</th>
       <td><span class="R">&#xF0086;</span></td>
       <td>
-        12421,5; 12483,6; 12770 (=„Mast/Schlachtschaf“ i.G.z. Wollschaf)<br>
+        12421,5; 12483,6; 12770 (=„Mast/Schlachtschaf“ i.G.z. Wollschaf) <br>
         <sup>kùš</sup>an-ti(l)𒁄, <a href="http://oracc.org/dcclt/ebla/P010627">12650</a>,6
       </td>
       <td></td>
@@ -596,7 +661,7 @@
     <tr>
       <th id="22">22</th>
       <td><span class="R">𒈾</span></td>
-      <td>R, Brit. Mus. N 86260, 1,9; <span class="LAK salt1">𒈾</span> pass. in den arch. T.<br>
+      <td>R, Brit. Mus. N 86260, 1,9; <span class="LAK salt1">𒈾</span> pass. in den arch. T. <br>
       𒈾 12443R1; 𒈾 pass. in den arch. T.</td>
       <td>𒈾</td>
       <td class="ednote"></td>
@@ -605,9 +670,9 @@
 
     <tr>
       <th id="23">23</th>
-      <td><span class="R">𒋓</span><br>
+      <td><span class="R">𒋓</span> <br>
       „Lampe“</td>
-      <td>R-R, R-ezen, aš-R, 9131,2; 12430,3; 12526,5; 12574,5 u.o<br>
+      <td>R-R, R-ezen, aš-R, 9131,2; 12430,3; 12526,5; 12574,5 u.o <br>
       𒋓, TDT2, 2892; REC14.</td>
       <td>𒋓</td>
       <td class="ednote"></td>
@@ -616,10 +681,10 @@
 
     <tr>
       <th id="24">24</th>
-      <td><span class="R">𒉢</span><br>
+      <td><span class="R">𒉢</span> <br>
       „Lampe“</td>
-      <td>gal-R-???, 12625, 2;<br>
-      R-BUR<sup>ḫu</sup>La<sup>ki</sup>, 12454,2; R, 12645,4, vgl. 12606,9f.<br>
+      <td>gal-R-???, 12625, 2; <br>
+      R-BUR<sup>ḫu</sup>La<sup>ki</sup>, 12454,2; R, 12645,4, vgl. 12606,9f. <br>
       pi 𒋔 12625,5.</td>
       <td>𒉢</td>
       <td class="ednote"></td>
@@ -639,12 +704,12 @@
       <th id="26">26</th>
       <td><span class="R">𒆲</span></td>
       <td>
-        R-R/<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9133,9; 9079,13; 9078,4; aš-<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9109,5;<br>
-        R-dul od. dul-R, PN, 9070,3; 12729,10, STH1,1(𒆲)<br>
-        R-dul-dul, PN, 12497,4; R-é, 12515,1 ; R-dù, 9078,6;<br>
-        te-R, 9124,2; bi(l)-R-ba, 12524,7; R-gà, 9116,4; 12567,1;<br>
-        12570,7; 12483,3. ud-R-áb/gu(d)/amar/am, 12806,2ff;<br>
-        R-giš-kul-Unug, 12654,9/12; R𒈦(=kul?)-ab, 12431,3<br>
+        R-R/<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9133,9; 9079,13; 9078,4; aš-<table class="over"><tr><td>R</td></tr><tr><td>R</td></tr></table>, PN, 9109,5; <br>
+        R-dul od. dul-R, PN, 9070,3; 12729,10, STH1,1(𒆲) <br>
+        R-dul-dul, PN, 12497,4; R-é, 12515,1 ; R-dù, 9078,6; <br>
+        te-R, 9124,2; bi(l)-R-ba, 12524,7; R-gà, 9116,4; 12567,1; <br>
+        12570,7; 12483,3. ud-R-áb/gu(d)/amar/am, 12806,2ff; <br>
+        R-giš-kul-Unug, 12654,9/12; R𒈦(=kul?)-ab, 12431,3 <br>
         ud-R-𒈫(=a), 12775,7; R-bi(l)-lal(?)-𒈫, 12775,8.
       </td>
       <td></td>
@@ -657,11 +722,11 @@
 
     <tr>
       <th id="27">27</th>
-      <td><span class="R salt1">𒇸</span><br>
+      <td><span class="R salt1">𒇸</span> <br>
     „Rechte+Linke“</td>
-      <td>ud-Unug-R, ......, ug-su-ud-R-… 9112, 1;<br>
+      <td>ud-Unug-R, ......, ug-su-ud-R-… 9112, 1; <br>
       s. n. 94.</td>
-      <td>𒇸<br>𒃴<br>𒆭</td>
+      <td>𒇸 <br>𒃴 <br>𒆭</td>
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK027.png"></td>
     </tr>
@@ -669,9 +734,9 @@
     <tr>
       <th id="28">28</th>
       <td><span class="R">&#xF009E;</span></td>
-      <td>8(gur) 24(Ka) <span class="LAK">𒓻</span>-šu-ga-R-NI (Var. R-šu-ga-NI),<br>
-      1¼(gur) <span class="LAK">𒓻</span>-šu-ga-NI <span class="LAK">&#xF009E;</span>; mit R wechselt<br>
-    in demselben Ausdrucke <span class="LAK">𒋳</span> u. lù, <a href="http://cdli.earth/P011099">12438</a>.<br>
+      <td>8(gur) 24(Ka) <span class="LAK">𒓻</span>-šu-ga-R-NI (Var. R-šu-ga-NI), <br>
+      1¼(gur) <span class="LAK">𒓻</span>-šu-ga-NI <span class="LAK">&#xF009E;</span>; mit R wechselt <br>
+    in demselben Ausdrucke <span class="LAK">𒋳</span> u. lù, <a href="http://cdli.earth/P011099">12438</a>. <br>
     s. n. 459f. und 29.</td>
       <td></td>
       <td class="ednote" lang="en">
@@ -686,20 +751,20 @@
       <th id="29">29</th>
       <td><span class="R">𒆛</span></td>
       <td>
-        ab-ud-R; kur-ki-ud-R; ᵈkur-ud-R; kur-ḫar-ud-R<br>
-        kur-igi-ḫar-ud-R; kur-urudu-ud-R; nimgir-a-ud-R;<br>
+        ab-ud-R; kur-ki-ud-R; ᵈkur-ud-R; kur-ḫar-ud-R <br>
+        kur-igi-ḫar-ud-R; kur-urudu-ud-R; nimgir-a-ud-R; <br>
         mé-ud-R;
-        <span class="LAK">𒓞</span>-ud-R; <span class="LAK">𒋖𒄑</span>-ku-ud-R; <span class="LAK saltTODO">𒓚</span>-eš-mar-ud-R,<br>
-        12680,12f;<br>
+        <span class="LAK">𒓞</span>-ud-R; <span class="LAK">𒋖𒄑</span>-ku-ud-R; <span class="LAK saltTODO">𒓚</span>-eš-mar-ud-R, <br>
+        12680,12f; <br>
         12755R3 (Duplic. von 12680): 𒆛;
         <table class="inline-tablet">
           <tr><td>túg-lù+𒀸</td></tr>
           <tr><td>ud 𒆛</td></tr>
-        </table>, 12766,R3;<br>
+        </table>, 12766,R3; <br>
         <table class="inline-tablet">
           <tr><td>𒈫𒆛</td></tr>
           <tr><td>zi <span class="LAK">𒒙</span></td></tr>
-        </table>, <a href="http://cdli.earth/P011070">12753</a>,3; ᵈSU.KUR.RU 𒆛, 9076,7 (4×);<br>
+        </table>, <a href="http://cdli.earth/P011070">12753</a>,3; ᵈSU.KUR.RU 𒆛, 9076,7 (4×); <br>
          𒆛 RTC12,1. s. n. 459f. u. 28
       </td>
       <td></td>
@@ -744,7 +809,7 @@
       <th id="31">31</th>
       <td><span class="R">𒌶</span></td>
       <td>
-        <sup>giš</sup>R, 12625,11; [ᵈ......]𒌶, 12760,19; CF. DP[310R2f];<br>
+        <sup>giš</sup>R, 12625,11; [ᵈ......]𒌶, 12760,19; CF. DP[310R2f]; <br>
         323,2; Nik. 18,3; 310R2f; TSA 2,7; STH1,28R5.
       </td>
       <td>𒌶</td>
@@ -754,10 +819,10 @@
 
     <tr>
       <th id="32">32</th>
-      <td><span class="R">𒋀</span><br>
+      <td><span class="R">𒋀</span> <br>
       „Türpfost.“</td>
       <td>
-        ungenauer: 𒋀, pass. in den arch. T. 𒋀<br>
+        ungenauer: 𒋀, pass. in den arch. T. 𒋀 <br>
         12426,8 u.ö. 𒋀, Ean. REC, 8
       </td>
       <td>𒋀</td>
@@ -767,10 +832,10 @@
 
     <tr>
       <th id="33">33</th>
-      <td><span class="R">𒋀𒆠</span><br>
+      <td><span class="R">𒋀𒆠</span> <br>
       32+ki</td>
       <td>
-        12784,1. 𒋀𒆠, 12760,1; 9108,13; 𒋀𒆠<table class="inline-tablet"><tr><td>-áb</td></tr><tr><td>mun</td></tr></table> 12806,7.<br>
+        12784,1. 𒋀𒆠, 12760,1; 9108,13; 𒋀𒆠<table class="inline-tablet"><tr><td>-áb</td></tr><tr><td>mun</td></tr></table> 12806,7. <br>
         𒋀𒆠 pass. in d. spät. arch. T.
       </td>
       <td>𒋀𒆠</td>
@@ -780,12 +845,12 @@
 
     <tr>
       <th id="34">34</th>
-      <td><span class="R">𒈠</span><br>
+      <td><span class="R">𒈠</span> <br>
       „Dattel“</td>
       <td>
-        R, 9071,2; 12597,9; 𒈠, 9074,10 u. pass. in den Fara-T.<br>
-        𒈠, 12778,1; 𒈠 pass. in den Text. Urukag.<br>
-        𒈠 u. 𒈠 pass. in d. Per. Ur; die letztere Zf. der Form nach<br>
+        R, 9071,2; 12597,9; 𒈠, 9074,10 u. pass. in den Fara-T. <br>
+        𒈠, 12778,1; 𒈠 pass. in den Text. Urukag. <br>
+        𒈠 u. 𒈠 pass. in d. Per. Ur; die letztere Zf. der Form nach <br>
         nicht zu unterscheiden von 𒆪=ku.
       </td>
       <td>𒈠</td>
@@ -798,12 +863,12 @@
 
     <tr>
       <th id="35">35</th>
-      <td><span class="R">𒈢</span><br>
+      <td><span class="R">𒈢</span> <br>
       „Dattelart“</td>
       <td>
-        Brit. Mus. N 86260R2,1; vgl. JAOS, 24,389;<br>
-        𒈢, R, 12620,3; <span class="LAK">𒕐𒕙</span> R 9044,2; 𒈢 pass. in d.<br>
-        T. Urukag. in den Ausdr. <sup>giš</sup>ma, <sup>giš</sup>R, zwei Dattelarten,<br>
+        Brit. Mus. N 86260R2,1; vgl. JAOS, 24,389; <br>
+        𒈢, R, 12620,3; <span class="LAK">𒕐𒕙</span> R 9044,2; 𒈢 pass. in d. <br>
+        T. Urukag. in den Ausdr. <sup>giš</sup>ma, <sup>giš</sup>R, zwei Dattelarten, <br>
         vgl. Amherst 50; 𒈢 CT9,18,4; 7,16,3f.
       </td>
       <td></td>
@@ -817,15 +882,15 @@
       <td><span class="R">𒉡</span></td>
       <td>
         <p>
-        pass. in d. Fara-T. 𒉡, 𒉡, 𒉡, REC 19<br>
-        𒉡 pass. in den T. Urukag. 𒉡, 𒉡, 𒉡, pass.<br>
+        pass. in d. Fara-T. 𒉡, 𒉡, 𒉡, REC 19 <br>
+        𒉡 pass. in den T. Urukag. 𒉡, 𒉡, 𒉡, pass. <br>
         in d. Zeit der Kön. von Ur.
         </p>
         <p>
-        <span class="LAK">&#xF009B;</span>, <span class="LAK">𒀸&#xF009B;</span>, <span class="LAK">𒕢𒉡</span>-si, 12574,3; 12773,4;<br>
-        40 sag-si <span class="LAK">&#xF009B;</span>, DP36 (Fara-T.!); vgl. sag-si 𒌋-nu,<br>
-        (underschieden von ḫa (Fisch) u. zusammengefasst<br>
-        als si-𒌋-nu), DP. 328; 284; 286; Nik. 275; VAT 12636;<br>
+        <span class="LAK">&#xF009B;</span>, <span class="LAK">𒀸&#xF009B;</span>, <span class="LAK">𒕢𒉡</span>-si, 12574,3; 12773,4; <br>
+        40 sag-si <span class="LAK">&#xF009B;</span>, DP36 (Fara-T.!); vgl. sag-si 𒌋-nu, <br>
+        (underschieden von ḫa (Fisch) u. zusammengefasst <br>
+        als si-𒌋-nu), DP. 328; 284; 286; Nik. 275; VAT 12636; <br>
         vgl. den Priesterberuf: nu-sag ᵈNin-a-zu, DP 51,5 203,7.
         </p>
       </td>
@@ -836,12 +901,12 @@
 
     <tr>
       <th id="37">37</th>
-      <td><span class="R">&#xF009A;</span><br>
+      <td><span class="R">&#xF009A;</span> <br>
       „Küchlein?“</td>
       <td>
-        immer zusammen mit <span class="LAK">𒉅</span>, ᵈR, 12760,<span class="http://oracc.org/dcclt/P010566.240">8</span>;<br>
-        R-en, 9108,6; R<sup>ḫu</sup>; peš-R<sup>ḫu</sup>; ug-a-<span class="LAK">𒕁</span>-R<sup>ḫu</sup>;<br>
-        ru-ru-R<sup>ḫu</sup>; gír-R<sup>ḫu</sup>; tir-R<sup>ḫu</sup>; 9124,<a href="http://oracc.org/dcclt/P010649.266">11</a>; vgl. 12619,3;<br>
+        immer zusammen mit <span class="LAK">𒉅</span>, ᵈR, 12760,<span class="http://oracc.org/dcclt/P010566.240">8</span>; <br>
+        R-en, 9108,6; R<sup>ḫu</sup>; peš-R<sup>ḫu</sup>; ug-a-<span class="LAK">𒕁</span>-R<sup>ḫu</sup>; <br>
+        ru-ru-R<sup>ḫu</sup>; gír-R<sup>ḫu</sup>; tir-R<sup>ḫu</sup>; 9124,<a href="http://oracc.org/dcclt/P010649.266">11</a>; vgl. 12619,3; <br>
         12625,17; 12640; 12645,4; 12567,3. s. n. 462.
       </td>
       <td></td>
@@ -861,7 +926,7 @@
           <tr>
             <td>unug</td>
           </tr>
-          </table>, 12560,7; 12503,8; u.ö.; <sup>giš</sup>𒉼<br>
+          </table>, 12560,7; 12503,8; u.ö.; <sup>giš</sup>𒉼 <br>
           DP 418,5; 419,1ff. Sarg. & Gud., REC 118; RTC 221R3
       </td>
       <td>𒉼</td>
@@ -871,11 +936,11 @@
 
     <tr>
       <th id="39">39</th>
-      <td><span class="R">𒋚</span><br>
+      <td><span class="R">𒋚</span> <br>
       „Schwein“</td>
       <td>
-        R, PN, 12784,9; 𒋚, pass. in allen arch. T.<br>
-        R(=šubur)-ra(-me), DP 119,6; nagar-giš-R, TDT 3 II 5185;<br>
+        R, PN, 12784,9; 𒋚, pass. in allen arch. T. <br>
+        R(=šubur)-ra(-me), DP 119,6; nagar-giš-R, TDT 3 II 5185; <br>
         s. ᵈNin-R, Panth.
       </td>
       <td>𒋚</td>
@@ -885,17 +950,16 @@
 
     <tr>
       <th id="40">40</th>
-      <td><span class="R">𒂄</span><br>
+      <td><span class="R">𒂄</span> <br>
       „Schwein“</td>
       <td>
         <p>
-        R-áb/gu(d)/amar/am, 12806; vgl. R(=šáḫ)-ú, Weide-<br>
-        schwein; R<sup>giš</sup>gi, Rohr/Sumpf-Schwein, DP 145,5f; 152,7;<br>
-        iá-R, Schw.-Fett, CT5, 39,3; <sup>kùš</sup>R, Schw.-Fell; sib-R,<br>
-        Schw.-Hirt, CT3, 9, 3, 37; gím-R-kú-a, Sklavin für die<br>
-        Schweinemast, Nik. 1 R5; R-gi(g), schwarzes Schw., PN,<br>
-        RTC 77; vgl. uru+R; ta+R; R(=dun)-a,=„abhängig von“<br>
-        o. dgl., pass. in den T. Urukag.; <sup>(d)</sup>R-gi-ra (auch<br>
+        R-áb/gu(d)/amar/am, 12806; vgl. R(=šáḫ)-ú, Weide<span class="hyphenated-linebreak"></span>schwein; R<sup>giš</sup>gi, Rohr/Sumpf-Schwein, DP 145,5f; 152,7; <br>
+        iá-R, Schw.-Fett, CT5, 39,3; <sup>kùš</sup>R, Schw.-Fell; sib-R, <br>
+        Schw.-Hirt, CT3, 9, 3, 37; gím-R-kú-a, Sklavin für die <br>
+        Schweinemast, Nik. 1 R5; R-gi(g), schwarzes Schw., PN, <br>
+        RTC 77; vgl. uru+R; ta+R; R(=dun)-a,=„abhängig von“ <br>
+        o. dgl., pass. in den T. Urukag.; <sup>(d)</sup>R-gi-ra (auch <br>
         geschrieben: ᵈR-gĭr, Contenau 23,2.
       </p>
       <p>
@@ -913,28 +977,28 @@
     <tr>
       <th id="41">41</th>
       <td>
-          <span class="R">𒁆</span><br>
+          <span class="R">𒁆</span> <br>
           „Harfe“
       </td>
       <td>
-        R<sup>ḫu</sup>, 12426,1 (2×); 𒁆-R<sup>ḫu</sup>, 12426,6;<br>
-        <span class="LAK salt1">𒁆</span>-a<sup>ḫu</sup>; 9124,7; <span class="LAK salt2">𒁆</span>:bi(l)-rim<span class="LAK">𒕁</span>-R<sup>ḫa</sup>,<br>
-        12693,<a href="http://oracc.org/dcclt/P010578.71">5</a>; 12751,3; gal-<span class="LAK salt3">𒁆</span>, <div style="display:inline-block;vertical-align: text-top;">9130,4 =<br>12652,5.</div><br>
-        𒁆, Clay, Misc. Inscr. 12,6,2;<br>
-        <span class="LAK salt4">𒁆</span> 12645,9 (7×); gar-kešda-R, 12645,9<br>
-        <span class="LAK salt5">𒁆</span><span class="LAK">𒄸</span> 12761,2; vgl. 12619,3;<br>
-        é <span class="LAK salt6">𒁆</span>, PN, 9107,3; <span class="LAK salt7">𒁆</span>, 9107,3;<br>
-        <span class="LAK salt8">𒁆</span>-e(?) 12650,13; ša(g)-<span class="LAK salt9">𒁆</span>-ku, 12526,3;<br>
-        <span class="LAK salt10">𒁆</span>-di, 9111,11; di-<span class="LAK salt11">𒁆</span> 12617,1;<br>
-        <span class="LAK salt12">𒁆</span> 9121,3; 𒁆-di, DP33,1; vgl. R-di ᵈSin,<br>
-        SAK 166 e)7; 𒁆-ru-a, Fö. 75,3; R-il e-ta-ru-a,<br>
-        Fö. 93,12; 118,2; DP 167,4; 𒁆 (Kultgegenstand),<br>
-        Nik. 23R2; DP 55,6; 66R7 (R-bí(l)); Nin-é-R-ni-du(g),<br>
-        PN, Nik. 1R3; 6R4; 𒁆 REC46 (Suppl.);<br>
-        mu 𒁆-ušum-gal-kalam-ma ba-dim-ma,<br>
-        RTC 201; ᵈ𒁆-ud-da, RTC 311,5; ᵈR-ud-da<br>
-        é-uru III(?), TDT 2, 796,R; R-ud-da-uru III-na,<br>
-        Amherst 65; 𒁆(=balag)-gà-ni, Gud. Cyl. B11, 1;<br>
+        R<sup>ḫu</sup>, 12426,1 (2×); 𒁆-R<sup>ḫu</sup>, 12426,6; <br>
+        <span class="LAK salt1">𒁆</span>-a<sup>ḫu</sup>; 9124,7; <span class="LAK salt2">𒁆</span>:bi(l)-rim<span class="LAK">𒕁</span>-R<sup>ḫa</sup>, <br>
+        12693,<a href="http://oracc.org/dcclt/P010578.71">5</a>; 12751,3; gal-<span class="LAK salt3">𒁆</span>, <div style="display:inline-block;vertical-align: text-top;">9130,4 = <br>12652,5.</div> <br>
+        𒁆, Clay, Misc. Inscr. 12,6,2; <br>
+        <span class="LAK salt4">𒁆</span> 12645,9 (7×); gar-kešda-R, 12645,9 <br>
+        <span class="LAK salt5">𒁆</span><span class="LAK">𒄸</span> 12761,2; vgl. 12619,3; <br>
+        é <span class="LAK salt6">𒁆</span>, PN, 9107,3; <span class="LAK salt7">𒁆</span>, 9107,3; <br>
+        <span class="LAK salt8">𒁆</span>-e(?) 12650,13; ša(g)-<span class="LAK salt9">𒁆</span>-ku, 12526,3; <br>
+        <span class="LAK salt10">𒁆</span>-di, 9111,11; di-<span class="LAK salt11">𒁆</span> 12617,1; <br>
+        <span class="LAK salt12">𒁆</span> 9121,3; 𒁆-di, DP33,1; vgl. R-di ᵈSin, <br>
+        SAK 166 e)7; 𒁆-ru-a, Fö. 75,3; R-il e-ta-ru-a, <br>
+        Fö. 93,12; 118,2; DP 167,4; 𒁆 (Kultgegenstand), <br>
+        Nik. 23R2; DP 55,6; 66R7 (R-bí(l)); Nin-é-R-ni-du(g), <br>
+        PN, Nik. 1R3; 6R4; 𒁆 REC46 (Suppl.); <br>
+        mu 𒁆-ušum-gal-kalam-ma ba-dim-ma, <br>
+        RTC 201; ᵈ𒁆-ud-da, RTC 311,5; ᵈR-ud-da <br>
+        é-uru III(?), TDT 2, 796,R; R-ud-da-uru III-na, <br>
+        Amherst 65; 𒁆(=balag)-gà-ni, Gud. Cyl. B11, 1; <br>
         a-ša(g)<sup>giš</sup> 𒁆 CT7, 29a) R11; vgl. RTC 247,1.
       </td>
       <td>𒁆</td>
@@ -946,7 +1010,7 @@
       <th id="42">42</th>
       <td><span class="R2">𒈦</span>; <span class="R2 salt1">𒈦</span></td>
       <td>
-        R(=„maš“ (und „máš“)); pass. in allen arch. T.<br>
+        R(=„maš“ (und „máš“)); pass. in allen arch. T. <br>
         vgl. die Zahlzeichen u. n. 43. R=𒉽, 12770,4f; 12421,3f.
       </td>
       <td>𒈦</td>
@@ -955,16 +1019,16 @@
     </tr>
     <tr>
       <th id="43">43</th>
-      <td><span class="R">𒈧</span><br>
-        „sitzendes<br>
+      <td><span class="R">𒈧</span> <br>
+        „sitzendes <br>
         Zicklein“.
       </td>
       <td>
-        R (=Ziegenbock u. Zicklein), 12653, 2 𒈧 Blau,<br>
-        Brit. Mus. N 86260. R=???, 12770,4f; 12421,3f;<br>
-        In den Texten der Zeit Urukag. findet sich diese Zf.<br>
-        nicht, sondern nur maš(=máš), Nik. 1,2 u. pass.<br>
-        R(=máš) ist nicht Abkürzung von maš-ša(g)-du(g)<br>
+        R (=Ziegenbock u. Zicklein), 12653, 2 𒈧 Blau, <br>
+        Brit. Mus. N 86260. R=???, 12770,4f; 12421,3f; <br>
+        In den Texten der Zeit Urukag. findet sich diese Zf. <br>
+        nicht, sondern nur maš(=máš), Nik. 1,2 u. pass. <br>
+        R(=máš) ist nicht Abkürzung von maš-ša(g)-du(g) <br>
         vgl. R(𒈧)-nita-ša(g)-du(g), CT 9,29.
       </td>
       <td>𒈧</td>
@@ -996,7 +1060,7 @@
     <tr>
       <th id="46">46</th>
       <td>
-        <span class="R2 salt1">𒃰</span>, <span class="R2 salt2">𒃰</span>,<br>
+        <span class="R2 salt1">𒃰</span>, <span class="R2 salt2">𒃰</span>, <br>
         <span class="R2 salt3">𒃰</span>, <span class="R2 salt5">𒃰</span>
       </td>
       <td>
@@ -1043,8 +1107,8 @@
             </td>
           </tr>
         </table>
-        <span class="LAK salt5">𒃰</span>-na (=na-gíd, Rinderhirt), 12424,7 u. pass.<br>
-        3<span class="LAK salt5">𒃰</span> 4 gu, NN, 12572, pass. <span class="LAK salt5">𒃰</span>-sukal 9108,2; 9130,1.<br>
+        <span class="LAK salt5">𒃰</span>-na (=na-gíd, Rinderhirt), 12424,7 u. pass. <br>
+        3<span class="LAK salt5">𒃰</span> 4 gu, NN, 12572, pass. <span class="LAK salt5">𒃰</span>-sukal 9108,2; 9130,1. <br>
         <table class="inline-tablet close">
         <tr>
           <td>ᵈkud-dŭ</td>
@@ -1074,7 +1138,7 @@
           <td>ud-ni-ki-mu;</td>
         </tr>
         </table>
-        <br>
+         <br>
         <table class="inline-tablet close">
         <tr>
           <td>ᵈlam <span class="LAK salt2">𒃰</span></td>
@@ -1098,7 +1162,7 @@
         <tr>
           <td>7-tag,</td>
         </tr>
-        </table><br>
+        </table> <br>
         12503,4; <span class="LAK salt3">𒃰</span>-dul-sar, 9124,5;
         <table class="inline-tablet close">
         <tr>
@@ -1107,7 +1171,7 @@
         <tr>
           <td>nun</td>
         </tr>
-        </table>, 12503, 6.<br>
+        </table>, 12503, 6. <br>
         s. n. 285.
       </td>
       <td style="vertical-align: middle;">𒃰</td>
@@ -1118,7 +1182,7 @@
     <tr>
       <th id="46a">46<sup>a</sup></th>
       <td><span class="R salt1">𒁮</span></td>
-      <td>R(=dam)-me, 9130,3; 12652,4; 𒁮, 12675,2.<br>
+      <td>R(=dam)-me, 9130,3; 12652,4; 𒁮, 12675,2. <br>
       s. n. 523.</td>
       <td>𒁮</td>
       <td class="ednote"></td>
@@ -1128,7 +1192,7 @@
     <tr>
       <th id="47">47</th>
       <td><span class="R">𒋩</span></td>
-      <td>R (Maß von 20, 70, 90 Maßeinheiten), 12421,1f; 12770,1f.<br>
+      <td>R (Maß von 20, 70, 90 Maßeinheiten), 12421,1f; 12770,1f. <br>
       R = ½ GAR (=Brot), DP 159,7f. s. n. 182.</td>
       <td></td>
       <td class="ednote"></td>
@@ -1137,13 +1201,12 @@
 
     <tr>
       <th id="48">48</th>
-      <td><span class="R">𒈮</span><br>
-      „Meißel des Stein-<br>
-      metzes“ und ?</td>
-      <td>ᵈR(=zadim)-gir, 12571,9. 𒈮 pass. in allen arch. T.<br>
-      85 túg 𒈮(=mug), CT 5, 50b, pass; 22 ma-na sìg-R(=mug),<br>
+      <td><span class="R">𒈮</span> <br>
+      „Meißel des Stein<span class="hyphenated-linebreak"></span>metzes“ und ?</td>
+      <td>ᵈR(=zadim)-gir, 12571,9. 𒈮 pass. in allen arch. T. <br>
+      85 túg 𒈮(=mug), CT 5, 50b, pass; 22 ma-na sìg-R(=mug), <br>
       TDT 1, 1364. sìg 𒈮, 12650,10.</td>
-      <td>𒈯 u.<br>𒈮</td>
+      <td>𒈯 u. <br>𒈮</td>
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK048.png"></td>
     </tr>
@@ -1151,7 +1214,7 @@
     <tr>
       <th id="49">49</th>
       <td class="R">&#xF00A0;</td>
-      <td>R, 12650,7, u.o. 𒊩𒆳 9108,3 u. o. in den Fara-T.<br>
+      <td>R, 12650,7, u.o. 𒊩𒆳 9108,3 u. o. in den Fara-T. <br>
       𒊩𒆳 RTC 16,1 u. pass. in den Urukag.-T.; später pass. 𒊩𒆳</td>
       <td>𒊩𒆳</td>
       <td class="ednote" lang="en">Probably best handled diachronically a 𒊩𒆳 ligature.</td>
@@ -1161,8 +1224,8 @@
     <tr>
       <th id="50">50</th>
       <td class="R">𒓙</td>
-      <td>R-áb/gu(d)/amar/am, 12806; pa-te-si-gar R-si, 9070,11<br>
-      12444,1; 12655,3; a-R-si-si, 12759,7; 𒓙-gid-nun<sup>ki</sup><br>
+      <td>R-áb/gu(d)/amar/am, 12806; pa-te-si-gar R-si, 9070,11 <br>
+      12444,1; 12655,3; a-R-si-si, 12759,7; 𒓙-gid-nun<sup>ki</sup> <br>
       12573,3.</td>
       <td></td>
       <td class="ednote"></td>
@@ -1173,9 +1236,9 @@
       <th id="51">51</th>
       <td class="R">𒓚</td>
       <td>
-        sag-aš-R-R, 12655,3; 𒓚-gid-nun<sup>ki</sup>, 12573,3;<br>
-        𒓚-sag, 12625,15; 𒓚𒑋 mar-ud 𒆛<br>
-        12680,13; R-zig-ga 9076,7;<br>
+        sag-aš-R-R, 12655,3; 𒓚-gid-nun<sup>ki</sup>, 12573,3; <br>
+        𒓚-sag, 12625,15; 𒓚𒑋 mar-ud 𒆛 <br>
+        12680,13; R-zig-ga 9076,7; <br>
         𒓚𒌸, 12617,7.
       </td>
       <td></td>
