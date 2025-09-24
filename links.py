@@ -21,9 +21,24 @@ with open("../edsl/lak/etc/vat.P") as f:
 lak_number : str|None = None
 numbers_seen : set[int] = set()
 
+max_lak_number = 0
 with open("LAK.html") as f:
   for line in f.readlines():
-    def linkify(match: re.Match[str]):
+    match = re.search(r'id=\"(\d+)[a-z]?\"', line)
+    if match:
+      max_lak_number = int(match.group(1))
+
+with open("LAK.html") as f:
+  for line in f.readlines():
+    def linkify_internal(match: re.Match[str]):
+      referenced_lak_number = int(match.group("n"))
+      if match.group("href") and int(match.group("href")) != referenced_lak_number:
+        raise ValueError(f"n. {referenced_lak_number} links to {match.group('href')}")
+      if referenced_lak_number < max_lak_number:
+        return f' <a href="#{referenced_lak_number}>n. {referenced_lak_number}</a>'
+      return match.group(0)
+    line = re.sub(r'(?<!Mus\.) (?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
+    def linkify_vat(match: re.Match[str]):
       vat_number = int(match.group("VAT"))
       numbers_seen.add(vat_number)
       if match.group("P"):
@@ -34,7 +49,7 @@ with open("LAK.html") as f:
         return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>.*))">)?(?P<VAT>\d{4,})(?:</a>)?', linkify, line)
+    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>.*))">)?(?P<VAT>\d{4,})(?:</a>)?', linkify_vat, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
