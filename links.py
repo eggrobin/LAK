@@ -35,7 +35,7 @@ with open("LAK.html") as f:
       if match.group("href") and int(match.group("href")) != referenced_lak_number:
         raise ValueError(f"n. {referenced_lak_number} links to {match.group('href')}")
       if referenced_lak_number < max_lak_number:
-        return f' <a href="#{referenced_lak_number}>n. {referenced_lak_number}</a>'
+        return f' <a href="#{referenced_lak_number}">n. {referenced_lak_number}</a>'
       return match.group(0)
     line = re.sub(r'(?<!Mus\.) (?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
     def linkify_vat(match: re.Match[str]):
