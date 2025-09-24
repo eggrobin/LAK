@@ -35,6 +35,11 @@
     }
 
     @font-face {
+      font-family: 'LFD-lak-LAK6-LAK8';
+      src: url('Oracc-LAK-LAK6-LAK8-variants.ttf');
+    }
+
+    @font-face {
       font-family: Nabu-ninua-ihsus;
       src: url("Nabuninuaihsus.ttf");
     }
@@ -148,6 +153,14 @@
       line-height: 1em;
     }
 
+    th[id="6"] ~ td .LAK {
+      font-family: LFD-lak-LAK6-LAK8;
+    } 
+
+    th[id="8"] ~ td .R {
+      font-family: LFD-lak-LAK6-LAK8;
+    }
+
     tr.page-footer {
       /* These rows are just here to prevent the bottom half of the border of
          the last row from showing up on the next page when printing */
@@ -206,6 +219,12 @@
       display: inline-block;
     }
 
+    .diplomatic-overhang-bottom {
+      display: inline-block;
+      vertical-align: text-top;
+      height: 1rem;
+    }
+
     .middle {
       vertical-align: middle;
     }
@@ -240,6 +259,9 @@
     }
     for (const tr of document.querySelectorAll(".diplomatic-space")) {
       tr.style.display = reflow ? "none" : "";
+    }
+    for (const tr of document.querySelectorAll(".diplomatic-overhang-bottom")) {
+      tr.style.display = reflow ? "inline" : "";
     }
     for (const td of document.querySelectorAll(".signlist>tbody>tr>td")) {
       td.style["white-space"] = reflow ? "inherit" : "";
@@ -463,7 +485,7 @@
         „Stern“.
       <td>
         <div>
-        pass. in allen arch. T.; verziertes R: <span class="R salt2" style="display: inline-block; vertical-align: text-top; height: 1rem;">𒀭</span> <br>
+        pass. in allen arch. T.; verziertes R: <span class="R salt2 diplomatic-overhang-bottom">𒀭</span> <br>
         <span class="diplomatic-space" style="width:30%"></span><a href="http://cdli.earth/P010622">12606</a>, R <br>
         <span class="LAK salt1">𒀭</span>, REC 5<sup>bis</sup>; <br>
         <span class="diplomatic-space" style="width:20%"></span>R-na; R-ra/ri/rí, pass.
