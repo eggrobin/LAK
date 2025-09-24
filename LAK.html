@@ -243,6 +243,10 @@
     .middle {
       vertical-align: middle;
     }
+
+    .moved-from-next-page {
+      display: inline;
+    }
   </style>
   <script>
   function update_from_query() {
@@ -293,6 +297,34 @@
         span.textContent = "";
       }
     }
+    if (reflow) {
+      for (const tr of document.querySelectorAll("tr.page-header")) {
+        tr.style.display = "none";
+      }
+      for (const tr of document.querySelectorAll("tr.page-footer")) {
+        tr.style.display = "none";
+      }
+      for (const page_header of document.querySelectorAll("tr.page-header")) {
+        const next_row = page_header.nextElementSibling;
+        if (next_row && !next_row.firstElementChild.id) {
+          const page_footer = page_header.previousElementSibling;
+          const starting_cell = page_footer.previousElementSibling
+              .firstElementChild.nextElementSibling.nextElementSibling;
+          starting_cell.innerHTML +=
+              '<div class="moved-from-next-page">' +
+              next_row.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
+              "</div>";
+          next_row.style.display = "none";
+        }
+      }
+    } else {
+      for (const element of document.querySelectorAll(".moved-from-next-page")) {
+        element.remove();
+      }
+      for (const tr of document.querySelectorAll(".signlist>tbody>tr")) {
+        tr.style.display = "";
+      }
+    }
   }
   window.onload = function () {
     for (var input of document.getElementsByTagName("input")) {
@@ -307,12 +339,13 @@
   A work-in-progress diplomatic edition of Deimel’s <cite lang="de">Liste der archaischen Keilschriftzeichen von Fara</cite>,
   based on the <a href="http://oracc.org/listfontdata/lak/">Oracc-LAK</a> font by Steve Tinney.
 </p>
-<p>
-  <input id="facsimile" name="facsimile" type="checkbox" onclick="update()">
+<nav style="position: fixed; right:0; background-color: white; border: solid; padding: 0.25em;">
+  <input id="facsimile" name="facsimile" type="checkbox">
   <label for="facsimile">Side-by-side view with facsimile</label>
-  <input id="reflow" name="reflow" type="checkbox" onclick="update()">
+  <input id="reflow" name="reflow" type="checkbox">
   <label for="reflow">Reflow</label>
-</p>
+</nav>
+<p>&nbsp;</p>
 
 <table class="signlist">
   <tbody>
