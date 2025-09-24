@@ -165,14 +165,19 @@
       font-family: LFD-lak-LAK6-LAK8;
     }
 
-    tr.page-footer {
-      /* These rows are just here to prevent the bottom half of the border of
-         the last row from showing up on the next page when printing */
-      font-size: 0;
+    tr.page-header:not(#p1) {
+      break-before: page;
     }
 
-    tr.page-header {
-      break-before: page;
+    /* The footer rows are mostly here to prevent the bottom half of the
+      border of the last row from showing up on the next page when printing.
+      Since we need them anyway, we reproduce the footers. */
+    .signlist tr.page-footer td {
+      border: none;
+    }
+
+    .signlist tr.page-header td {
+      border: none;
     }
 
     .signlist>tbody>tr>td.facsimile {
@@ -194,6 +199,11 @@
       border-collapse: collapse;
       display: inline;
       vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    table.tablet {
+      white-space: nowrap;
     }
 
     .case-ruling-right {
@@ -205,8 +215,18 @@
       line-height: 70%;
     }
 
+    tr.page-header:not(#p1) th {
+      border-top: 1px dashed;
+    }
+
     @media print {
+      tr.page-header:not(#p1) th {
+        border-top: none;
+      }
       td.facsimile {
+        display: none;
+      }
+      nav {
         display: none;
       }
     }
@@ -360,7 +380,7 @@
 
 <table class="signlist">
   <tbody>
-    <tr class="page-header"><th colspan="4">1</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-header" id="p1"><th colspan="4">1</th><td colspan="2"></td></tr>
     <tr>
       <th id="1">1</th>
       <td><span class="R">𒀸</span> <br>„Zahleinheit“ <br>& <br>„junges Fischchen“</td>
@@ -556,8 +576,8 @@
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK008.png" alt=""></td>
     </tr>
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">2</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td></td><td colspan="2"><b>DOG.</b> Deimel: Fara.</td><td>1</td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p2"><th colspan="4">2</th><td colspan="2"></td></tr>
     <tr>
       <th id="9">9</th>
       <td><span class="R">𒀮</span> <br>
@@ -697,8 +717,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK017.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">3</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p3"><th colspan="4">3</th><td colspan="2"></td></tr>
     <tr>
       <th></th>
       <td></td>
@@ -811,8 +831,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK026.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">4</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="3"><td>1*</td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p4"><th colspan="4">4</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="27">27</th>
@@ -952,8 +972,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK034.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">5</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p5"><th colspan="4">5</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="35">35</th>
@@ -1065,8 +1085,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK040.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">5</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p5"><th colspan="4">5</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="41">41</th>
@@ -1130,8 +1150,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK043.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">6</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p6"><th colspan="4">6</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="44">44</th>
@@ -1158,7 +1178,7 @@
         <span class="R2 salt3">𒃰</span>, <span class="R2 salt5">𒃰</span>
       </td>
       <td>
-        <table>
+        <table class="tablet">
           <tr>
             <td>𒕓<table class="over LAK salt1">
               <tr>
@@ -1341,8 +1361,8 @@
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK051.png" alt=""></td>
     </tr>
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">8</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p8"><th colspan="4">8</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="52">52</th>
@@ -1446,8 +1466,8 @@
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK058.png" alt=""></td>
     </tr>
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">9</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p9"><th colspan="4">9</th><td colspan="2"></td></tr>
 
     <tr>
       <th></th>
@@ -1572,8 +1592,8 @@
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK066.png" alt=""></td>
     </tr>
 
-    <tr class="page-footer"><th colspan="4"></th><td class="ednote"></td><td class="facsimile"></td></tr>
-    <tr class="page-header"><th colspan="4">10</th><td class="ednote"></td><td class="facsimile"></td></tr>
+    <tr class="page-footer"><td></td><td colspan="2"><b>DOG.</b> Deimel: Fara.</td><td>2</td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p10"><th colspan="4">10</th><td colspan="2"></td></tr>
 
     <tr>
       <th></th>
