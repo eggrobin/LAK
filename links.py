@@ -28,8 +28,15 @@ with open("LAK.html") as f:
     if match:
       max_lak_number = int(match.group(1))
 
+in_body = False
+
 with open("LAK.html") as f:
   for line in f.readlines():
+    if "<body>" in line:
+      in_body = True
+    if not in_body:
+      lines.append(line)
+      continue
     def linkify_internal(match: re.Match[str]):
       referenced_lak_number = int(match.group("n"))
       if match.group("href") and int(match.group("href")) != referenced_lak_number:
@@ -49,7 +56,7 @@ with open("LAK.html") as f:
         return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>.*))">)?(?P<VAT>\d{4,})(?:</a>)?', linkify_vat, line)
+    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>.*))">)?\b(?P<VAT>\d{4,})\b(?:</a>)?', linkify_vat, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
