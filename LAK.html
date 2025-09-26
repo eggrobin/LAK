@@ -24,6 +24,12 @@
       src: url('Archaic-Cuneiform-Numerals.ttf');
     }
 
+    /* For mentions of Pcun in the notes. */
+    @font-face {
+      font-family: 'PCSL';
+      src: url('PCSL.ttf');
+    }
+
     body {
       font-family: 'STIX', 'NotoSansCuneiform-egg', 'ACN';
       line-height: 1.2em;
@@ -123,6 +129,7 @@
     .signlist {
       border-collapse: collapse;
       hyphens: auto;
+      text-align: justify;
     }
 
     .signlist>tbody>tr>td {
@@ -140,10 +147,11 @@
     }
 
     .signlist>tbody>tr>td.ednote {
+      font-family: 'STIX', 'NotoSansCuneiform-egg', 'ACN', 'PCSL';
       white-space: normal;
       border: none;
       font-size: 75%;
-      max-width:15em;
+      max-width: 50em;
     }
 
     .close .LAK {
@@ -545,9 +553,12 @@
         >su, Déc. ép. p. XXXIV: <span class="LAK salt4">𒄈</span>, Blau (=<a href="http://cdli.earth/P005996">Brit. Mus. n. 86260</a>).
       </td>
       <td>
-        𒄈
       </td>
-      <td class="ednote"></td>
+      <td class="ednote">
+        Editor’s note: The copy of the sign from Blau monument 1 is not very resemblant. This is probably the one on the reverse transliterated ZATU687 &#x12B55; in CDLI;
+        the same identification is made in REC3(=𒄈)
+        with a better drawing.
+      </td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK006.png" alt=""></td>
     </tr>
 
@@ -1095,7 +1106,7 @@
     </tr>
 
     <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
-    <tr class="page-header" id="p5"><th colspan="4">5</th><td colspan="2"></td></tr>
+    <tr class="page-header" id="p6"><th colspan="4">6</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="41">41</th>
@@ -1160,7 +1171,7 @@
     </tr>
 
     <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
-    <tr class="page-header" id="p6"><th colspan="4">6</th><td colspan="2"></td></tr>
+    <tr class="page-header" id="p7"><th colspan="4">7</th><td colspan="2"></td></tr>
 
     <tr>
       <th id="44">44</th>
