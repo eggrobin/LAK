@@ -281,6 +281,10 @@
       line-height: 80%;
     }
 
+    .diplomatic-column.upward.from-baseline {
+      vertical-align: text-bottom;
+    }
+
     .diplomatic-row {
       display: inline-block;
     }
@@ -327,6 +331,9 @@
       tr.style.display = facsimile ? "" : "none";
     }
     document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
+    for (const ins of document.querySelectorAll("ins.diplomatic")) {
+      ins.style["text-decoration"] = reflow ? "none" : "";
+    }
     for (const tr of document.querySelectorAll(".diplomatic-column")) {
       tr.style.display = reflow ? "inline" : "";
       tr.style["vertical-align"] = reflow ? "baseline" : "";
@@ -2065,11 +2072,11 @@
       <th id="96">96</th>
       <td><span class="R">&#xF00A5;</span></td>
       <td>
-        R (=ninda+numun)-si, <a href="http://cdli.earth/P010595">12781</a>,17. <table class="inline-tablet close"><tr><td>???</td></tr><tr><td>𒆳𒊏</td></tr></table> = <br>
-        <a href="http://cdli.earth/P010984">9126</a>,5
+        R (=ninda+numun)-si, <a href="http://cdli.earth/P010595">12781</a>,17. <table class="inline-tablet close"><tr><td>𒋀</td></tr><tr><td>𒆳𒊏</td></tr></table> = <br>
+        <a href="http://cdli.earth/P010984">9126</a>,<a href="http://oracc.org/epsd2/P010984.48">5</a>
       </td>
       <td></td>
-      <td class="ednote"></td>
+      <td class="ednote" lang="epsd2">CDLI & ePSD2 have šeš-kur-ra for 9126,5. ePSD2 lemmatizes that as a (reasonably common) PN.</td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK096.png" alt=""></td>
     </tr>
 
@@ -2198,7 +2205,7 @@
       <th id="109">109</th>
       <td><span class="R">𒉘</span></td>
       <td>R, RTC 8,1; 𒉘 REC 62; 𒉘, <a href="http://cdli.earth/P011041">12629</a>,2; <a href="http://cdli.earth/P011082">9075</a>,7 <br>
-      <span class="R2 salt1">𒉘</span>, 𒉘, pass. in d. arch. T. á-R(=ág)-gà, <div class="diplomatic-column.upward"><div class="diplomatic-row">RTC,</div><div class="diplomatic-row" style="text-align: right;">8</div></td>
+      <span class="R2 salt1">𒉘</span>, 𒉘, pass. in d. arch. T. á-R(=ág)-gà, <div class="diplomatic-column upward from-baseline"><div class="diplomatic-row">RTC,</div><div class="diplomatic-row" style="text-align: right;"><ins class="diplomatic">8</ins></div></td>
       <td>𒉘</td>
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK109.png" alt=""></td>
