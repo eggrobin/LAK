@@ -226,6 +226,22 @@
       white-space: nowrap;
     }
 
+    table.inline-tablet.diplomatic-overhang-bottom {
+      display: inline-block;
+      vertical-align: text-top;
+    }
+
+    .open-damage-right:before {
+      display: inline-block;
+      width: 0;
+      content: "\A0[";
+      font-size: 1rem;
+    }
+
+    .open-damage-right {
+      font-size: 0;
+    }
+
     table.tablet {
       white-space: nowrap;
     }
@@ -334,15 +350,18 @@
     for (const ins of document.querySelectorAll("ins.diplomatic")) {
       ins.style["text-decoration"] = reflow ? "none" : "";
     }
-    for (const tr of document.querySelectorAll(".diplomatic-column")) {
-      tr.style.display = reflow ? "inline" : "";
-      tr.style["vertical-align"] = reflow ? "baseline" : "";
+    for (const element of document.querySelectorAll(".diplomatic-column")) {
+      element.style.display = reflow ? "inline" : "";
+      element.style["vertical-align"] = reflow ? "baseline" : "";
     }
-    for (const tr of document.querySelectorAll(".diplomatic-space")) {
-      tr.style.display = reflow ? "none" : "";
+    for (const element of document.querySelectorAll(".diplomatic-space")) {
+      element.style.display = reflow ? "none" : "";
     }
-    for (const tr of document.querySelectorAll(".diplomatic-overhang-bottom")) {
-      tr.style.display = reflow ? "inline" : "";
+    for (const element of document.querySelectorAll(".diplomatic-overhang-bottom")) {
+      element.style.display = reflow ? "inline" : "";
+    }
+    for (const table of document.querySelectorAll("table.inline-tablet.diplomatic-overhang-bottom")) {
+      table.style["vertical-align"] = reflow ? "middle" : "";
     }
     for (const td of document.querySelectorAll(".signlist>tbody>tr>td")) {
       td.style["white-space"] = reflow ? "inherit" : "";
@@ -2307,7 +2326,7 @@
       <td><span class="R">𒍫</span></td>
       <td>
         kaman-šú 𒍫: R𒈫R: <a href="http://cdli.earth/P011098">12584</a>,2; 𒍫, <a href="http://cdli.earth/P010623">12575</a>,5/8f. <br>
-        <table class="inline-tablet"><!--TODO(egg): overhang bottom but not when reflowed.-->
+        <table class="inline-tablet diplomatic-overhang-bottom"><!--TODO(egg): overhang bottom but not when reflowed.-->
           <tr><td>še ᵈGid</td></tr>
           <tr><td>𒀀-R</td></tr>
         </table>, RTC 15,3; R-na, <a href="http://cdli.earth/P011064">9074</a>,11; <a href="http://cdli.earth/P011033">12497</a>,8. <br>
@@ -2342,7 +2361,7 @@
       <th id="118">118</th>
       <td><span class="R">𒕃</span></td>
       <td>
-        <span class="damage-right">R</span>-<table class="inline-tablet close"><tr><td>ub</td></tr><tr><td>gid</td></tr></table>, R-ub, <a href="http://cdli.earth/P010651">12503</a>,1f. s. n. 191
+        <span class="open-damage-right">⸢</span>R<span class="close-damage-right">]</span>-<table class="inline-tablet close"><tr><td>ub</td></tr><tr><td>gid</td></tr></table>, R-ub, <a href="http://cdli.earth/P010651">12503</a>,1f. s. n. 191
       </td>
       <td></td>
       <td class="ednote"></td>
