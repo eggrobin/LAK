@@ -387,7 +387,9 @@
       }
       for (const page_header of document.querySelectorAll("tr.page-header")) {
         const next_row = page_header.nextElementSibling;
-        if (next_row && !next_row.firstElementChild.id) {
+        if (next_row &&
+            !next_row.firstElementChild.id &&
+            next_row.firstElementChild.nextElementSibling.innerHTML.trim() === "") {
           const page_footer = page_header.previousElementSibling;
           const starting_cell = page_footer.previousElementSibling
               .firstElementChild.nextElementSibling.nextElementSibling;
@@ -2766,6 +2768,8 @@
 
     <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
     <tr class="page-header" id="p17"><th colspan="4">17</th><td colspan="2"></td></tr>
+    <tr class="page-footer"><td></td><td colspan="2"><b>DOG.</b> Deimel: Fara.</td><td>3</td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p18"><th colspan="4">18</th><td colspan="2"></td></tr>
 
   </tbody>
 </table>
