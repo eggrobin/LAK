@@ -306,6 +306,20 @@
       vertical-align: text-bottom;
     }
 
+    .diplomatic-brace-right > .diplomatic-column {
+      vertical-align: middle;
+    }
+
+    .diplomatic-brace-right > .label::before {
+      vertical-align: middle;
+      content: var(--brace-label-before);
+      font-size: 3em;
+    }
+
+    .diplomatic-brace-right {
+      --brace-label-before: "}";
+    }
+
     .diplomatic-row {
       display: inline-block;
     }
@@ -381,6 +395,13 @@
       } else {
         span.style = "";
         span.textContent = "";
+      }
+    }
+    for (const element of document.querySelectorAll(".diplomatic-brace-right")) {
+      if (reflow) {
+        element.style.setProperty("--brace-label-before", "\"\"");
+      } else {
+        element.style = "";
       }
     }
     if (reflow) {
@@ -2922,6 +2943,155 @@
 
     <tr class="page-footer"><td></td><td colspan="2"><b>DOG.</b> Deimel: Fara.</td><td>3</td><td colspan="2"></td></tr>
     <tr class="page-header" id="p18"><th colspan="4">18</th><td colspan="2"></td></tr>
+
+    <tr>
+      <th id="151">151</th>
+      <td><span class="R">&#xF0079;</span></td>
+      <td>
+        R-da, Nik. 131,2; R=bi(l)+uḫ?
+      </td>
+      <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK151.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th></th>
+      <td><span class="R">𒄄</span></td>
+      <td>
+        s. n. 466.
+      </td>
+      <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"></td>
+    </tr>
+
+    <tr>
+      <th id="152">152</th>
+      <td><span class="R2">𒌑</span>, <span class="R2 salt1">𒌑</span></td>
+      <td>
+        pass. in d. arch. T.
+      </td>
+      <td>𒌑</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK152.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="153">153</th>
+      <td><span class="R">𒁈</span> <br>
+      „Teppich, Vorhang?“</td>
+      <td>
+        9109,6; 9111,6/9; nun-R-ezen, 12503,7 u.o. <br>
+        𒁈 Uruk., Sarg., Gud. pass. 𒁈, 𒁈 pass. Dyn. Ur
+      </td>
+      <td>𒁈</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK153.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="154">154</th>
+      <td><span class="R">𒂇</span></td>
+      <td>
+        𒂇, Déc, pl. 1<sup>ter</sup> u. 6<sup>b</sup>1,3; Lugal-<sup>giš</sup> 𒂇, TDT1, 1452; <br>
+        𒅎-R, 9124,1. R. (Berufstand), oft in den Fara-T. <br>
+        𒂇, DP32; 𒂇, DP31 u. pass. bei Urukag. <br>
+        𒂇 pass. Dyn. Ur; 𒂇, Gud. Cyl. A20,6. s. n. 765
+      </td>
+      <td>𒂇 u. <br>???</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK154.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="155">155</th>
+      <td><span class="R">𒌣</span> <br>„Schmelzofen“.</td>
+      <td>
+        <span class="case-ruling-right">gal-R</span> <span class="case-ruling-right">gal-R-azag</span> <span class="case-ruling-right">sangu-R</span> <span class="case-ruling-right">ab-R-azag</span> 𒂞-R, <br>
+        9130,2; R(=di(m))-ma, STH1,22,7; 𒌣, SAK46,5,13
+      </td>
+      <td>𒌣</td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK155.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="156">156</th>
+      <td><span class="R">𒌥</span> <br> 155+pa</td>
+      <td>
+        9075,20 u.o. Ka-mu-R, 12680,7; <table class="inline-tablet close"><tr><td>a-R-R</td></tr><tr><td>mu-a</td></tr></table>, 12680,6 <br>
+        <span class="R salt1">𒌥</span> pass., 𒌤 oft i. d. Fara-T. u. pass. bei Urukag. <br>
+        𒌤 Gud. REC90; 𒌤, Nik. 32R1f. 𒌤 <div class="diplomatic-column diplomatic-overhang-bottom">CT7,25 <br>b) R</div> <br>
+        u. pass. in d. Dyn. Ur. s. n. 551.
+      </td>
+      <td>𒌤</td>
+      <td class="ednote" lang="en">An unfortunate disunification between 𒌤 and 𒌥 here in the encoding.
+        We probably should use primarily 𒌤 with stylistic alternates…</td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK156.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="157">157</th>
+      <td><span class="R">𒌙</span></td>
+      <td>
+        é-R, STH 2, 54 Obv. 145; gan-R, BE 3, 91; TU 12,1,17; Barton <br>
+        Haverf. I Pl. 30, 193; vgl. BE 6 II 10R1f; 12,2 (=ki-(s)láh? = un<span class="hyphenated-linebreak"></span>bebaut? s. M. 7406. <br>
+        201 <sup>dug</sup>kam-R; 1489 <sup>dug</sup>Ḳa-R, TDT2, 892R2/4; á gu(d)-<br>áb-R-sag, C. Ḫam. R 20,89; 25 <sup>giš</sup>šinig-R, Virol. <div class="diplomatic-column upward from-baseline"><div class="diplomatic-row">Compt.</div> <div class="diplomatic-row">46,6/10.</div></div>
+      </td>
+      <td></td>
+      <td class="ednote" lang="en">
+        See the email thread titled MURUB₄; the separately encoded 𒌙 exists to
+        represent a Borgerian figment. This should be an alternate of 𒌘.
+      </td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK157.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="158">158</th>
+      <td><span class="R">&#xF0058;</span></td>
+      <td>
+        40 <sup>giš</sup>ù-Ku-R, Reins. TU113,5; REC93
+      </td>
+      <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK158.png" alt=""></td>
+    </tr>
+
+    <tr>
+      <th id="159">159</th>
+      <td><span class="diplomatic-brace-right"><div class="diplomatic-column"><span class="R">𒉠</span> <br>
+        <span class="R2 salt1">𒉠</span> <br>
+        <span class="R salt2">𒉠</span></div><span class="label">Fara</span></span></td>
+      <td>
+        gal-R, 9130,2; 1265,2; 12615,2 = 𒉠-gal, Clay, <br>
+        Misc. Inscr. 12,3; du(g)-R, 9108,10 <br>
+        <span class="case-ruling-right">igi-R</span> pa-di-R, 9108,10; <table class="inline-tablet"><tr><td>R-ta 𒊏 𒕙</td></tr><tr><td>túg-gal</td></tr></table>, 12503,7. R-si, 12425,4. <br>
+        <table class="inline-tablet"><tr><td>ab-R-𒍝</td></tr><tr><td>𒉣𒇬</td></tr></table>: 9112,10 <table class="over"><tr><td>kar</td></tr><tr><td>kar</td></tr></table>𒕁<table class="over" style="text-align:center;"><tr><td>igi-du(g)</td></tr><tr><td>R</td></tr></table>,12680,10. <br>
+        R-zag, 9130,4; 12652,5. saḫar-R-túg-ru, 12503,6/3; <br>
+        <span class="case-ruling-right">saḫar-R</span> 
+        saḫar-R 𒊏, 12503,3f. R-ninni-<table class="over"><tr><td>kur</td></tr><tr><td>ta</td></tr></table>: 12426, 4. <br>
+        R und 𒉠, 𒉠, Nik. 88, 2; 162R1; 179; 236R2; TSA28,2; Sarg.
+      </td>
+      <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK159.png" alt=""></td>
+    </tr>
+
+    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
+    <tr class="page-header" id="p19"><th colspan="4">19</th><td colspan="2"></td></tr>
+
+    <tr>
+      <th></th>
+      <td></td>
+      <td>
+        vgl. Scheil ZL 63; Für die Dyn. Ur vgl. den Namen des 4. Mo<span class="hyphenated-linebreak"></span>nats in Umma: itu-R, RA8,152 u. o.
+      </td>
+      <td></td>
+      <td class="ednote"></td>
+      <td class="facsimile"></td>
+    </tr>
+
 
   </tbody>
 </table>
