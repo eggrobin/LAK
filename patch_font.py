@@ -4,6 +4,13 @@ SALT = "'salt' Stylistic Alternatives lookup 3 subtable"
 
 font = fontforge.open("LAK.ttf")
 
+def assign(code_point: str, glyph_name: str):
+  font.createChar(ord(code_point))
+  font.selection.select(glyph_name)
+  font.copy()
+  font.selection.select(f"u{ord(code_point):X}")
+  font.paste()
+
 def add_alternate(code_point: str, glyph_name: str):
   glyph = font['u%X' % ord(code_point)]
   salt = glyph.getPosSub(SALT)
@@ -20,14 +27,12 @@ def add_alternate(code_point: str, glyph_name: str):
 add_alternate('𒆰', 'uF009C.1')
 # On LAK020, but transliterated bal in dcclt/ebla (in kuš-AN-ti-bal).
 add_alternate('𒁄', 'uF0086.1')
-font.createChar(ord("𒉋"))
-font.selection.select(f"uF00B0")
-font.copy()
-font.selection.select(f"u{ord('𒉋'):X}")
-font.paste()
+assign('𒉋', "uF00B0")
 add_alternate('𒉋', 'uF00B0.1')
 add_alternate('𒉋', 'uF00B0.2')
 add_alternate('𒉋', 'uF00B1')
+# See https://github.com/oracc/osl/pull/40.
+assign('𒌝', f"u{ord('𒈩'):X}")
 
 font.generate("LAK.ttf")
 font.close()
