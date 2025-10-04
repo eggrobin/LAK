@@ -17,6 +17,10 @@
       font-style: italic;
       src: url('STIXTwoText-Italic.ttf');
     }
+    @font-face {
+      font-family: 'STIX-Math';
+      src: url('STIXTwoMath-Regular.ttf');
+    }
 
     /* These two are only a fallback while waiting for better Oracc-LAK
        coverage. */
@@ -36,7 +40,7 @@
     }
 
     body {
-      font-family: 'STIX', 'NotoSansCuneiform-egg', 'ACN';
+      font-family: 'STIX', 'STIX-Math', 'NotoSansCuneiform-egg', 'ACN';
       line-height: 1.2em;
     }
 
@@ -192,11 +196,14 @@
       vertical-align: top;
     }
 
+    .ednote {
+      font-size: 75%;
+    }
+
     .signlist>tbody>tr>td.ednote {
       font-family: 'STIX', 'NotoSansCuneiform-egg', 'ACN', 'PCSL';
       white-space: normal;
       border: none;
-      font-size: 75%;
       max-width: 50em;
     }
 
@@ -375,6 +382,16 @@
     .moved-from-next-page {
       display: inline;
     }
+
+    ins {
+      background-color: lightgreen;
+      text-decoration: none;
+    }
+
+    ins.diplomatic {
+      background-color: revert;
+      text-decoration: revert;
+    }
   </style>
   <script>
   function update_from_query() {
@@ -484,27 +501,25 @@
   A work-in-progress diplomatic edition of Deimel’s <cite lang="de">Liste der archaischen Keilschriftzeichen von Fara</cite>,
   based on the <a href="http://oracc.org/listfontdata/lak/">Oracc-LAK</a> font by Steve Tinney.
 </p>
+<p>
+  Missing text that is clearly required (e.g., unclosed parentheses, or the sign number in the reference to 𒅔 just below <a href="#132">n. 132</a>)
+  is added with green highlighting<ins> like this</ins>.
+  Other corrections or remarks are written <span class="ednote">in smaller type</span> to the right of the sign list.
+  The document replicates the layout of the original, including page and line breaks.
+  For ease of reading on screens of various sizes
+  using the checkbox on the right, the text can also be reflowed
+  (eliminating page breaks and using automatic line breaking).
+  The text can viewed side-by-side with a facsimile for proofreading.
+</p>
 <p lang="en">
+  Each sign number can be used as a fragment identifier (#𝑛 for sign 𝑛), as well as each page (#p𝑛 for page 𝑛).
+  References to sign numbers in the text are linked to the respective signs.
   Artefact designations are linked to CDLI; locations within the artefact are linked to the appropriate location in an
   Oracc transliteration.
-  The text can viewed side-by-side with a facsimile for proofreading, or reflowed from its original lines for
-  ease of reading on screens of various sizes.
 </p>
 <p class="en">
   The Neo-Assyrian font is <a href="https://github.com/eggrobin/Nabu-ninua-ihsus" class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</a>. The Latin font is <a href="https://www.tiro.com/fonts/stix-two">STIX Two</a> Text by Ross Mills, John Hudson, and Paul Hanslow.
 </p>
-<div lang="en" style="background-color: lightyellow;">
-   TODO:
-   <ul>
-    <li>Finish typing the list…</li>
-    <li>The Oracc-LAK font needs more glyphs for the examples shown inline in the text.</li>
-    <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs.</li>
-    <li>Few artefact designations other than VAT numbers are linkified at the moment, and very few locations linkified at all.</li>
-    <li>Add, with appropriate markup, missing text that is clearly required (e.g., unclosed parentheses, or the sign number in the reference to 𒅔 that reads s. n. without a number).</li>
-    <li>Add an option to modernize the transliterations (e.g., lù to lú or lu₂); maybe something to expand the abbreviations as well.</li>
-    <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent transliteration…</li>
-   </ul>
-</div>
 <nav style="position: fixed; left:calc(100vw - 12em); background-color: white; border: solid; padding: 0.25em;">
   <div style="display: flex;">
   <input id="facsimile" name="facsimile" type="checkbox">
@@ -512,6 +527,17 @@
   <div><input id="reflow" name="reflow" type="checkbox">
   <label for="reflow">Reflow</label></div>
 </nav>
+<div lang="en" style="background-color: lightyellow;">
+   TODO:
+   <ul>
+    <li>Finish typing the list…</li>
+    <li>The Oracc-LAK font needs more glyphs for the examples shown inline in the text.</li>
+    <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs.</li>
+    <li>Few artefact designations other than VAT numbers are linkified at the moment, and very few locations linkified at all.</li>
+    <li>Add an option to modernize the transliterations (e.g., lù to lú or lu₂); maybe something to expand the abbreviations as well.</li>
+    <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent transliteration…</li>
+   </ul>
+</div>
 <p>&nbsp;</p>
 
 <table class="signlist">
@@ -2284,7 +2310,7 @@
       <td><span class="R">𒖘</span></td>
       <td>
         𒕐 azag-gìn-R-ma-na, RTC 14, 5 (R = ⅓ Schekel; <br>
-        da 1 še gur = 1 gìn-azag-ud (pass. im 3. vorchr. Jahr<span class="hyphenated-linebreak"></span>tausend), wird 1 ninda = ⅓ gur.
+        da 1 še gur = 1 gìn-azag-ud (pass. im 3. vorchr. Jahr<span class="hyphenated-linebreak"></span>tausend), wird 1 ninda = ⅓ gur<ins>)</ins>.
       </td>
       <td></td>
       <td class="ednote"></td>
@@ -2680,7 +2706,7 @@
       <th></th>
       <td><span class="R">𒅔</span></td>
       <td>
-        s. n.
+        s. n.<ins> 214.</ins>
       </td>
       <td></td>
       <td class="ednote"></td>
@@ -3336,7 +3362,7 @@
       <th id="175">175</th>
       <td><span class="R">𒊫</span> <br>
         <span class="R salt1">𒊫</span> <br>
-        „unterer Teil <br>des Frauenkör<span class="hyphenated-linebreak"></span>pers+Kleid (<br>Vliess). s. n. 497.</td>
+        „unterer Teil <br>des Frauenkör<span class="hyphenated-linebreak"></span>pers+Kleid (<br>Vliess)<ins>“</ins>. s. n. 497.</td>
       <td>
         <span class="case-ruling-right">ᵈNinni-R</span> <span class="case-ruling-right">ᵈEn-lil-R</span> <span class="case-ruling-right">túr-R</span> 𒂂-R, <a href="http://cdli.earth/P010647">9108</a>,8 <br>
         R-šú<sup>ki</sup>, <a href="http://cdli.earth/P011029">12814</a>,2; 𒊫, R, <a href="http://cdli.earth/P010654">12574</a>,R3; R 𒋰𒉪, <a href="http://cdli.earth/P010651">12503</a>,2 <br>
