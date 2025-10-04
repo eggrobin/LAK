@@ -208,9 +208,19 @@
       max-width: 50em;
     }
 
+    .closer .R {
+      line-height: inherit;
+    }
+
+    .closer .LAK {
+      line-height: inherit;
+    }
+
+    .close .R {
+      line-height: inherit;
+    }
+
     .close .LAK {
-      font-family: LFD-lak;
-      font-size: 150%;
       line-height: inherit;
     }
 
@@ -291,6 +301,10 @@
 
     .close {
       line-height: 70%;
+    }
+
+    .closer {
+      line-height: 50%;
     }
 
     .smash {
@@ -515,7 +529,7 @@
   The checkboxes on the right, as well as URL query parameters, control these options.
 </p>
 <p lang="en">
-  Each sign number can be used as a fragment identifier (#𝑛 for sign 𝑛), as well as each page (#p𝑛 for page 𝑛).
+  Each sign number can be used as a fragment identifier (#𝑛 for sign 𝑛), as well as each page number (#p𝑛 for page 𝑛).
   References to sign numbers in the text are linked to the respective signs.
   Artefact designations are linked to CDLI; locations within the artefact are linked to the appropriate location in an
   Oracc transliteration.
@@ -534,11 +548,11 @@
    TODO:
    <ul>
     <li>Finish typing the list…</li>
-    <li>The Oracc-LAK font needs more glyphs for the examples shown inline in the text.</li>
-    <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs.</li>
+    <li>The Oracc-LAK font is being expanded to cover the forms shown inline in the text, rather than just the index forms.</li>
+    <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs. It also needs some stylistic alternates where Deimel shows multiple NA forms or shows Babylonian forms.</li>
     <li>Few artefact designations other than VAT numbers are linkified at the moment, and very few locations linkified at all.</li>
     <li>Add an option to modernize the transliterations (e.g., lù to lú or lu₂); maybe something to expand the abbreviations as well.</li>
-    <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent transliteration…</li>
+    <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent reading…</li>
    </ul>
 </div>
 <p>&nbsp;</p>
@@ -742,7 +756,7 @@
       <td>
         𒀭
       </td>
-      <td class="ednote"></td>
+      <td class="ednote" lang="en">Is <span class="LAK salt2">𒀭</span> even text? It is in the middle of a multi-column blank on the reverse of <a href="http://cdli.earth/P010622">12606</a>.</td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK008.png" alt=""></td>
     </tr>
     <tr class="page-footer"><td></td><td colspan="2"><b>DOG.</b> Deimel: Fara.</td><td>1</td><td colspan="2"></td></tr>
@@ -752,20 +766,20 @@
       <td><span class="R">𒀮</span> <br>
         wie <a href="#8">n. 8</a>
       <td>
-        <a href="http://cdli.earth/P010649">9124</a>,2; <a href="http://cdli.earth/P010600">12573</a>,1 u.ö. in allen arch. T. 𒀭𒀭, <a href="http://cdli.earth/P010591">12426</a>,8/12. <div class="diplomatic-column upward close"><span class="diplomatic-row">u.</span><span class="diplomatic-row">ö.</span></div> <br>
-        <table class="inline-tablet">
+        <a href="http://cdli.earth/P010649">9124</a>,2; <a href="http://cdli.earth/P010600">12573</a>,1 u.ö. in allen arch. T. <span class="LAK">𒀭𒀭</span>, <a href="http://cdli.earth/P010591">12426</a>,8/12. <div class="diplomatic-column upward close"><span class="diplomatic-row">u.</span><span class="diplomatic-row">ö.</span></div> <br>
+        <table class="inline-tablet LAK">
         <tr><td></td><td>𒀭</td></tr>
         <tr><td>𒀭</td><td></td></tr>
-        </table>, DP 33,4 (Fara-Text!); ᵈ???, <a href="http://cdli.earth/P010677">12806</a>, <a href="http://oracc.org/dcclt/P010677.13">1</a>/<a href="http://oracc.org/dcclt/P010677.41">3</a>; ???, <br>
-        <a href="http://cdli.earth/P010645">9112</a>,5; <table class="over">
+        </table>, DP 33,4 (Fara-Text!); ᵈ<span class="inline-tablet close"><span class="LAK">𒀭𒀭</span><br><span class="R">𒀸</span></span>, <a href="http://cdli.earth/P010677">12806</a>, <a href="http://oracc.org/dcclt/P010677.13">1</a>/<a href="http://oracc.org/dcclt/P010677.41">3</a>; <span class="inline-tablet close"><span class="R">𒀸</span><br><span class="LAK">𒀭𒀭</span></span>, <br>
+        <a href="http://cdli.earth/P010645">9112</a>,5; <table class="LAK inline-tablet closer">
         <tr><td>𒀸</td><td><span style="color: transparent;">𒈬</span></td><td></td></tr>
         <tr><td>𒀭</td><td></td><td>𒀭</td></tr></table>, <a href="http://cdli.earth/P010649">9124</a>, <a href="http://oracc.org/dcclt/P010649.66">3</a>; 
-        <span class="inline-tablet close">𒀭<span class="tablet-br"></span>𒀸<span class="tablet-br"></span>𒀭</span>, <a href="http://cdli.earth/P010600">12573</a>, <a href="http://oracc.org/dcclt/P010600.69">4</a>. s. Panth. 1557.
+        <span class="inline-tablet LAK closer">𒀭<span class="tablet-br"></span>𒀸<span class="tablet-br"></span>𒀭</span>, <a href="http://cdli.earth/P010600">12573</a>, <a href="http://oracc.org/dcclt/P010600.69">4</a>. s. Panth. 1557.
       </td>
       <td>𒀮</td>
       <td class="ednote" lang="en">
-        The ᵈ from <a href="http://cdli.earth/P010677">12806</a> is one third of a 𒀯, and the ??? is the remainder of 𒀯𒁇.
-        All ED tilla₂ are stacked like this (also <a href="http://oracc.org/epsd2/P010566.527">P010566</a>, <a href="http://oracc.org/epsd2/P324826.5">P324826</a>). Compare Ur III 𒀭𒀸𒀭, e.g., in <a href="http://oracc.org/epsd2/P499766.22">P499766</a>.
+        The ᵈ from <a href="http://cdli.earth/P010677">12806</a> is one third of a 𒀯, and the <span class="inline-tablet close"><span class="LAK">𒀭𒀭</span><br><span class="R">𒀸</span></span> is the remainder of 𒀯𒁇.
+        All ED tilla₂ are stacked as <span class="inline-tablet close">𒀭<span class="tablet-br"></span>𒀸<span class="tablet-br"></span>𒀭</span> (also <a href="http://oracc.org/epsd2/P010566.527">P010566</a>, <a href="http://oracc.org/epsd2/P324826.5">P324826</a>). Compare Ur III 𒀭𒀸𒀭, e.g., in <a href="http://oracc.org/epsd2/P499766.22">P499766</a>.
       </td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK009.png" alt=""></td>
     </tr>
@@ -775,7 +789,7 @@
       <td><span class="R">𒀯</span> <br>
       wie <a href="#8">n. 8</a></td>
       <td>
-        R, <a href="http://cdli.earth/P011039">12738</a>,3; <sup>R</sup>𒀭𒈪, <a href="http://cdli.earth/P010645">9112</a>,12 ; <a href="http://cdli.earth/P010646">12582</a>,10 ; <span class="R2 salt1">𒀯</span>ḫu, <br>
+        R, <a href="http://cdli.earth/P011039">12738</a>,3; <sup>R</sup><span class="LAK">𒀭𒈪</span>, <a href="http://cdli.earth/P010645">9112</a>,12 ; <a href="http://cdli.earth/P010646">12582</a>,10 ; <span class="R2 salt1">𒀯</span>ḫu, <br>
         <a href="http://cdli.earth/P010649">9124</a>,10; <span class="R2 salt1">𒀯</span><span class="R2">𒀭</span>, <a href="http://cdli.earth/P010591">12426</a>,7
       </td>
       <td>𒀯</td>
@@ -815,7 +829,7 @@
       <th id="13">13</th>
       <td><span class="R">&#xF009D;</span></td>
       <td>
-        5R-gu, <a href="http://cdli.earth/P011095">9110</a>,<a href="http://oracc.org/epsd2/P011095.26">4</a>; R-𒓲, <a href="http://oracc.org/dcclt/ebla/P010627">12650</a>,9.
+        5R-gu, <a href="http://cdli.earth/P011095">9110</a>,<a href="http://oracc.org/epsd2/P011095.26">4</a>; R-<span class="LAK">𒓲</span>, <a href="http://oracc.org/dcclt/ebla/P010627">12650</a>,9.
       </td>
       <td></td>
       <td class="ednote" lang="en">The one from <a href="http://cdli.earth/P011095">9110</a> is transliterated as 𒀸𒆜 in ePSD2.</td>
@@ -1960,7 +1974,7 @@
       <td><span class="R">&#xF00A3;</span></td>
       <td>vgl. <span class="R">𒓜</span> ud-nun 𒊏, <a href="http://cdli.earth/P010651">12503</a>,2. <span class="R salt1">𒓜</span>-<div class="diplomatic-column">sangu <br><a href="http://cdli.earth/P010647">9108</a>,9</div></td>
       <td></td>
-      <td class="ednote" lang="en">The index form seems to be a fictitious component, so this can probably remain a figment of the PUA.</td>
+      <td class="ednote" lang="en">The index form seems to be a fictitious component, so it can probably remain a figment of the PUA. 𒓜 is encoded.</td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK079.png" alt=""></td>
     </tr>
 
@@ -3176,7 +3190,7 @@
         𒃼, 𒃼, 𒃼 pass. Dyn. Ur. 𒃼 C. Ham. 37,57.
       </td>
       <td>𒃼</td>
-      <td class="ednote" lang="en">Deimel has the obverse and reverse swapped for 12619; 𒃼𒃼𒓙 is on column r. 4.</td>
+      <td class="ednote" lang="en">Deimel has the obverse and reverse swapped for <a href="http://cdli.earth/P010632">12619</a>; 𒃼𒃼𒓙 is on column r. 4.</td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK160.png" alt=""></td>
     </tr>
 
