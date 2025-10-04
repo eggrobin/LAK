@@ -243,6 +243,12 @@
       line-height: 55%;
     }
 
+    .inline-tablet {
+      display: inline-block;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
     table.inline-tablet {
       border-collapse: collapse;
       display: inline;
@@ -275,7 +281,7 @@
       padding-right: 2px;
     }
 
-    table.close {
+    .close {
       line-height: 70%;
     }
 
@@ -305,6 +311,11 @@
 
     span.hyphenated-linebreak::before {
       content: var(--hyphen-newline);
+      white-space: pre;
+    }
+
+    span.tablet-br::before {
+      content: "\A";
       white-space: pre;
     }
 
@@ -494,8 +505,8 @@
     <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent transliteration…</li>
    </ul>
 </div>
-<nav style="position: fixed; right:0; background-color: white; border: solid; padding: 0.25em;">
-  <div>
+<nav style="position: fixed; left:calc(100vw - 12em); background-color: white; border: solid; padding: 0.25em;">
+  <div style="display: flex;">
   <input id="facsimile" name="facsimile" type="checkbox">
   <label for="facsimile">Side-by-side view with facsimile</label></div>
   <div><input id="reflow" name="reflow" type="checkbox">
@@ -720,12 +731,12 @@
         <a href="http://cdli.earth/P010645">9112</a>,5; <table class="over">
         <tr><td>𒀸</td><td><span style="color: transparent;">𒈬</span></td><td></td></tr>
         <tr><td>𒀭</td><td></td><td>𒀭</td></tr></table>, <a href="http://cdli.earth/P010649">9124</a>, <a href="http://oracc.org/dcclt/P010649.66">3</a>; 
-        <table class="over"><tr><td>𒀭</td></tr><tr><td>𒀸</td></tr><tr><td>𒀭</td></tr></table>, <a href="http://cdli.earth/P010600">12573</a>, <a href="http://oracc.org/dcclt/P010600.69">4</a>. s. Panth. 1557.
+        <span class="inline-tablet close">𒀭<span class="tablet-br"></span>𒀸<span class="tablet-br"></span>𒀭</span>, <a href="http://cdli.earth/P010600">12573</a>, <a href="http://oracc.org/dcclt/P010600.69">4</a>. s. Panth. 1557.
       </td>
       <td>𒀮</td>
       <td class="ednote" lang="en">
         The ᵈ from <a href="http://cdli.earth/P010677">12806</a> is one third of a 𒀯, and the ??? is the remainder of 𒀯𒁇.
-        All ED tilla₂ are stacked like this (also <a href="http://oracc.org/epsd2/P010566.527">P010566</a>, <a href="http://oracc.org/epsd2/P324826.5">P324826</a>).
+        All ED tilla₂ are stacked like this (also <a href="http://oracc.org/epsd2/P010566.527">P010566</a>, <a href="http://oracc.org/epsd2/P324826.5">P324826</a>). Compare Ur III 𒀭𒀸𒀭, e.g., in <a href="http://oracc.org/epsd2/P499766.22">P499766</a>.
       </td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK009.png" alt=""></td>
     </tr>
