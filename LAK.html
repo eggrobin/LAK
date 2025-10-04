@@ -299,6 +299,10 @@
       padding-right: 2px;
     }
 
+    .case-ruling-right-when-reflowed {
+      padding-right: 2px;
+    }
+
     .close {
       line-height: 70%;
     }
@@ -380,6 +384,22 @@
       display: inline-block;
     }
 
+    .diplomatic-border-bottom {
+      border-bottom: solid;
+    }
+
+    .diplomatic-table {
+      display: table;
+    }
+
+    .diplomatic-table .diplomatic-row {
+      display: table-row;
+    }
+
+    .diplomatic-table .diplomatic-cell {
+      display: table-cell;
+    }
+
     .diplomatic-space {
       display: inline-block;
     }
@@ -438,6 +458,21 @@
     for (const element of document.querySelectorAll(".diplomatic-column")) {
       element.style.display = reflow ? "inline" : "";
       element.style["vertical-align"] = reflow ? "baseline" : "";
+    } reflow ? "none" : "";
+    for (const element of document.querySelectorAll(".diplomatic-table")) {
+      element.style.display = reflow ? "inline" : "";
+    }
+    for (const element of document.querySelectorAll(".diplomatic-border-bottom")) {
+      element.style["border-bottom"] = reflow ? "none" : "";
+    }
+    for (const element of document.querySelectorAll(".case-ruling-right-when-reflowed")) {
+      element.style["border-right"] = reflow ? "solid" : "";
+    }
+    for (const element of document.querySelectorAll(".diplomatic-row")) {
+      element.style.display = reflow ? "inline" : "";
+    }
+    for (const element of document.querySelectorAll(".diplomatic-cell")) {
+      element.style.display = reflow ? "inline" : "";
     }
     for (const element of document.querySelectorAll(".diplomatic-space")) {
       element.style.display = reflow ? "none" : "";
@@ -1368,51 +1403,25 @@
         <span class="R2 salt3">𒃰</span>, <span class="R2 salt5">𒃰</span>
       </td>
       <td>
-        <table class="tablet">
-          <tr>
-            <td>𒕓<table class="over LAK salt1">
-              <tr>
-                <td>𒃰</td>
-              </tr>
-              <tr>
-                <td>𒃰</td>
-              </tr>
-            </table>
-            </td>
-            <td>
-              anšu-igigunu
-            </td>
-            <td>, NN</td>
-          </tr>
-          <tr>
-            <td>𒕔<table class="over LAK salt1">
-              <tr>
-                <td>𒃰</td>
-              </tr>
-              <tr>
-                <td>𒃰</td>
-              </tr>
-            </table></td>
-            <td>anšu</td>
-            <td>, NN</td>
-          </tr>
-          <tr>
-            <td colspan="2" style="border-bottom: solid; border-image: linear-gradient(to right, #000 50%, transparent 50%) 100% 1;">𒕔</td>
-            <td>, NN <span style="display:inline-block;vertical-align:text-bottom;transform: rotate(90deg);">𒕺</span>𒕷𒕫(?)</td>
-          </tr>
-          <tr>
-            <td colspan="3">
-              anšu 14<table class="over LAK salt5 close" style="vertical-align:text-top; font-size: 75%;">
-              <tr>
-                <td><span class="LAK salt5">𒃰</span></td>
-              </tr>
-              <tr>
-                <td><span class="LAK salt5">𒃰</span></td>
-              </tr>
-              </table>, ama-gán-igigunu-anšu-šu-ga; <a href="http://cdli.earth/P010959">12533</a>.
-            </td>
-          </tr>
-        </table>
+        <span class="diplomatic-table">
+          <span class="diplomatic-row inline-tablet">
+            <span class="diplomatic-cell">𒕓<span class="inline-tablet close LAK salt1">𒃰<span class="tablet-br"></span>𒃰</span></span>
+            <span class="diplomatic-cell">anšu-igigunu</span><span class="diplomatic-cell">, NN</span>
+          </span>
+          <span class="diplomatic-row inline-tablet">
+            <span class="diplomatic-cell">𒕔<span class="inline-tablet close LAK salt1">𒃰<span class="tablet-br"></span>𒃰</span></span>
+            <span class="diplomatic-cell">anšu</span><span class="diplomatic-cell">, NN</span>
+          </span>
+          <span class="diplomatic-row inline-tablet case-ruling-right-when-reflowed">
+            <span class="diplomatic-cell diplomatic-border-bottom" style="border-image: linear-gradient(to right, #000 50%, transparent 50%) 100% 1;">𒕔</span><span class="diplomatic-cell"></span><span class="diplomatic-cell">, NN <span style="display:inline-block;vertical-align:text-bottom;transform: rotate(90deg);">𒕺</span>𒕷𒕫(?) </span></span>&nbsp;</span>
+        anšu 14<table class="over LAK salt5 close" style="vertical-align:text-top; font-size: 75%;">
+        <tr>
+          <td><span class="LAK salt5">𒃰</span></td>
+        </tr>
+        <tr>
+          <td><span class="LAK salt5">𒃰</span></td>
+        </tr>
+        </table>, ama-gán-igigunu-anšu-šu-ga; <a href="http://cdli.earth/P010959">12533</a>.<br>
         <span class="LAK salt5">𒃰</span>-na (=na-gíd, Rinderhirt), <a href="http://cdli.earth/P010964">12424</a>,7 u. pass. <br>
         3<span class="LAK salt5">𒃰</span> 4 gu, NN, 12572, pass. <span class="LAK salt5">𒃰</span>-sukal <a href="http://cdli.earth/P010647">9108</a>,2; <a href="http://cdli.earth/P010670">9130</a>,1. <br>
         <table class="inline-tablet close">
@@ -1483,7 +1492,7 @@
       <td style="vertical-align: middle;">𒃰</td>
       <td class="ednote" lang="en">
         Steve points out that the <span class="LAK salt1">𒃰</span>
-        from <a href="http://cdli.earth/P010651">12503</a> are really <span class="LAK salt3">𒃰</span> (see CDLI photo).
+        from 12533 are really <span class="LAK salt3">𒃰</span> (see CDLI photo).
         Does <span class="LAK salt1">𒃰</span> exist?
         (Of course &#x1258A; 1/4(iku@c@v) exists in the BIN 8 texts, but it is a different thing entirely.)
       </td>
