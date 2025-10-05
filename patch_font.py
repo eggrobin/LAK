@@ -43,6 +43,8 @@ add_alternate('𒉋', 'uF00B0.2')
 add_alternate('𒉋', 'uF00B1')
 # See https://github.com/oracc/osl/pull/40.
 assign('𒌝', f"u{ord('𒈩'):X}")
+# https://github.com/oracc/osl/pull/41.
+add_alternate("𒆲", "uF009F")
 
 font.generate("LAK.ttf")
 font.close()
