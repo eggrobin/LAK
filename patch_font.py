@@ -49,5 +49,9 @@ add_alternate("𒆲", "uF009F")
 add_alternate('𒋞', f"u{ord('𒑍'):X}")
 font[f"u{ord('𒑍'):X}"].unicode=-1
 
+# Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
+add_ligature("𒄷𒋛𒀀", "uF3900")
+add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
+
 font.generate("LAK.ttf")
 font.close()
