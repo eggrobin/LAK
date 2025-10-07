@@ -46,7 +46,7 @@ assign('𒌝', f"u{ord('𒈩'):X}")
 # https://github.com/oracc/osl/pull/41.
 add_alternate("𒆲", "uF009F")
 # TODO(egg): This needs an OSL PR.
-add_alternate('𒋞', f"u{ord('𒑍'):X}")
+assign('𒈱', f"u{ord('𒑍'):X}")
 font[f"u{ord('𒑍'):X}"].unicode=-1
 
 # Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
