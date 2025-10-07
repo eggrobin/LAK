@@ -18,7 +18,7 @@ def add_alternate(code_point: str, glyph_name: str):
   salt = glyph.getPosSub(SALT)[0][2:] if salt else tuple()
   salt = (*salt, glyph_name)
   glyph.addPosSub(SALT, salt)
-  print(f"added salt{len(salt)} to U+{ord(code_point):04X} {code_point}")
+  print(f"added {glyph_name} as salt{len(salt)} of U+{ord(code_point):04X} {code_point}")
   font.buildOrReplaceAALTFeatures()
 
 def add_ligature(code_points: str, glyph_name: str):
@@ -45,6 +45,9 @@ add_alternate('𒉋', 'uF00B1')
 assign('𒌝', f"u{ord('𒈩'):X}")
 # https://github.com/oracc/osl/pull/41.
 add_alternate("𒆲", "uF009F")
+# TODO(egg): This needs an OSL PR.
+add_alternate('𒋞', f"u{ord('𒑍'):X}")
+font[f"u{ord('𒑍'):X}"].unicode=-1
 
 font.generate("LAK.ttf")
 font.close()
