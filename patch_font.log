@@ -1,0 +1,16 @@
+﻿f020211 p8..p10 glyph variants
+added uF009C.1 as salt3 of U+121B0 𒆰
+added uF0086.1 as salt7 of U+12044 𒁄
+liga: U+122A9 U+121B3 ↦ uF00A0
+Assigned uF00B0 to U+1224B 𒉋
+added uF00B0.1 as salt1 of U+1224B 𒉋
+added uF00B0.2 as salt2 of U+1224B 𒉋
+added uF00B1 as salt3 of U+1224B 𒉋
+Assigned u12229 to U+1231D 𒌝
+added uF009F as salt3 of U+121B2 𒆲
+Assigned u1244D to U+12231 𒈱
+liga: U+12137 U+122DB U+12000 ↦ uF3900
+liga: U+1244B U+12047 ↦ uF3901
+added u12075.1 as salt5 of U+124DA 𒓚
+added u12075.4 as salt2 of U+12192 𒆒
+Assigned u12351.3 to U+12034 𒀴

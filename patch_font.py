@@ -6,11 +6,14 @@ LIGA = "'liga' Standard Ligatures lookup 2 subtable"
 font = fontforge.open("LAK.ttf")
 
 def assign(code_point: str, glyph_name: str):
+  if ord(code_point) in font:
+    raise ValueError(f"{code_point} already in font")
   font.createChar(ord(code_point))
   font.selection.select(glyph_name)
   font.copy()
   font.selection.select(f"u{ord(code_point):X}")
   font.paste()
+  print(f"Assigned {glyph_name} to U+{ord(code_point):04X} {code_point}")
 
 def add_alternate(code_point: str, glyph_name: str):
   glyph = font['u%X' % ord(code_point)]
