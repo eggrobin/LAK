@@ -33,7 +33,7 @@ def add_ligature(code_points: str, glyph_name: str):
 
 # The index form comes from 12778 (a lexical text), whose dcclt/ebla
 # transliteration avoids reading them and calls them LAK011.  It makes sense to
-# hold off on identifying that one.  The other form of LAK011 form comes from
+# hold off on identifying that one.  The other form of LAK011 comes from
 # 12610 in še-numun; it is just a sloppy numun=KUL.
 add_alternate('𒆰', 'uF009C.1')
 # On LAK020, but transliterated bal in dcclt/ebla (in kuš-AN-ti-bal).
@@ -44,8 +44,6 @@ assign('𒉋', "uF00B0")
 add_alternate('𒉋', 'uF00B0.1')
 add_alternate('𒉋', 'uF00B0.2')
 add_alternate('𒉋', 'uF00B1')
-# See https://github.com/oracc/osl/pull/40.
-assign('𒌝', f"u{ord('𒈩'):X}")
 # https://github.com/oracc/osl/pull/41.
 add_alternate("𒆲", "uF009F")
 # TODO(egg): This needs an OSL PR.
