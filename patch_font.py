@@ -24,9 +24,19 @@ def add_alternate(code_point: str, glyph_name: str):
   print(f"{glyph_name} is an alternate form (salt{len(salt)}) of U+{ord(code_point):04X} {code_point}")
   font.buildOrReplaceAALTFeatures()
 
+def remove_ligature(code_points: str):
+  glyph_name = "_".join('u%X' % ord(code_point) for code_point in code_points) + ".liga"
+  if glyph_name not in font:
+    raise ValueError(f"No {glyph_name} in font")
+  if not font[glyph_name].getPosSub(LIGA):
+    raise ValueError(f"{glyph_name} does not have a liga mapping")
+  if font[glyph_name].getPosSub(LIGA)[0][2:] != tuple('u%X' % ord(code_point) for code_point in code_points):
+    raise ValueError(f"{glyph_name} is not a {code_points} ligature: {font[glyph_name].getPosSub(LIGA)}")
+  font[glyph_name].removePosSub(LIGA)
+
 def add_ligature(code_points: str, glyph_name: str):
   if font[glyph_name].getPosSub(LIGA):
-    raise ValueError(f"{glyph_name} already has a LIGA mapping: {font[glyph_name].getPosSub(LIGA)}")
+    raise ValueError(f"{glyph_name} already has a liga mapping: {font[glyph_name].getPosSub(LIGA)}")
   font[glyph_name].addPosSub(LIGA, tuple('u%X' % ord(code_point) for code_point in code_points))
   print(glyph_name, "is a ligature", *('U+%X' % ord(code_point) for code_point in code_points), code_points)
   font.buildOrReplaceAALTFeatures()
@@ -49,6 +59,11 @@ add_alternate("𒆲", "uF009F")
 # TODO(egg): This needs an OSL PR.
 assign('𒈱', f"u{ord('𒑍'):X}")
 font[f"u{ord('𒑍'):X}"].unicode=-1
+
+# TODO(egg): This needs an OSL PR.
+remove_ligature("𒉣𒇬")
+add_ligature("𒁹𒉣𒇬", "uF133A")
+add_ligature("𒉣𒇬", "uF00A2")
 
 # Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
 add_ligature("𒄷𒋛𒀀", "uF3900")
