@@ -1,9 +1,16 @@
 import fontforge
+import hashlib
 
 SALT = "'salt' Stylistic Alternatives lookup 3 subtable"
 LIGA = "'liga' Standard Ligatures lookup 2 subtable"
 
 font = fontforge.open("LAK.ttf")
+
+with open("glyph_hashes.log", "w") as log:
+  for glyph in font:
+    font[glyph].layers[1].export("temp.svg")
+    with open("temp.svg", "rb") as f:
+      print(glyph, hashlib.sha1(f.read()).hexdigest(), file=log)
 
 def assign(code_point: str, glyph_name: str):
   if ord(code_point) in font:
