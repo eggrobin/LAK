@@ -60,12 +60,18 @@ add_ligature("𒊩𒆳", "uF00A0")
 assign('𒉋', "uF00B0")
 add_alternate('𒉋', 'uF00B0.1')
 add_alternate('𒉋', 'uF00B0.2')
+add_alternate('𒉋', 'uF00B0.3')
 add_alternate('𒉋', 'uF00B1')
+add_alternate('𒉋', 'uF00B1.1')
+add_alternate('𒉋', 'uF00B1.2')
 # https://github.com/oracc/osl/pull/41.
 add_alternate("𒆲", "uF009F")
 # TODO(egg): This needs an OSL PR.
 assign('𒈱', f"u{ord('𒑍'):X}")
 font[f"u{ord('𒑍'):X}"].unicode=-1
+
+# We need to do something about those duplicate encodings.
+assign("𒐺", "u1203C")
 
 # TODO(egg): This needs an OSL PR.
 remove_ligature("𒉣𒇬")
