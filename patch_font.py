@@ -54,5 +54,13 @@ font[f"u{ord('𒑍'):X}"].unicode=-1
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
 
+# pp. 11–15 corrections
+add_ligature("𒋀𒆳𒊏", "uF00A5.1")
+assign("𒉝", "u12599.2")
+add_ligature("𒈥𒊮", f"u{ord('𒈥'):X}.2")
+add_ligature("𒄑𒋛", f"u{ord('𒌝'):X}.1")
+add_ligature("𒉚𒀀", f"u{ord('𒉚'):X}.6")
+assign("𒉛", f"u{ord('𒉚'):X}.8")
+
 font.generate("LAK.ttf")
 font.close()

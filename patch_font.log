@@ -10,3 +10,9 @@ added uF009F as salt3 of U+121B2 𒆲
 Assigned u1244D to U+12231 𒈱
 liga: U+12137 U+122DB U+12000 ↦ uF3900
 liga: U+1244B U+12047 ↦ uF3901
+liga: U+122C0 U+121B3 U+1228F ↦ uF00A5.1
+Assigned u12599.2 to U+1225D 𒉝
+liga: U+12225 U+122AE ↦ u12225.2
+liga: U+12111 U+122DB ↦ u1231D.1
+liga: U+1225A U+12000 ↦ u1225A.6
+Assigned u1225A.8 to U+1225B 𒉛
