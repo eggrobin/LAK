@@ -206,3 +206,5 @@ project.lock.json
 
 .DS_Store
 xcuserdata
+
+temp.svg
