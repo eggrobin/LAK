@@ -13,7 +13,7 @@ def assign(code_point: str, glyph_name: str):
   font.copy()
   font.selection.select(f"u{ord(code_point):X}")
   font.paste()
-  print(f"Assigned {glyph_name} to U+{ord(code_point):04X} {code_point}")
+  print(f"{glyph_name} is U+{ord(code_point):04X} {code_point}")
 
 def add_alternate(code_point: str, glyph_name: str):
   glyph = font['u%X' % ord(code_point)]
@@ -21,14 +21,14 @@ def add_alternate(code_point: str, glyph_name: str):
   salt = glyph.getPosSub(SALT)[0][2:] if salt else tuple()
   salt = (*salt, glyph_name)
   glyph.addPosSub(SALT, salt)
-  print(f"added {glyph_name} as salt{len(salt)} of U+{ord(code_point):04X} {code_point}")
+  print(f"{glyph_name} is an alternate form (salt{len(salt)}) of U+{ord(code_point):04X} {code_point}")
   font.buildOrReplaceAALTFeatures()
 
 def add_ligature(code_points: str, glyph_name: str):
   if font[glyph_name].getPosSub(LIGA):
     raise ValueError(f"{glyph_name} already has a LIGA mapping: {font[glyph_name].getPosSub(LIGA)}")
   font[glyph_name].addPosSub(LIGA, tuple('u%X' % ord(code_point) for code_point in code_points))
-  print("liga:", " ".join('U+%X' % ord(code_point) for code_point in code_points), "↦", glyph_name)
+  print(glyph_name, "is a ligature", *('U+%X' % ord(code_point) for code_point in code_points), code_points)
   font.buildOrReplaceAALTFeatures()
 
 # The index form comes from 12778 (a lexical text), whose dcclt/ebla

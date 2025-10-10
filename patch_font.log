@@ -1,18 +1,18 @@
 ﻿62d6b9f GAN₂@t and KU₄ fixes
-added uF009C.1 as salt3 of U+121B0 𒆰
-added uF0086.1 as salt7 of U+12044 𒁄
-liga: U+122A9 U+121B3 ↦ uF00A0
-Assigned uF00B0 to U+1224B 𒉋
-added uF00B0.1 as salt1 of U+1224B 𒉋
-added uF00B0.2 as salt2 of U+1224B 𒉋
-added uF00B1 as salt3 of U+1224B 𒉋
-added uF009F as salt3 of U+121B2 𒆲
-Assigned u1244D to U+12231 𒈱
-liga: U+12137 U+122DB U+12000 ↦ uF3900
-liga: U+1244B U+12047 ↦ uF3901
-liga: U+122C0 U+121B3 U+1228F ↦ uF00A5.1
-Assigned u12599.2 to U+1225D 𒉝
-liga: U+12225 U+122AE ↦ u12225.2
-liga: U+12111 U+122DB ↦ u1231D.1
-liga: U+1225A U+12000 ↦ u1225A.6
-Assigned u1225A.8 to U+1225B 𒉛
+uF009C.1 is an alternate form (salt3) of U+121B0 𒆰
+uF0086.1 is an alternate form (salt7) of U+12044 𒁄
+uF00A0 is a ligature U+122A9 U+121B3 𒊩𒆳
+uF00B0 is U+1224B 𒉋
+uF00B0.1 is an alternate form (salt1) of U+1224B 𒉋
+uF00B0.2 is an alternate form (salt2) of U+1224B 𒉋
+uF00B1 is an alternate form (salt3) of U+1224B 𒉋
+uF009F is an alternate form (salt3) of U+121B2 𒆲
+u1244D is U+12231 𒈱
+uF3900 is a ligature U+12137 U+122DB U+12000 𒄷𒋛𒀀
+uF3901 is a ligature U+1244B U+12047 𒑋𒁇
+uF00A5.1 is a ligature U+122C0 U+121B3 U+1228F 𒋀𒆳𒊏
+u12599.2 is U+1225D 𒉝
+u12225.2 is a ligature U+12225 U+122AE 𒈥𒊮
+u1231D.1 is a ligature U+12111 U+122DB 𒄑𒋛
+u1225A.6 is a ligature U+1225A U+12000 𒉚𒀀
+u1225A.8 is U+1225B 𒉛
