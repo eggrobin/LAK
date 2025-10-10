@@ -54,10 +54,5 @@ font[f"u{ord('𒑍'):X}"].unicode=-1
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
 
-# Font mapping issues in the 2025-10-08 batch:
-add_alternate('𒓚', f"u{ord('𒁵'):X}.1")
-add_alternate('𒆒', f"u{ord('𒁵'):X}.4")
-assign('𒀴', f"u{ord('𒍑'):X}.3")
-
 font.generate("LAK.ttf")
 font.close()
