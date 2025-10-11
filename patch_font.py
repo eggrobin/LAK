@@ -68,7 +68,7 @@ add_alternate('𒉋', 'uF00B1.2')
 add_alternate("𒆲", "uF009F")
 # TODO(egg): This needs an OSL PR.
 assign('𒈱', f"u{ord('𒑍'):X}")
-font[f"u{ord('𒑍'):X}"].unicode=-1
+font.removeGlyph(f"u{ord('𒑍'):X}")
 
 # We need to do something about those duplicate encodings.
 assign("𒐺", "u1203C")
@@ -82,13 +82,19 @@ add_ligature("𒉣𒇬", "uF00A2")
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
 
-# pp. 11–15 corrections
+print("# pp. 11–15 corrections")
 add_ligature("𒋀𒆳𒊏", "uF00A5.1")
 assign("𒉝", "u12599.2")
 add_ligature("𒈥𒊮", f"u{ord('𒈥'):X}.2")
 add_ligature("𒄑𒋛", f"u{ord('𒌝'):X}.1")
 add_ligature("𒉚𒀀", f"u{ord('𒉚'):X}.6")
 assign("𒉛", f"u{ord('𒉚'):X}.8")
+
+print("# pp. 16–18 corrections")
+assign("𒑎", f"u{ord('𒑀'):X}.1")
+assign("𒑍", f"u{ord('𒄿'):X}.2")
+add_ligature("𒋗𒆸𒆸", f"u{ord('𒋗'):X}_u{ord('𒆸'):X}.liga.3")
+add_alternate("\U000F00B8", f"uF00AF.1")
 
 font.generate("LAK.ttf")
 font.close()
