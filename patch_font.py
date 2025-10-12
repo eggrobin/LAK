@@ -78,6 +78,17 @@ remove_ligature("𒉣𒇬")
 add_ligature("𒁹𒉣𒇬", "uF133A")
 add_ligature("𒉣𒇬", "uF00A2")
 
+# An @form not distinguished in transliteration.
+add_alternate("𒋧", "uF00B4")
+add_alternate("𒋧", "uF00B4.1")
+
+# TODO(egg): This needs an OSL PR + CDLI & ePSD2 changes.
+add_ligature("𒊺𒉭", "uF00B6")
+
+print("WORKAROUND:")
+assign("𒌃", "uF00B7")
+add_ligature("𒌃𒌑", "uF00B7")
+
 # Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
