@@ -98,10 +98,10 @@ p_number_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
 
 with open("artefacts.py", "w") as f:
   print("NON_VAT_ARTEFACTS = {", file=f)
-  for designation, p_number in artefact_designation_to_p_number.items():
+  for designation, p_number in sorted(artefact_designation_to_p_number.items(), key=lambda kv: (-len(kv[0]), kv[0])):
     p_number_to_artefact_designation[p_number].add(designation)
     if not designation.isdigit() or int(designation) not in vat_to_p:
-      print(f"  {designation!r:40} : {p_number!r},", file=f)
+      print(f"  {designation!r} : {p_number!r},", file=f)
   print("}", file=f)
 
 with open("links.log", "w") as f:
