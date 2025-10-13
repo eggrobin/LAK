@@ -52,22 +52,26 @@ with open("LAK.html") as f:
       vat_number = int(vat_number) if vat_number else None
       if vat_number:
         vat_numbers_seen.add(vat_number)
-      link = match.group("P") or match.group("Other_Link")
+      p_number = match.group("P")
+      link = p_number or match.group("Other_Link")
       if link:
         artefact_designation = match.group("VAT") or match.group("Linked_VAT") or match.group("Other_Artefact")
         if artefact_designation not in artefact_designation_to_link:
           artefact_designation_to_link[artefact_designation] = link
         if artefact_designation_to_link[artefact_designation] != link:
           raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_link[artefact_designation]} then {link}")
-      if match.group("P"):
-        if vat_number and vat_to_p[vat_number] != match.group("P"):
-          raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
-        return match.group()
-      elif vat_number in vat_to_p and not match.group("Other_Link"):
-        return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
       else:
+        artefact_designation = match.group()
+      if match.group("Other_Link"):
         return match.group()
-    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<Other_Link>(?!http://oracc.org/([a-z]+/)+P\d+\.\d)[^"]*))">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?P<VAT>\d{4,})(?:\b|(?=R))', linkify_artefact, line)
+      else:
+        if p_number and vat_number and vat_to_p[vat_number] != p_number:
+          raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
+        if p_number:
+          return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
+        else:
+          return match.group()
+    line = re.sub(r'(?:<a href="(?:https?://cdli.earth/(?P<P>P\d+)|(?P<Other_Link>(?!#|http://oracc.org/([a-z]+/)+P\d+\.\d)[^"]*))">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?P<VAT>\d{4,})(?:\b|(?=R))', linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
