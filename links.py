@@ -2,6 +2,8 @@ from collections import defaultdict
 import csv
 import re
 
+import artefacts
+
 lines : list[str] = []
 
 refs : dict[str, list[int]] = {}
@@ -21,7 +23,7 @@ with open("../edsl/lak/etc/vat.P") as f:
 
 lak_number : str|None = None
 vat_numbers_seen : set[int] = set()
-artefact_designation_to_link : dict[str, str] = {}
+artefact_designation_to_p_number : dict[str, str] = {}
 
 max_lak_number = 0
 with open("LAK.html") as f:
@@ -30,13 +32,15 @@ with open("LAK.html") as f:
     if match:
       max_lak_number = int(match.group(1))
 
-in_body = False
+in_signlist = False
+
+NON_VAT_ARTEFACT_DESIGNATION = "(?P<Non_VAT>" + "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) + ")"
 
 with open("LAK.html") as f:
   for line in f.readlines():
-    if "<body>" in line:
-      in_body = True
-    if not in_body:
+    if '<table class="signlist">' in line:
+      in_signlist = True
+    if not in_signlist:
       lines.append(line)
       continue
     def linkify_internal(match: re.Match[str]):
@@ -53,25 +57,25 @@ with open("LAK.html") as f:
       if vat_number:
         vat_numbers_seen.add(vat_number)
       p_number = match.group("P")
-      link = p_number or match.group("Other_Link")
-      if link:
-        artefact_designation = match.group("VAT") or match.group("Linked_VAT") or match.group("Other_Artefact")
-        if artefact_designation not in artefact_designation_to_link:
-          artefact_designation_to_link[artefact_designation] = link
-        if artefact_designation_to_link[artefact_designation] != link:
-          raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_link[artefact_designation]} then {link}")
+      if p_number:
+        artefact_designation = match.group("VAT") or match.group("Linked_VAT") or match.group("Other_Artefact") or match.group("Non_VAT")
+        if artefact_designation not in artefact_designation_to_p_number:
+          artefact_designation_to_p_number[artefact_designation] = p_number
+        if artefact_designation_to_p_number[artefact_designation] != p_number:
+          raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_p_number[artefact_designation]} then {link}")
       else:
         artefact_designation = match.group()
-      if match.group("Other_Link"):
-        return match.group()
+      if p_number and vat_number and vat_to_p[vat_number] != p_number:
+        raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
+      if vat_number and not p_number:
+        p_number = vat_to_p.get(vat_number)
+      if not p_number:
+        p_number = artefacts.NON_VAT_ARTEFACTS.get(artefact_designation)
+      if p_number:
+        return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
-        if p_number and vat_number and vat_to_p[vat_number] != p_number:
-          raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
-        if p_number:
-          return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
-        else:
-          return match.group()
-    line = re.sub(r'(?:<a href="(?:https?://cdli.earth/(?P<P>P\d+)|(?P<Other_Link>(?!#|http://oracc.org/([a-z]+/)+P\d+\.\d)[^"]*))">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?P<VAT>\d{4,})(?:\b|(?=R))', linkify_artefact, line)
+        return match.group()
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?:(?P<VAT>\d{4,})|%s)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
@@ -90,11 +94,16 @@ with open("LAK.html") as f:
 with open("LAK.html", "w") as f:
   f.writelines(lines)
 
-link_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
+p_number_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
 
-for designation, link in artefact_designation_to_link.items():
-  link_to_artefact_designation[link].add(designation)
+with open("artefacts.py", "w") as f:
+  print("NON_VAT_ARTEFACTS = {", file=f)
+  for designation, p_number in artefact_designation_to_p_number.items():
+    p_number_to_artefact_designation[p_number].add(designation)
+    if not designation.isdigit() or int(designation) not in vat_to_p:
+      print(f"  {designation!r:40} : {p_number!r},", file=f)
+  print("}", file=f)
 
 with open("links.log", "w") as f:
-  for link, designations in sorted(link_to_artefact_designation.items()):
-    print(link, sorted(designations), file=f)
+  for p_number, designations in sorted(p_number_to_artefact_designation.items()):
+    print(p_number, sorted(designations), file=f)
