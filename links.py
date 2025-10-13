@@ -75,7 +75,7 @@ with open("LAK.html") as f:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?:(?P<VAT>\d{4,})|%s)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
