@@ -1,9 +1,12 @@
 NON_VAT_ARTEFACTS = {
   'Déc. ép 24 (Taf. mit Zeichn.)' : 'P220632',
   'Clay, Misc. Inscr. 12' : 'P217645',
+  'Brit. Mus. N. 86261' : 'P005995',
   'Brit. Mus. n. 86260' : 'P005996',
+  'Brit. Mus. n. 86261' : 'P005995',
   'Déc. ép. p. XXXIV' : 'P220632',
   'Brit. Mus. N 86260' : 'P005996',
+  'Brit. Mus. 86261' : 'P005995',
   'Déc. ép. p. 34' : 'P220632',
   'Tabl. שׁ, Penns.' : 'P005988',
   'Poebel, HGT 102' : 'P229723',
