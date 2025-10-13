@@ -1,3 +1,4 @@
+from collections import defaultdict
 import csv
 import re
 
@@ -19,7 +20,8 @@ with open("../edsl/lak/etc/vat.P") as f:
       vat_to_p[vat_number] = p_number
 
 lak_number : str|None = None
-numbers_seen : set[int] = set()
+vat_numbers_seen : set[int] = set()
+artefact_designation_to_link : dict[str, str] = {}
 
 max_lak_number = 0
 with open("LAK.html") as f:
@@ -45,32 +47,50 @@ with open("LAK.html") as f:
         return f' <a href="#{referenced_lak_number}">n. {referenced_lak_number}</a>'
       return match.group(0)
     line = re.sub(r'(?<!Mus\.) (?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
-    def linkify_vat(match: re.Match[str]):
-      vat_number = int(match.group("VAT"))
-      numbers_seen.add(vat_number)
+    def linkify_artefact(match: re.Match[str]):
+      vat_number = match.group("VAT") or match.group("Linked_VAT")
+      vat_number = int(vat_number) if vat_number else None
+      if vat_number:
+        vat_numbers_seen.add(vat_number)
+      link = match.group("P") or match.group("Other_Link")
+      if link:
+        artefact_designation = match.group("VAT") or match.group("Linked_VAT") or match.group("Other_Artefact")
+        if artefact_designation not in artefact_designation_to_link:
+          artefact_designation_to_link[artefact_designation] = link
+        if artefact_designation_to_link[artefact_designation] != link:
+          raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_link[artefact_designation]} then {link}")
       if match.group("P"):
-        if vat_to_p[vat_number] != match.group("P"):
+        if vat_number and vat_to_p[vat_number] != match.group("P"):
           raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
         return match.group()
-      elif vat_number in vat_to_p and not match.group("other"):
+      elif vat_number in vat_to_p and not match.group("Other_Link"):
         return f'<a href="http://cdli.earth/{vat_to_p[vat_number]}">{match.group()}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<other>[^"]*))">)?\b(?P<VAT>\d{4,})\b(?:</a>)?', linkify_vat, line)
+    line = re.sub(r'(?:<a href="(?:http://cdli.earth/(?P<P>P\d+)|(?P<Other_Link>(?!http://oracc.org/([a-z]+/)+P\d+\.\d)[^"]*))">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>[^<]*))</a>)|\b(?P<VAT>\d{4,})(?:\b|(?=R))', linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
         for ref in refs[lak_number]:
-          if ref not in numbers_seen:
+          if ref not in vat_numbers_seen:
             print(f"*** LAK {lak_number}: in EDSL but not found: {ref}")
-        for ref in numbers_seen:
+        for ref in vat_numbers_seen:
           if ref not in refs[lak_number]:
             print(f"*** LAK {lak_number}: {ref} found but not in EDSL")
-        if set(refs[lak_number]) == numbers_seen:
-          print(f"--- {len(numbers_seen)} references as expected for {lak_number}")
+        if set(refs[lak_number]) == vat_numbers_seen:
+          print(f"--- {len(vat_numbers_seen)} references as expected for {lak_number}")
       lak_number = match.group(1)
-      numbers_seen = set()
+      vat_numbers_seen = set()
     lines.append(line)
 
 with open("LAK.html", "w") as f:
   f.writelines(lines)
+
+link_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
+
+for designation, link in artefact_designation_to_link.items():
+  link_to_artefact_designation[link].add(designation)
+
+with open("links.log", "w") as f:
+  for link, designations in sorted(link_to_artefact_designation.items()):
+    print(link, sorted(designations), file=f)
