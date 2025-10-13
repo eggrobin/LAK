@@ -15,6 +15,7 @@ NON_VAT_ARTEFACTS = {
   'TDT 3 II 6375' : 'P111302',
   'CT 7, 29 b)' : 'P108530',
   'Entem. Keg.' : 'P222532',
+  'Gud. Cyl. B' : 'P232301',
   'Gud. cyl. B' : 'P232301',
   'TDT 2, 3529' : 'P110958',
   'UruK. cône' : 'P222607',
