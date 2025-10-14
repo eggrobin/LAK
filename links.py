@@ -53,9 +53,13 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "(?P<Non_VAT>" +
   "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) +
   "|" +
-  "|".join(f"DP ?{n}" for n in dp_to_p) +
+  r"(?:DP|<!--DP-->) ?[0-9]{1,3}" +
   ")"
 )
+
+# TODO(egg): Automate replacement of
+# (DP(?:-->)? ?\d+</a>, ?\d+; *)(\d+)
+# with $1<!--DP-->$2
 
 with open("LAK.html") as f:
   for line in f.readlines():
@@ -92,13 +96,13 @@ with open("LAK.html") as f:
         p_number = vat_to_p.get(vat_number)
       if not p_number:
         p_number = artefacts.NON_VAT_ARTEFACTS.get(artefact_designation)
-      if not p_number and artefact_designation.startswith("DP"):
-        p_number = dp_to_p.get(int(artefact_designation.removeprefix("DP").strip()))
+      if not p_number and artefact_designation.startswith("DP") or artefact_designation.startswith("<!--DP"):
+        p_number = dp_to_p.get(int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix("-->").strip()))
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|\b(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
