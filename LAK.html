@@ -438,13 +438,18 @@
     }
 
     ins.diplomatic::after {
+      display: inline-block;
       content: var(--caron-below);
       font-size: 125%;
+      width: 0;
     }
 
     ins.diplomatic {
+      display: inline-block;
+      text-align: right;
       background-color: revert;
       text-decoration: revert;
+      margin-bottom: 0.1em;
       --caron-below: '\202F\A0\032C';
     }
 
@@ -486,6 +491,7 @@
     }
     document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
     for (const ins of document.querySelectorAll("ins.diplomatic")) {
+      ins.style.display = reflow ? "inline" : "";
       ins.style["text-decoration"] = reflow ? "none" : "";
       ins.style.setProperty("--caron-below", reflow ? "\"\"" : "");
     }
@@ -759,7 +765,7 @@
       <td>
         ᵈR, <a href="http://cdli.earth/P010630">12737</a>,4; R-la, s. Frauennam. bei Urukag. <br>
         R-dur-a, <a href="http://cdli.earth/P010666">12778</a>,2; gal-R-dur, <a href="http://cdli.earth/P010670">9130</a>,6. <br>
-        Zf. in allen arch. T. R (=ḫala(ḫ)?)-ḫa-dam, <span class="diplomatic-column upward from-baseline"><span class="diplomatic-row"><a href="http://cdli.earth/P220872">DP222</a>;</span><span class="diplomatic-row"><ins class="diplomatic"><a href="http://cdli.earth/P221455">RTC58</a></ins></span></span>
+        Zf. in allen arch. T. R (=ḫala(ḫ)?)-ḫa-dam, <span class="diplomatic-column upward from-baseline"><span class="diplomatic-row"><a href="http://cdli.earth/P220872">DP222</a>;</span><ins class="diplomatic"><a href="http://cdli.earth/P221455">RTC58</a></ins></span>
       </td>
       <td><span class="RNA">𒄬</span></td>
       <td class="ednote"></td>
@@ -2396,7 +2402,7 @@
       <th id="109">109</th>
       <td><span class="R">𒉘</span></td>
       <td>R, <a href="http://cdli.earth/P010562">RTC 8</a>,1; <span class="R2 salt2">𒉘</span> REC 62; <span class="R2 salt1">𒉘</span>, <a href="http://cdli.earth/P011041">12629</a>,2; <a href="http://cdli.earth/P011082">9075</a>,7 <br>
-      <span class="R2 salt1"><span class="LAK salt3">𒉘</span></span>, <span class="R salt4">𒉘</span>, pass. in d. arch. T. á-R(=ág)-gà, <div class="diplomatic-column upward from-baseline"><div class="diplomatic-row">RTC,</div><div class="diplomatic-row" style="text-align: right;"><ins class="diplomatic">8</ins></div></td>
+      <span class="R2 salt1"><span class="LAK salt3">𒉘</span></span>, <span class="R salt4">𒉘</span>, pass. in d. arch. T. á-R(=ág)-gà, <div class="diplomatic-column upward from-baseline"><div class="diplomatic-row">RTC,</div><ins class="diplomatic">8</ins></td>
       <td><span class="RNA">𒉘</span></td>
       <td class="ednote"></td>
       <td class="facsimile"><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK109.png" alt=""></td>
@@ -3770,7 +3776,7 @@
         R-ni-na, <a href="http://cdli.earth/P010610">12639</a>,1; R-sar <a href="http://cdli.earth/P010650">12425</a>,5; ///ki-R, <a href="http://cdli.earth/P010627">12650</a>,12; <br>
         gar-R-𒋖, <a href="http://cdli.earth/P010647">9108</a>,4; vgl. lagab+R, <a href="http://cdli.earth/P011034">9109</a>,2; lagar+R<sup>ḫu</sup>, <a href="http://cdli.earth/P010649">9124</a>,9; <br>
         𒋧; 𒋧, Ean. REC138; 𒋧 <a href="http://cdli.earth/P220784">DP 134</a>,6 u. pass. bei Urukag. <br>
-        𒋧; 𒋧; 𒋧, 𒋧 𒋧 𒋧, Lugalzag. OBI 87,1f; <span class="diplomatic-column upward from-baseline"><span class="diplomatic-row">REC</span><span class="diplomatic-row"><ins class="diplomatic">138</ins></span></span> <br>
+        𒋧; 𒋧; 𒋧, 𒋧 𒋧 𒋧, Lugalzag. OBI 87,1f; <span class="diplomatic-column upward from-baseline"><span class="diplomatic-row">REC</span><ins class="diplomatic">138</ins></span> <br>
         𒋧, 𒋧 BE 3 ZL 229; 𒋧 CT 1, 10, 4; TDT 2, 4405; 𒋧 Reisn. <br>
         TU S. 152; 187. 𒋧 C. Ḫam. 32, 50; R(=sum/n)-na, <br>
         TDT 2, 3977b.
