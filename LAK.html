@@ -40,6 +40,10 @@
       src: url('PCSL.ttf');
     }
 
+    a {
+      text-decoration: none;
+    }
+
     body {
       font-family: 'STIX', 'STIX-Math', 'NotoSansCuneiform-egg', 'ACN';
       line-height: 1.2em;
@@ -435,12 +439,13 @@
 
     ins.diplomatic::after {
       content: var(--caron-below);
+      font-size: 125%;
     }
 
     ins.diplomatic {
       background-color: revert;
       text-decoration: revert;
-      --caron-below: '\A0\032C';
+      --caron-below: '\202F\A0\032C';
     }
 
     ul.TODO {
