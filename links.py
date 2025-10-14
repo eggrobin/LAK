@@ -90,14 +90,22 @@ with open("LAK.html") as f:
           raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_p_number[artefact_designation]} then {link}")
       else:
         artefact_designation = match.group()
+      if artefact_designation.startswith("DP") or artefact_designation.startswith("<!--DP"):
+        m = re.search(r"recte (\d+)", artefact_designation)
+        if m:
+          dp_number = int(m.group(1))
+        else:
+          dp_number = int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix("-->").strip())
+      else:
+        dp_number = None
+      if p_number and dp_number and dp_to_p[dp_number] != p_number:
+        raise ValueError(f"Mismatch for DP {vat_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
         p_number = vat_to_p.get(vat_number)
       if not p_number:
         p_number = artefacts.NON_VAT_ARTEFACTS.get(artefact_designation)
-      if not p_number and artefact_designation.startswith("DP") or artefact_designation.startswith("<!--DP"):
-        p_number = dp_to_p.get(int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix("-->").strip()))
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
