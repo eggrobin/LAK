@@ -9,6 +9,7 @@ lines : list[str] = []
 refs : dict[str, list[int]] = {}
 vat_to_p : dict[int, str] = {}
 dp_to_p : dict[int, str] = {}
+rtc_to_p : dict[int, str] = {}
 
 with open("DP.csv") as f:
   for i, line in enumerate(csv.reader(f)):
@@ -22,6 +23,34 @@ with open("DP.csv") as f:
       dp_to_p[dp] = f"P{int(line[0]):06}"
     except Exception as e:
       print(line)
+      raise
+
+with open("RTC.csv") as f:
+  heading = []
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      heading = line
+      continue
+    if line[40] == "composite":
+      continue
+    try:
+      publications = [p.strip() for p in line[3].split(";")]
+      rtc_range = line[5].split(";")[publications.index("Thureau-Dangin1903RTC")]
+      if "-" in rtc_range:
+        first, last = rtc_range.split("-")
+        rtcs = range(int(first), int(last)+1)
+      else:
+        rtcs = (int(rtc_range),)
+      for rtc in rtcs:
+        if (line[2].startswith("RTC") and
+            "+" not in line[2] and
+            "-" not in line[2] and
+            line[2] != f"RTC {rtc:03}"):
+          raise ValueError(line[2], rtc)
+        rtc_to_p[rtc] = f"P{int(line[0]):06}"
+    except Exception as e:
+      for i, field in enumerate(line):
+        print(f"{i:2} {heading[i]:30} {field!r}")
       raise
 
 with open("../edsl/lak/etc/lak-refs.tsv") as f:
@@ -54,6 +83,8 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) +
   "|" +
   r"(?:DP|<!--DP-->) ?[0-9]{1,3}" +
+  "|" +
+  r"(?:RTC|<!--RTC-->) ?[0-9]{1,3}" +
   ")"
 )
 
@@ -98,14 +129,28 @@ with open("LAK.html") as f:
           dp_number = int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix("-->").strip())
       else:
         dp_number = None
+      if artefact_designation.startswith("RTC") or artefact_designation.startswith("<!--RTC"):
+        m = re.search(r"recte (\d+)", artefact_designation)
+        if m:
+          rtc_number = int(m.group(1))
+        else:
+          rtc_number = int(artefact_designation.removeprefix("<!--").removeprefix("RTC").removeprefix("-->").strip())
+      else:
+        rtc_number = None
       if p_number and dp_number and dp_to_p[dp_number] != p_number:
         raise ValueError(f"Mismatch for DP {vat_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
+      if p_number and rtc_number and rtc_to_p[rtc_number] != p_number:
+        raise ValueError(f"Mismatch for RTC {vat_number}: {match.group('P')} vs. CDLI {rtc_to_p[rtc_number]}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
         p_number = vat_to_p.get(vat_number)
       if not p_number:
         p_number = artefacts.NON_VAT_ARTEFACTS.get(artefact_designation)
+      if not p_number and rtc_number:
+        p_number = rtc_to_p[rtc_number]
+      if not p_number and dp_number:
+        p_number = dp_to_p[dp_number]
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
