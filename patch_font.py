@@ -11,6 +11,11 @@ with open("glyph_hashes.log", "w") as log:
     font[glyph].layers[1].export("temp.svg")
     with open("temp.svg", "rb") as f:
       print(glyph, hashlib.sha1(f.read()).hexdigest(), file=log)
+    salt = font[glyph].getPosSub(SALT)
+    if salt:
+      print(f"  {salt[0][1]}:", file=log)
+      for i, alternate in enumerate(salt[0][2:], start=1):
+        print(f"    {i:2} = {alternate}", file=log)
 
 def assign(code_point: str, glyph_name: str):
   if ord(code_point) in font:
