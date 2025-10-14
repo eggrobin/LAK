@@ -439,7 +439,12 @@
     }
 
     ul.TODO {
-      background-color: lightyellow;
+      background-color: #FFFFEE;
+      list-style-type: '\1256B'
+    }
+
+    ul.TODO > li::marker {
+      font-family: LFD-lak;
     }
 
     .TODO {
@@ -600,9 +605,9 @@
    TODO:
    <ul class="TODO">
     <li>Finish typing the list…</li>
-    <li>The Oracc-LAK font is being expanded to cover the forms shown inline in the text, rather than just the index forms.</li>
+    <li>The Oracc-LAK font is being expanded to cover the forms shown inline in the text, rather than just the index forms. Missing glyphs in the parts that already have good coverage are highlighted in bright yellow <span class="TODO">like this</span>; they are also called out in highlighted notes to the right.</li>
     <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs. It also needs some stylistic alternates where Deimel shows multiple NA forms or shows Babylonian forms.</li>
-    <li>Few artefact designations other than VAT numbers are linkified at the moment, and very few locations linkified at all.</li>
+    <li>Few artefact designations other than VAT and DP numbers are linkified at the moment, and very few locations linkified at all.</li>
     <li>Add an option to modernize the transliterations (e.g., lù to lú or lu₂); maybe something to expand the abbreviations as well.</li>
     <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent reading…</li>
    </ul>
