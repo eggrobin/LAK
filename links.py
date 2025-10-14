@@ -10,6 +10,21 @@ refs : dict[str, list[int]] = {}
 vat_to_p : dict[int, str] = {}
 dp_to_p : dict[int, str] = {}
 rtc_to_p : dict[int, str] = {}
+nik_to_p : dict[int, str] = {}
+
+with open("Nik.csv") as f:
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      continue
+    try:
+      publications = [p.strip() for p in line[3].split(";")]
+      nik = int(line[5].split(";")[publications.index("Nikol'skij1908")])
+      if line[2].startswith("Nik") and line[2] != f"Nik 1, {nik:03}":
+        raise ValueError(line[2])
+      nik_to_p[nik] = f"P{int(line[0]):06}"
+    except Exception as e:
+      print(line)
+      raise
 
 with open("DP.csv") as f:
   for i, line in enumerate(csv.reader(f)):
@@ -87,6 +102,8 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   r"(?:DP\.?|<!--DP-->) ?[0-9]{1,3}" +
   "|" +
   r"(?:RTC|<!--RTC-->) ?[0-9]{1,3}" +
+  "|" +
+  r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   ")"
 )
 
@@ -139,10 +156,20 @@ with open("LAK.html") as f:
           rtc_number = int(re.sub(r"^(<!--RTC-->|RTC *)", "", artefact_designation))
       else:
         rtc_number = None
+      if artefact_designation.startswith("Nik") or artefact_designation.startswith("<!--Nik"):
+        m = re.search(r"recte (\d+)", artefact_designation)
+        if m:
+          nik_number = int(m.group(1))
+        else:
+          nik_number = int(re.sub(r"^(<!--Nik-->|Nik\.? *)", "", artefact_designation))
+      else:
+        nik_number = None
       if p_number and dp_number and dp_to_p[dp_number] != p_number:
         raise ValueError(f"Mismatch for DP {vat_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
       if p_number and rtc_number and rtc_to_p[rtc_number] != p_number:
         raise ValueError(f"Mismatch for RTC {vat_number}: {match.group('P')} vs. CDLI {rtc_to_p[rtc_number]}")
+      if p_number and nik_number and nik_to_p[nik_number] != p_number:
+        raise ValueError(f"Mismatch for Nik {vat_number}: {match.group('P')} vs. CDLI {nik_to_p[nik_number]}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
@@ -153,6 +180,8 @@ with open("LAK.html") as f:
         p_number = rtc_to_p[rtc_number]
       if not p_number and dp_number:
         p_number = dp_to_p[dp_number]
+      if not p_number and nik_number:
+        p_number = nik_to_p[nik_number]
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
