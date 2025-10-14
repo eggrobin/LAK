@@ -87,6 +87,9 @@ assign("𒌘", f"u{ord('𒌙'):x}")
 add_alternate("𒋧", "uF00B4")
 add_alternate("𒋧", "uF00B4.1")
 
+# TODO(egg): Needs OSL PR.
+add_alternate("𒅔", "uF00B5")
+
 # TODO(egg): This needs an OSL PR + CDLI & ePSD2 changes.
 add_ligature("𒊺𒉭", "uF00B6")
 
