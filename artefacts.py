@@ -1,4 +1,5 @@
 NON_VAT_ARTEFACTS = {
+  'Brit. Mus. N. <br><span class="diplomatic-space" style="width: 3em;"></span> 86260' : 'P005996',
   'Déc. ép 24 (Taf. mit Zeichn.)' : 'P220632',
   'Clay, Misc. Inscr. 12' : 'P217645',
   'Brit. Mus. N. 86261' : 'P005995',
