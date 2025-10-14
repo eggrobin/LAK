@@ -128,7 +128,7 @@ with open("LAK.html") as f:
         if m:
           dp_number = int(m.group(1))
         else:
-          dp_number = int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix(".").removeprefix("-->").strip())
+          dp_number = int(re.sub(r"^(<!--DP-->|DP\.? *)", "", artefact_designation))
       else:
         dp_number = None
       if artefact_designation.startswith("RTC") or artefact_designation.startswith("<!--RTC"):
@@ -136,7 +136,7 @@ with open("LAK.html") as f:
         if m:
           rtc_number = int(m.group(1))
         else:
-          rtc_number = int(artefact_designation.removeprefix("<!--").removeprefix("RTC").removeprefix("-->").strip())
+          rtc_number = int(re.sub(r"^(<!--RTC-->|RTC *)", "", artefact_designation))
       else:
         rtc_number = None
       if p_number and dp_number and dp_to_p[dp_number] != p_number:
