@@ -76,6 +76,8 @@ with open("LAK.html") as f:
     if match:
       max_lak_number = int(match.group(1))
 
+print("Max LAK", max_lak_number)
+
 in_signlist = False
 
 NON_VAT_ARTEFACT_DESIGNATION = (
@@ -104,9 +106,9 @@ with open("LAK.html") as f:
       if match.group("href") and int(match.group("href")) != referenced_lak_number:
         raise ValueError(f"n. {referenced_lak_number} links to {match.group('href')}")
       if referenced_lak_number < max_lak_number:
-        return f' <a href="#{referenced_lak_number}">n. {referenced_lak_number}</a>'
+        return f'<a href="#{referenced_lak_number}">n. {referenced_lak_number}</a>'
       return match.group(0)
-    line = re.sub(r'(?<!Mus\.) (?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
+    line = re.sub(r'(?<!\w)(?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
     def linkify_artefact(match: re.Match[str]):
       vat_number = match.group("VAT") or match.group("Linked_VAT")
       vat_number = int(vat_number) if vat_number else None
