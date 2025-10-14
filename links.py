@@ -8,6 +8,21 @@ lines : list[str] = []
 
 refs : dict[str, list[int]] = {}
 vat_to_p : dict[int, str] = {}
+dp_to_p : dict[int, str] = {}
+
+with open("DP.csv") as f:
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      continue
+    try:
+      publications = [p.strip() for p in line[3].split(";")]
+      dp = int(line[5].split(";")[publications.index("AllottedelaFuÿe1908-1920DP")])
+      if line[2].startswith("DP") and line[2] != f"DP {dp:03}":
+        raise ValueError(line[2])
+      dp_to_p[dp] = f"P{int(line[0]):06}"
+    except Exception as e:
+      print(line)
+      raise
 
 with open("../edsl/lak/etc/lak-refs.tsv") as f:
   for line in csv.reader(f, delimiter="\t"):
@@ -34,7 +49,13 @@ with open("LAK.html") as f:
 
 in_signlist = False
 
-NON_VAT_ARTEFACT_DESIGNATION = "(?P<Non_VAT>" + "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) + ")"
+NON_VAT_ARTEFACT_DESIGNATION = (
+  "(?P<Non_VAT>" +
+  "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) +
+  "|" +
+  "|".join(f"DP ?{n}" for n in dp_to_p) +
+  ")"
+)
 
 with open("LAK.html") as f:
   for line in f.readlines():
@@ -71,6 +92,8 @@ with open("LAK.html") as f:
         p_number = vat_to_p.get(vat_number)
       if not p_number:
         p_number = artefacts.NON_VAT_ARTEFACTS.get(artefact_designation)
+      if not p_number and artefact_designation.startswith("DP"):
+        p_number = dp_to_p.get(int(artefact_designation.removeprefix("DP").strip()))
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
