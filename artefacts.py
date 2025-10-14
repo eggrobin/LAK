@@ -1,5 +1,6 @@
 NON_VAT_ARTEFACTS = {
   'Brit. Mus. N. <br><span class="diplomatic-space" style="width: 3em;"></span> 86260' : 'P005996',
+  '<span class="diplomatic-row">RTC,</span><ins class="diplomatic">8</ins>' : 'P010562',
   'Déc. ép 24 (Taf. mit Zeichn.)' : 'P220632',
   '<!--DP-->f<!--recte 126-->' : 'P220776',
   'Clay, Misc. Inscr. 12' : 'P217645',
@@ -89,6 +90,7 @@ NON_VAT_ARTEFACTS = {
   'RTC 311' : 'P128464',
   'RTC 389' : 'P128542',
   'RTC 413' : 'P128566',
+  'RTC, 13' : 'P010553',
   'Cyl. B' : 'P232301',
   'DP 111' : 'P220761',
   'DP 119' : 'P220769',
