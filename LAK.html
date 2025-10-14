@@ -433,9 +433,14 @@
       text-decoration: none;
     }
 
+    ins.diplomatic::after {
+      content: var(--caron-below);
+    }
+
     ins.diplomatic {
       background-color: revert;
       text-decoration: revert;
+      --caron-below: '\A0\032C';
     }
 
     ul.TODO {
@@ -477,6 +482,7 @@
     document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
     for (const ins of document.querySelectorAll("ins.diplomatic")) {
       ins.style["text-decoration"] = reflow ? "none" : "";
+      ins.style.setProperty("--caron-below", reflow ? "\"\"" : "");
     }
     for (const element of document.querySelectorAll(".diplomatic-column")) {
       element.style.display = reflow ? "inline" : "";
@@ -748,7 +754,7 @@
       <td>
         ᵈR, <a href="http://cdli.earth/P010630">12737</a>,4; R-la, s. Frauennam. bei Urukag. <br>
         R-dur-a, <a href="http://cdli.earth/P010666">12778</a>,2; gal-R-dur, <a href="http://cdli.earth/P010670">9130</a>,6. <br>
-        Zf. in allen arch. T. R (=ḫala(ḫ)?)-ḫa-dam, <a href="http://cdli.earth/P220872">DP222</a>; <a href="http://cdli.earth/P221455">RTC58</a>
+        Zf. in allen arch. T. R (=ḫala(ḫ)?)-ḫa-dam, <span class="diplomatic-column upward from-baseline"><span class="diplomatic-row"><a href="http://cdli.earth/P220872">DP222</a>;</span><span class="diplomatic-row"><ins class="diplomatic"><a href="http://cdli.earth/P221455">RTC58</a></ins></span></span>
       </td>
       <td><span class="RNA">𒄬</span></td>
       <td class="ednote"></td>
