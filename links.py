@@ -84,7 +84,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "(?P<Non_VAT>" +
   "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) +
   "|" +
-  r"(?:DP|<!--DP-->) ?[0-9]{1,3}" +
+  r"(?:DP\.?|<!--DP-->) ?[0-9]{1,3}" +
   "|" +
   r"(?:RTC|<!--RTC-->) ?[0-9]{1,3}" +
   ")"
@@ -128,7 +128,7 @@ with open("LAK.html") as f:
         if m:
           dp_number = int(m.group(1))
         else:
-          dp_number = int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix("-->").strip())
+          dp_number = int(artefact_designation.removeprefix("<!--").removeprefix("DP").removeprefix(".").removeprefix("-->").strip())
       else:
         dp_number = None
       if artefact_designation.startswith("RTC") or artefact_designation.startswith("<!--RTC"):
