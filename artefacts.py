@@ -1,6 +1,6 @@
 NON_VAT_ARTEFACTS = {
+  '<span class="diplomatic-column upward from-baseline"><span class="diplomatic-row">RTC,</span><ins class="diplomatic">8</ins></span>' : 'P010562',
   'Brit. Mus. N. <br><span class="diplomatic-space" style="width: 3em;"></span> 86260' : 'P005996',
-  '<span class="diplomatic-row">RTC,</span><ins class="diplomatic">8</ins>' : 'P010562',
   'Déc. ép 24 (Taf. mit Zeichn.)' : 'P220632',
   '<!--DP-->f<!--recte 126-->' : 'P220776',
   'Clay, Misc. Inscr. 12' : 'P217645',
@@ -12,6 +12,7 @@ NON_VAT_ARTEFACTS = {
   'Brit. Mus. N 86260' : 'P005996',
   'Brit. Mus. 86261' : 'P005995',
   'Déc. ép. p. 34' : 'P220632',
+  'Gud. Cyl. <br>B.' : 'P232301',
   'Tabl. שׁ, Penns.' : 'P005988',
   'Poebel, HGT 102' : 'P229723',
   'Taf. שׁ, Penns.' : 'P005988',

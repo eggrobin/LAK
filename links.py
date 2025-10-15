@@ -1,5 +1,6 @@
 from collections import defaultdict
 import csv
+import os
 import re
 
 import artefacts
@@ -11,6 +12,70 @@ vat_to_p : dict[int, str] = {}
 dp_to_p : dict[int, str] = {}
 rtc_to_p : dict[int, str] = {}
 nik_to_p : dict[int, str] = {}
+ct_to_p : dict[int, dict[int, list[str]]] = {}
+
+ct_keys : list[str] = ["n/a", "King1896CT1"]
+
+with open("CT.csv") as f:
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      continue
+    ct_keys.append(line[0])
+
+for name in os.listdir():
+  match = re.match(r"CT(\d+).csv", name)
+  if match:
+    number = int(match.group(1))
+    key = ct_keys[number]
+    volume = defaultdict(list)
+    with open(name) as f:
+      for i, line in enumerate(csv.reader(f)):
+        if i == 0:
+          continue
+        try:
+          publications = [p.strip() for p in line[3].split(";")]
+          try:
+            reference = line[5].split(";")[publications.index(key)]
+          except ValueError as e:
+            print(e)
+            print(line)
+            continue
+          ct_range = reference.strip().removeprefix("pl. ").split(",")[0]
+          try:
+            if "-" in ct_range:
+              first, last = ct_range.split("-")
+              cts = range(int(first), int(last)+1)
+            else:
+              cts = (int(ct_range),)
+          except ValueError as e:
+            print(e)
+            print(line)
+            continue
+          for ct in cts:
+            volume[ct].append(f"P{int(line[0]):06}")
+        except Exception as e:
+          print(line)
+          raise
+    ct_to_p[number] = volume
+
+for number, volume in ct_to_p.items():
+  for ct, ps in volume.items():
+    if len(ps) > 1:
+      print(f"CT {number} {ct} is ambiguous: {ps}")
+
+with open("Nik.csv") as f:
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      continue
+    try:
+      publications = [p.strip() for p in line[3].split(";")]
+      nik = int(line[5].split(";")[publications.index("Nikol'skij1908")])
+      if line[2].startswith("Nik") and line[2] != f"Nik 1, {nik:03}":
+        raise ValueError(line[2])
+      nik_to_p[nik] = f"P{int(line[0]):06}"
+    except Exception as e:
+      print(line)
+      raise
 
 with open("Nik.csv") as f:
   for i, line in enumerate(csv.reader(f)):
