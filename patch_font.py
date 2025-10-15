@@ -100,7 +100,7 @@ add_ligature("𒊺𒉭", "uF00B6")
 
 print("WORKAROUND:")
 assign("𒌃", "uF00B7")
-add_ligature("𒌃𒌑", "uF00B7")
+add_ligature("𒌑𒌃", "uF00B7")
 
 # Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
 add_ligature("𒄷𒋛𒀀", "uF3900")

@@ -1,4 +1,4 @@
-﻿b8451af merge more-05.vfj into lak.vfj, i.e., up to LAK220
+﻿245e2e8 more-07 raw png snips
 uF009C.1 is an alternate form (salt3) of U+121B0 𒆰
 uF0086.1 is an alternate form (salt7) of U+12044 𒁄
 uF00A0 is a ligature U+122A9 U+121B3 𒊩𒆳
@@ -21,7 +21,7 @@ uF00B5 is an alternate form (salt1) of U+12154 𒅔
 uF00B6 is a ligature U+122BA U+1226D 𒊺𒉭
 WORKAROUND:
 uF00B7 is U+12303 𒌃
-uF00B7 is a ligature U+12303 U+12311 𒌃𒌑
+uF00B7 is a ligature U+12311 U+12303 𒌑𒌃
 uF3900 is a ligature U+12137 U+122DB U+12000 𒄷𒋛𒀀
 uF3901 is a ligature U+1244B U+12047 𒑋𒁇
 # pp. 11–15 corrections
