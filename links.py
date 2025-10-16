@@ -202,12 +202,13 @@ with open("LAK.html") as f:
       continue
     def linkify_internal(match: re.Match[str]):
       referenced_lak_number = int(match.group("n"))
-      if match.group("href") and int(match.group("href")) != referenced_lak_number:
-        raise ValueError(f"n. {referenced_lak_number} links to {match.group('href')}")
+      suffix = match.group("suffix") or ""
+      if match.group("href") and match.group("href") != f"{referenced_lak_number}{suffix}":
+        raise ValueError(f"n. {referenced_lak_number}{suffix} links to {match.group('href')}")
       if referenced_lak_number < max_lak_number:
-        return f'<a href="#{referenced_lak_number}">n. {referenced_lak_number}</a>'
+        return f'<a href="#{referenced_lak_number}{suffix}">n. {referenced_lak_number}{f"<sup>{suffix}</sup>" if suffix else ""}</a>'
       return match.group(0)
-    line = re.sub(r'(?<!\w)(?:<a href="#(?P<href>\d+)">)?n\. (?P<n>\d+)(?:</a>)?', linkify_internal, line)
+    line = re.sub(r'(?<!\w)(?:<a href="#(?P<href>\d+[a-z]?)">)?n\. (?P<n>\d+)(?:<sup>(?P<suffix>[a-z])</sup>)?(?:</a>)?', linkify_internal, line)
     def linkify_artefact(match: re.Match[str]):
       vat_number = match.group("VAT") or match.group("Linked_VAT")
       vat_number = int(vat_number) if vat_number else None
