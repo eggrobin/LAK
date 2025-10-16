@@ -19,8 +19,10 @@ ct_keys : list[str] = ["n/a", "King1896CT1"]
 # Key: LAK number, CT volume, CT plate, Deimel’s disambiguator.
 # Value: Artefact referred to, count of artefacts on the plate.
 CT_DISAMBIGUATION = {
+  ( "16", 7,  4, "a")  : "P315281",
   ( "40", 5, 39, None) : "P108485",
   ( "41", 7, 29, "a")  : "P108530",
+  ( "48", 5, 50, "b")  : "P108493",
   ( "63", 7, 29, "b")  : "P108530",
   ("148", 1,  1, None) : "P212953",  # TODO(egg): Maybe also P212954 (but not P212952).
   ("156", 7, 25, "b")  : "P108521",
@@ -186,7 +188,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   "|" +
-  r"CT ?\d+, ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=\d)))?" +
+  r"CT ?\d+, ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   ")"
 )
 
