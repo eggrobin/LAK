@@ -178,7 +178,7 @@ in_signlist = False
 
 NON_VAT_ARTEFACT_DESIGNATION = (
   "(?P<Non_VAT>" +
-  "|".join(re.escape(s) for s in artefacts.NON_VAT_ARTEFACTS) +
+  "|".join(re.escape(s) for s in sorted(artefacts.NON_VAT_ARTEFACTS, key=lambda k: -len(k))) +
   "|" +
   r"(?:DP\.?|<!--DP-->) ?[0-9]{1,3}" +
   "|" +
@@ -311,7 +311,7 @@ p_number_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
 
 with open("artefacts.py", "w") as f:
   print("NON_VAT_ARTEFACTS = {", file=f)
-  for designation, p_number in sorted(artefact_designation_to_p_number.items(), key=lambda kv: (-len(kv[0]), kv[0])):
+  for designation, p_number in sorted(artefact_designation_to_p_number.items(), key=lambda kv: kv[1]):
     p_number_to_artefact_designation[p_number].add(designation)
     if not designation.isdigit() or int(designation) not in vat_to_p:
       print(f"  {designation!r} : {p_number!r},", file=f)
