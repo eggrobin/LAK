@@ -19,19 +19,21 @@ ct_keys : list[str] = ["n/a", "King1896CT1"]
 # Key: LAK number, CT volume, CT plate, Deimel’s disambiguator.
 # Value: Artefact referred to, count of artefacts on the plate.
 CT_DISAMBIGUATION = {
-  ( "16", 7,  4, "a")  : "P315281",
-  ( "40", 5, 39, None) : "P108485",
-  ( "41", 7, 29, "a")  : "P108530",
-  ( "48", 5, 50, "b")  : "P108493",
-  ( "63", 7, 29, "b")  : "P108530",
-  ("148", 1,  1, None) : "P212953",  # TODO(egg): Maybe also P212954 (but not P212952).
-  ("156", 7, 25, "b")  : "P108521",
-  ("179", 5, 46, None) : "P108490",
-  ("180", 5, 46, None) : "P108490",
-  ("194", 3, 18, None) : "P108452",
-  ("194", 3, 16, "c")  : "P108446",
-  ("205", 7, 31, "a")  : "P108533",
-  ("214", 7, 18, "a")  : "P108507",
+  ( "16",  7,  4,  "a") : "P315281",
+  ( "40",  5, 39, None) : "P108485",
+  ( "41",  7, 29,  "a") : "P108530",
+  ( "48",  5, 50,  "b") : "P108493",
+  ( "63",  7, 29,  "b") : "P108530",
+  ( "63",  7, 43,  "a") : "P108555",
+  ("148",  1,  1, None) : "P212953",  # TODO(egg): Maybe also P212954 (but not P212952).
+  ("156",  7, 25,  "b") : "P108521",
+  ("179",  5, 46, None) : "P108490",
+  ("180",  5, 46, None) : "P108490",
+  ("193", 10, 46,  "c") : "P108641",
+  ("194",  3, 18, None) : "P108452",
+  ("194",  3, 16,  "c") : "P108446",
+  ("205",  7, 31,  "a") : "P108533",
+  ("214",  7, 18,  "a") : "P108507",
 }
 
 with open("CT.csv") as f:
@@ -194,7 +196,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   "|" +
-  r"CT ?\d+, ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
+  r"(?:<!--)?CT ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   ")"
 )
 
@@ -231,7 +233,7 @@ with open("LAK.html") as f:
           raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_p_number[artefact_designation]} then {link}")
       else:
         artefact_designation = match.group()
-      if artefact_designation.startswith("DP") or artefact_designation.startswith("<!--DP"):
+      if artefact_designation.removeprefix("<!--").startswith("DP"):
         m = re.search(r"recte (\d+)", artefact_designation)
         if m:
           dp_number = int(m.group(1))
@@ -239,7 +241,7 @@ with open("LAK.html") as f:
           dp_number = int(re.sub(r"^(<!--DP-->|DP\.? *)", "", artefact_designation))
       else:
         dp_number = None
-      if artefact_designation.startswith("RTC") or artefact_designation.startswith("<!--RTC"):
+      if artefact_designation.removeprefix("<!--").startswith("RTC"):
         m = re.search(r"recte (\d+)", artefact_designation)
         if m:
           rtc_number = int(m.group(1))
@@ -247,7 +249,7 @@ with open("LAK.html") as f:
           rtc_number = int(re.sub(r"^(<!--RTC-->|RTC,? *)", "", artefact_designation))
       else:
         rtc_number = None
-      if artefact_designation.startswith("Nik") or artefact_designation.startswith("<!--Nik"):
+      if artefact_designation.removeprefix("<!--").startswith("Nik"):
         m = re.search(r"recte (\d+)", artefact_designation)
         if m:
           nik_number = int(m.group(1))
@@ -256,8 +258,8 @@ with open("LAK.html") as f:
       else:
         nik_number = None
       ct_volume, ct_plate, p_from_ct = None, None, None
-      if artefact_designation.startswith("CT"):
-        m = re.match(r"CT ?(\d{1,2}), ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
+      if artefact_designation.removeprefix("<!--").startswith("CT"):
+        m = re.match(r"(?:<!--)?CT ?(\d{1,2})(?:,|-->) ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
         ct_volume, ct_plate, ct_disambiguator = int(m.group(1)), int(m.group(2)), m.group(3)
         candidates = ct_to_p[ct_volume][ct_plate]
         if candidates:
