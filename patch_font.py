@@ -71,17 +71,9 @@ add_alternate('𒉋', 'uF00B1.1')
 add_alternate('𒉋', 'uF00B1.2')
 # https://github.com/oracc/osl/pull/41.
 add_alternate("𒆲", "uF009F")
-# https://github.com/oracc/osl/pull/43/.
-assign('𒈱', f"u{ord('𒑍'):X}")
-font.removeGlyph(f"u{ord('𒑍'):X}")
 
 # We need to do something about those duplicate encodings.
 assign("𒐺", "u1203C")
-
-# https://github.com/oracc/osl/pull/42.
-remove_ligature("𒉣𒇬")
-add_ligature("𒁹𒉣𒇬", "uF133A")
-add_ligature("𒉣𒇬", "uF00A2")
 
 # See the email thread titled MURUB₄; the separately encoded 𒌙
 # exists to represent a Borgerian figment.  LAK157 should be an
