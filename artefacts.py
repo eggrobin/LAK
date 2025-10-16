@@ -233,6 +233,7 @@ NON_VAT_ARTEFACTS = {
   'Poeb. HGT 102' : 'P229723',
   'Gud. B' : 'P232275',
   'Gud. B.' : 'P232275',
+  'Gud. E' : 'P232278',
   'Gud. Cyl. A' : 'P232300',
   'Gud. cyl. B' : 'P232301',
   'Gud. Cyl. B' : 'P232301',
