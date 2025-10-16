@@ -116,6 +116,7 @@ NON_VAT_ARTEFACTS = {
   'TDT 1, 1127' : 'P217053',
   'TDT 1, 1433' : 'P217106',
   'Clay, Misc. Inscr. 12' : 'P217645',
+  'Clay, Misc. <br>Inscr. 12' : 'P217645',
   'Déc. ép. p. XXXIV' : 'P220632',
   'Déc. ép. p. 34' : 'P220632',
   'Déc. ép 24 (Taf. mit Zeichn.)' : 'P220632',
