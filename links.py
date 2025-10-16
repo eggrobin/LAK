@@ -38,7 +38,11 @@ with open("CT.csv") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
       continue
-    ct_keys.append(line[0])
+    if line[16].isdigit() or line[0].endswith("CT9"):
+      volume = 9 if line[0].endswith("CT9") else int(line[16])
+      while len(ct_keys) <= volume:
+        ct_keys.append("n/a")
+      ct_keys[volume] = line[0]
 
 for name in os.listdir():
   match = re.match(r"CT(\d+).csv", name)
@@ -50,6 +54,8 @@ for name in os.listdir():
       for i, line in enumerate(csv.reader(f)):
         if i == 0:
           continue
+        if line[40] == "composite text":
+          continue
         try:
           publications = [p.strip() for p in line[3].split(";")]
           try:
@@ -58,7 +64,7 @@ for name in os.listdir():
             print(e)
             print(line)
             continue
-          ct_range = reference.strip().removeprefix("pl. ").split(",")[0]
+          ct_range = reference.strip().removeprefix("pl. ").split(",")[0].split(" BM ")[0]
           try:
             if "-" in ct_range:
               first, last = ct_range.split("-")
