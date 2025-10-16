@@ -13,6 +13,7 @@ dp_to_p : dict[int, str] = {}
 rtc_to_p : dict[int, str] = {}
 nik_to_p : dict[int, str] = {}
 ct_to_p : dict[int, dict[int, list[str]]] = {}
+tdt_to_p : dict[int, dict[int, str]] = {}
 
 ct_keys : list[str] = ["n/a", "King1896CT1"]
 
@@ -91,6 +92,31 @@ with open("Nik.csv") as f:
     except Exception as e:
       print(line)
       raise
+
+for volume, key in ((1, "Thureau-Dangin1910ITT1"),
+                    (2, "Genouillac1910-1911ITT2"),
+                    (3, "deGenouillac1912ITT3")):  # Argh!
+  with open(f"TDT{volume}.csv") as f:
+    tdt_volume = {}
+    for i, line in enumerate(csv.reader(f)):
+      if i == 0:
+        continue
+      try:
+        publications = [p.strip() for p in line[3].split(";")]
+        tdt = line[5].split(";")[publications.index(key)].strip()
+        if not tdt.isdigit():
+          print(f"Weird number TDT {volume}, {tdt}")
+          continue
+        tdt = int(tdt)
+        if (line[2].startswith("ITT") and
+            "+" not in line[2] and
+            line[2].strip() != f"ITT {volume}, {tdt:05}"):
+          raise ValueError(f'{line[2].strip()!r} != {f"ITT {volume}, {tdt:05}"!r}')
+        tdt_volume[tdt] = f"P{int(line[0]):06}"
+      except Exception as e:
+        print(line)
+        raise
+      tdt_to_p[volume] = tdt_volume
 
 with open("Nik.csv") as f:
   for i, line in enumerate(csv.reader(f)):
@@ -186,6 +212,8 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   "|" +
   r"(?:<!--)?CT ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
+  "|" +
+  r"(?:<!--)?TDT ?\d+(?: ?II|,|-->) ?\d+" +
   ")"
 )
 
@@ -262,14 +290,22 @@ with open("LAK.html") as f:
             raise ValueError(f"Ambiguous reference {artefact_designation} in LAK {lak_number} could be any of the following:{''.join(f'{chr(0xA)}    http://cdli.earth/{n}' for n in ct_to_p[ct_volume][ct_plate])}")
           else:
             p_from_ct, = candidates
+      tdt_volume, tdt_number = None, None
+      if artefact_designation.removeprefix("<!--").startswith("TDT"):
+        m = re.match(r"(?:<!--)?TDT ?([123])(?: ?II|,|-->) ?(\d+)$", artefact_designation)
+        if not m:
+          raise ValueError(f"Could not parse TDT reference {artefact_designation}")
+        tdt_volume, tdt_number = int(m.group(1)), int(m.group(2))
       if p_number and dp_number and dp_to_p[dp_number] != p_number:
-        raise ValueError(f"Mismatch for DP {vat_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
+        raise ValueError(f"Mismatch for DP {dp_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
       if p_number and rtc_number and rtc_to_p[rtc_number] != p_number:
-        raise ValueError(f"Mismatch for RTC {vat_number}: {match.group('P')} vs. CDLI {rtc_to_p[rtc_number]}")
+        raise ValueError(f"Mismatch for RTC {rtc_number}: {match.group('P')} vs. CDLI {rtc_to_p[rtc_number]}")
       if p_number and nik_number and nik_to_p[nik_number] != p_number:
-        raise ValueError(f"Mismatch for Nik {vat_number}: {match.group('P')} vs. CDLI {nik_to_p[nik_number]}")
+        raise ValueError(f"Mismatch for Nik {nik_number}: {match.group('P')} vs. CDLI {nik_to_p[nik_number]}")
       if p_number and ct_volume and p_from_ct != p_number:
         raise ValueError(f"Mismatch for CT {ct_volume}, {ct_plate}: {match.group('P')} vs. CDLI {p_from_ct}")
+      if p_number and tdt_volume and tdt_number and tdt_to_p[tdt_volume][tdt_number] != p_number:
+        raise ValueError(f"Mismatch for TDT {tdt_volume}, {tdt_number}: {match.group('P')} vs. CDLI {tdt_to_p[tdt_volume][tdt_number]}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
@@ -284,6 +320,8 @@ with open("LAK.html") as f:
         p_number = nik_to_p[nik_number]
       if not p_number and p_from_ct:
         p_number = p_from_ct
+      if not p_number and tdt_volume and tdt_number:
+        p_number = tdt_to_p[tdt_volume][tdt_number]
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
