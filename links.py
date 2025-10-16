@@ -60,12 +60,7 @@ for name in os.listdir():
           continue
         try:
           publications = [p.strip() for p in line[3].split(";")]
-          try:
-            reference = line[5].split(";")[publications.index(key)]
-          except ValueError as e:
-            print(e)
-            print(line)
-            continue
+          reference = line[5].split(";")[publications.index(key)]
           ct_range = reference.strip().removeprefix("pl. ").split(",")[0].split(" BM ")[0]
           try:
             if "-" in ct_range:
@@ -74,8 +69,7 @@ for name in os.listdir():
             else:
               cts = (int(ct_range),)
           except ValueError as e:
-            print(e)
-            print(line)
+            print(f"Weird plate number CT {number}, {ct_range} = P{int(line[0]):06}")
             continue
           for ct in cts:
             volume[ct].append(f"P{int(line[0]):06}")
@@ -83,11 +77,6 @@ for name in os.listdir():
           print(line)
           raise
     ct_to_p[number] = volume
-
-for number, volume in ct_to_p.items():
-  for ct, ps in volume.items():
-    if len(ps) > 1:
-      print(f"CT {number}, {ct} is ambiguous: {ps}")
 
 with open("Nik.csv") as f:
   for i, line in enumerate(csv.reader(f)):
