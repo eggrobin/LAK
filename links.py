@@ -16,6 +16,22 @@ ct_to_p : dict[int, dict[int, list[str]]] = {}
 
 ct_keys : list[str] = ["n/a", "King1896CT1"]
 
+# Key: LAK number, CT volume, CT plate, Deimel’s disambiguator.
+# Value: Artefact referred to, count of artefacts on the plate.
+CT_DISAMBIGUATION = {
+  ( "40", 5, 39, None) : "P108485",
+  ( "41", 7, 29, "a")  : "P108530",
+  ( "63", 7, 29, "b")  : "P108530",
+  ("148", 1,  1, None) : "P212953",  # TODO(egg): Maybe also P212954 (but not P212952).
+  ("156", 7, 25, "b")  : "P108521",
+  ("179", 5, 46, None) : "P108490",
+  ("180", 5, 46, None) : "P108490",
+  ("194", 3, 18, None) : "P108452",
+  ("194", 3, 16, "c")  : "P108446",
+  ("205", 7, 31, "a")  : "P108533",
+  ("214", 7, 18, "a")  : "P108507",
+}
+
 with open("CT.csv") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
@@ -61,7 +77,7 @@ for name in os.listdir():
 for number, volume in ct_to_p.items():
   for ct, ps in volume.items():
     if len(ps) > 1:
-      print(f"CT {number} {ct} is ambiguous: {ps}")
+      print(f"CT {number}, {ct} is ambiguous: {ps}")
 
 with open("Nik.csv") as f:
   for i, line in enumerate(csv.reader(f)):
@@ -169,6 +185,8 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   r"(?:RTC,?|<!--RTC-->) ?[0-9]{1,3}" +
   "|" +
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
+  "|" +
+  r"CT ?\d+, ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=\d)))?" +
   ")"
 )
 
@@ -229,12 +247,29 @@ with open("LAK.html") as f:
           nik_number = int(re.sub(r"^(<!--Nik-->|Nik\.? *)", "", artefact_designation))
       else:
         nik_number = None
+      ct_volume, ct_plate, p_from_ct = None, None, None
+      if artefact_designation.startswith("CT"):
+        m = re.match(r"CT ?(\d{1,2}), ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
+        ct_volume, ct_plate, ct_disambiguator = int(m.group(1)), int(m.group(2)), m.group(3)
+        candidates = ct_to_p[ct_volume][ct_plate]
+        if candidates:
+          disambiguation = CT_DISAMBIGUATION.get((lak_number, ct_volume, ct_plate, ct_disambiguator))
+          if disambiguation:
+            if disambiguation not in candidates:
+              raise ValueError(f"Disambiguation {disambiguation} not in candidates {candidates} for CT {ct_volume}, {ct_plate}")
+            p_from_ct = disambiguation
+          elif len(candidates) > 1:
+            raise ValueError(f"Ambiguous reference {artefact_designation} in LAK {lak_number} could be any of the following:{''.join(f'{chr(0xA)}    http://cdli.earth/{n}' for n in ct_to_p[ct_volume][ct_plate])}")
+          else:
+            p_from_ct, = candidates
       if p_number and dp_number and dp_to_p[dp_number] != p_number:
         raise ValueError(f"Mismatch for DP {vat_number}: {match.group('P')} vs. CDLI {dp_to_p[dp_number]}")
       if p_number and rtc_number and rtc_to_p[rtc_number] != p_number:
         raise ValueError(f"Mismatch for RTC {vat_number}: {match.group('P')} vs. CDLI {rtc_to_p[rtc_number]}")
       if p_number and nik_number and nik_to_p[nik_number] != p_number:
         raise ValueError(f"Mismatch for Nik {vat_number}: {match.group('P')} vs. CDLI {nik_to_p[nik_number]}")
+      if p_number and ct_volume and p_from_ct != p_number:
+        raise ValueError(f"Mismatch for CT {ct_volume}, {ct_plate}: {match.group('P')} vs. CDLI {p_from_ct}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
@@ -247,11 +282,13 @@ with open("LAK.html") as f:
         p_number = dp_to_p[dp_number]
       if not p_number and nik_number:
         p_number = nik_to_p[nik_number]
+      if not p_number and p_from_ct:
+        p_number = p_from_ct
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:(?<=[a-z])(?=\d)|(?<=\))|\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
