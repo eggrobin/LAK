@@ -84,16 +84,16 @@ assign("𒌘", f"u{ord('𒌙'):x}")
 add_alternate("𒋧", "uF00B4")
 add_alternate("𒋧", "uF00B4.1")
 
-# TODO(egg): Needs OSL PR.
+# https://github.com/oracc/osl/pull/44.
 add_alternate("𒅔", "uF00B5")
 
-# TODO(egg): This needs an OSL PR + CDLI & ePSD2 changes.
+# https://github.com/oracc/osl/pull/45.
 add_ligature("𒊺𒉭", "uF00B6")
 
-# TODO(egg): This needs an OSL PR + CDLI & ePSD2 changes.
+# https://github.com/oracc/osl/pull/46.
 add_alternate("𒍜", "uF00BB")
 
-# TODO(egg): This needs an OSL PR.
+# https://github.com/oracc/osl/pull/47.
 add_alternate("𒋤", "uF00BD")
 
 # TODO(egg): This needs an OSL PR.
