@@ -93,6 +93,12 @@ add_ligature("𒊺𒉭", "uF00B6")
 # TODO(egg): This needs an OSL PR + CDLI & ePSD2 changes.
 add_alternate("𒍜", "uF00BB")
 
+# TODO(egg): This needs an OSL PR.
+add_alternate("𒋤", "uF00BD")
+
+# TODO(egg): This needs an OSL PR.
+add_alternate("𒀮", "uF00BC")
+
 print("WORKAROUND:")
 assign("𒌃", "uF00B7")
 add_ligature("𒌑𒌃", "uF00B7")
