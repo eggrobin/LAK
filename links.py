@@ -20,23 +20,24 @@ ct_keys : list[str] = ["n/a", "King1896CT1"]
 # Key: LAK number, CT volume, CT plate, Deimel’s disambiguator.
 # Value: Artefact referred to, count of artefacts on the plate.
 CT_DISAMBIGUATION = {
-  ( "16" ,  7,  4,  "a") : "P315281",
-  ( "40" ,  5, 39, None) : "P108485",
-  ( "41" ,  7, 29,  "a") : "P108530",
-  ( "48" ,  5, 50,  "b") : "P108493",
-  ( "63" ,  7, 29,  "b") : "P108530",
-  ( "63" ,  7, 43,  "a") : "P108555",
-  ("148" ,  1,  1, None) : "P212953",  # TODO(egg): Maybe also P212954 (but not P212952).
-  ("156" ,  7, 25,  "b") : "P108521",
-  ("179" ,  5, 46, None) : "P108490",
-  ("180" ,  5, 46, None) : "P108490",
-  ("193" , 10, 46,  "c") : "P108641",
-  ("194" ,  3, 18, None) : "P108452",
-  ("194" ,  3, 16,  "c") : "P108446",
-  ("205" ,  7, 31,  "a") : "P108533",
-  ("214" ,  7, 18,  "a") : "P108507",
-  ("221b",  7, 38,  "b") : "P108548",
-  ("240" , 32, 36, None) : "P108676",
+  ( "16" ,  7,  4,  "a") : ("P315281", 4),
+  ( "40" ,  5, 39, None) : ("P108485", 2),
+  ( "41" ,  7, 29,  "a") : ("P108530", 2),
+  ( "48" ,  5, 50,  "b") : ("P108493", 2),
+  ( "63" ,  7, 29,  "b") : ("P108530", 2),
+  ( "63" ,  7, 43,  "a") : ("P108555", 2),
+  # TODO(egg): Maybe also P212954 (but not P212952).
+  ("148" ,  1,  1, None) : ("P212953", 3),
+  ("156" ,  7, 25,  "b") : ("P108521", 2),
+  ("179" ,  5, 46, None) : ("P108490", 2),
+  ("180" ,  5, 46, None) : ("P108490", 2),
+  ("193" , 10, 46,  "c") : ("P108641", 4),
+  ("194" ,  3, 18, None) : ("P108452", 5),
+  ("194" ,  3, 16,  "c") : ("P108446", 4),
+  ("205" ,  7, 31,  "a") : ("P108533", 2),
+  ("214" ,  7, 18,  "a") : ("P108507", 2),
+  ("221b",  7, 38,  "b") : ("P108548", 2),
+  ("240" , 32, 36, None) : ("P108676", 2),
 }
 
 with open("CT.csv") as f:
@@ -283,13 +284,25 @@ with open("LAK.html") as f:
         ct_volume, ct_plate, ct_disambiguator = int(m.group(1)), int(m.group(2)), m.group(3)
         candidates = ct_to_p[ct_volume][ct_plate]
         if candidates:
-          disambiguation = CT_DISAMBIGUATION.get((lak_number, ct_volume, ct_plate, ct_disambiguator))
+          disambiguation, count = CT_DISAMBIGUATION.get(
+            (lak_number, ct_volume, ct_plate, ct_disambiguator),
+            (None, 1))
           if disambiguation:
+            if count != len(candidates):
+              raise ValueError(f"""Disambiguation of reference {
+                artefact_designation} in LAK {lak_number}: Expected {
+                count}, got {len(candidates)} candidates""")
             if disambiguation not in candidates:
-              raise ValueError(f"Disambiguation {disambiguation} not in candidates {candidates} for CT {ct_volume}, {ct_plate}")
+              raise ValueError(f"""Disambiguation {
+                disambiguation} not in candidates {candidates} for CT {
+                ct_volume}, {ct_plate}""")
             p_from_ct = disambiguation
           elif len(candidates) > 1:
-            raise ValueError(f"Ambiguous reference {artefact_designation} in LAK {lak_number} could be any of the following:{''.join(f'{chr(0xA)}    http://cdli.earth/{n}' for n in ct_to_p[ct_volume][ct_plate])}")
+            raise ValueError(f"""Ambiguous reference {
+              artefact_designation} in LAK {
+              lak_number} could be any of the following:{
+              ''.join(f'{chr(0xA)}    http://cdli.earth/{n}'
+                      for n in ct_to_p[ct_volume][ct_plate])}""")
           else:
             p_from_ct, = candidates
       tdt_volume, tdt_number = None, None
