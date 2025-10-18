@@ -65,7 +65,7 @@ for name in os.listdir():
         try:
           publications = [p.strip() for p in line[3].split(";")]
           reference = line[5].split(";")[publications.index(key)]
-          ct_range = reference.strip().removeprefix("pl. ").split(",")[0].split(" BM ")[0]
+          ct_range = reference.strip().removeprefix("pl. ").split(",")[0].split(" BM ")[0].split("(")[0]
           try:
             if "-" in ct_range:
               first, last = ct_range.split("-")
@@ -81,6 +81,11 @@ for name in os.listdir():
           print(line)
           raise
     ct_to_p[number] = volume
+
+  
+# See this mess: https://cdli.earth/publications/1734640.
+# Unfortunately this kind of join of publications means we do not get those in the CSV dumps for a CT volume.
+ct_to_p[25][8] = ["P365753"]
 
 with open("Nik.csv") as f:
   for i, line in enumerate(csv.reader(f)):
