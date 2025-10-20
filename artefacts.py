@@ -1,4 +1,5 @@
 NON_VAT_ARTEFACTS = {
+  'The E. A. Hoffman <br>archaic Tabl.' : 'P005986',
   'Tabl. שׁ, Penns.' : 'P005988',
   'Taf. שׁ, Penns.' : 'P005988',
   'Brit. Mus. 86261' : 'P005995',
@@ -99,6 +100,7 @@ NON_VAT_ARTEFACTS = {
   'RTC 353' : 'P128506',
   'RTC 389' : 'P128542',
   'RTC 413' : 'P128566',
+  'de Gen. Trouv. d. Dreh. 2' : 'P134675',
   '116' : 'P134880',
   '117' : 'P134881',
   'Legr. RdU 182' : 'P134946',
