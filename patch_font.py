@@ -99,6 +99,8 @@ add_alternate("𒋤", "uF00BD")
 # TODO(egg): This needs an OSL PR.
 add_alternate("𒀮", "uF00BC")
 
+add_alternate("𒊾", "uF00CA")
+
 print("WORKAROUND:")
 assign("𒌃", "uF00B7")
 add_ligature("𒌑𒌃", "uF00B7")
