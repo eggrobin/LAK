@@ -221,7 +221,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:<!--)?CT ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   "|" +
-  r"(?:<!--)?TDT ?\d+(?:,? ?II|,|-->) ?\d+" +
+  r"(?:<!--)?TDT(?:-->)? ?\d+(?:,? ?II|,|-->) ?\d+" +
   ")"
 )
 
@@ -312,7 +312,7 @@ with open("LAK.html") as f:
             p_from_ct, = candidates
       tdt_volume, tdt_number = None, None
       if artefact_designation.removeprefix("<!--").startswith("TDT"):
-        m = re.match(r"(?:<!--)?TDT ?([123])(?:,? ?II|,|-->) ?(\d+)$", artefact_designation)
+        m = re.match(r"(?:<!--)?TDT(?:-->)? ?([123])(?:,? ?II|,|-->) ?(\d+)$", artefact_designation)
         if not m:
           raise ValueError(f"Could not parse TDT reference {artefact_designation}")
         tdt_volume, tdt_number = int(m.group(1)), int(m.group(2))
