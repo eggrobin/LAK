@@ -100,6 +100,8 @@ add_alternate("𒋤", "uF00BD")
 add_alternate("𒀮", "uF00BC")
 
 add_alternate("𒊾", "uF00CA")
+for i in range(1, 8):
+  add_alternate("𒊾", f"uF00CA.{i}")
 
 print("WORKAROUND:")
 assign("𒌃", "uF00B7")
