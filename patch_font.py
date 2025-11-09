@@ -126,5 +126,9 @@ assign("𒑍", f"u{ord('𒄿'):X}.2")
 add_ligature("𒋗𒆸𒆸", f"u{ord('𒋗'):X}_u{ord('𒆸'):X}.liga.3")
 add_alternate("\U000F00B8", f"uF00AF.1")
 
+# Consistently use U+F0116 as our PUA code point for UŠTIL, even in compounds.
+add_ligature("𒆜\U000F0116", "uF3902")
+add_alternate("\U000F0116", "uF3902.1")
+
 font.generate("LAK.ttf")
 font.close()
