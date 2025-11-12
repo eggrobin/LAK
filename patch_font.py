@@ -120,6 +120,9 @@ add_ligature("𒄑𒋛", f"u{ord('𒌝'):X}.1")
 add_ligature("𒉚𒀀", f"u{ord('𒉚'):X}.6")
 assign("𒉛", f"u{ord('𒉚'):X}.8")
 
+# Needs OSL PR.
+add_ligature("𒊾𒁇", f"uF00C7")
+
 print("# pp. 16–18 corrections")
 assign("𒑎", f"u{ord('𒑀'):X}.1")
 assign("𒑍", f"u{ord('𒄿'):X}.2")
