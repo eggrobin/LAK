@@ -92,6 +92,11 @@ add_ligature("𒊺𒉭", "uF00B6")
 
 # https://github.com/oracc/osl/pull/46.
 add_alternate("𒍜", "uF00BB")
+add_alternate("𒍜", "uF00BB.1")
+add_alternate("𒍜", "uF00BB.2")
+add_alternate("𒍜", "uF00BB.3")
+
+assign("𒈶", "u12238.2")
 
 # https://github.com/oracc/osl/pull/47.
 add_alternate("𒋤", "uF00BD")
