@@ -247,7 +247,7 @@ with open("LAK.html") as f:
       if referenced_lak_number < max_lak_number:
         return f'<a href="#{referenced_lak_number}{suffix}">n. {referenced_lak_number}{f"<sup>{suffix}</sup>" if suffix else ""}</a>'
       return match.group(0)
-    line = re.sub(r'(?<!\w)(?:<a href="#(?P<href>\d+[a-z]?)">)?n\. (?P<n>\d+)(?:<sup>(?P<suffix>[a-z]\)?)</sup>)?(?:</a>)?', linkify_internal, line)
+    line = re.sub(r'(?<!\w)(?:<a href="#(?P<href>\d+[a-z]?)">)?n\. (?P<n>\d+)(?:<sup>(?P<suffix>[a-z])\)?</sup>)?(?:</a>)?', linkify_internal, line)
     def linkify_artefact(match: re.Match[str]):
       vat_number = match.group("VAT") or match.group("Linked_VAT")
       vat_number = int(vat_number) if vat_number else None
