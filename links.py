@@ -42,9 +42,12 @@ CT_DISAMBIGUATION = {
   ("287" , 10, 49,  "d") : ("P108656", 4),
   ("289" ,  7, 20,  "b") : ("P108512", 2),
   ("308" ,  7, 21, None) : ("P108513", 2),
+  ("321" ,  5, 46, None) : ("P108489", 2),
 }
 
-with open("CT.csv") as f:
+KNOWN_AMBIGUITIES = set(("CT 5, 46",))
+
+with open("CT.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
       continue
@@ -60,7 +63,7 @@ for name in os.listdir():
     number = int(match.group(1))
     key = ct_keys[number]
     volume = defaultdict(list)
-    with open(name) as f:
+    with open(name, encoding="utf-8") as f:
       for i, line in enumerate(csv.reader(f)):
         if i == 0:
           continue
@@ -91,7 +94,7 @@ for name in os.listdir():
 # Unfortunately this kind of join of publications means we do not get those in the CSV dumps for a CT volume.
 ct_to_p[25][8] = ["P365753"]
 
-with open("Nik.csv") as f:
+with open("Nik.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
       continue
@@ -108,7 +111,7 @@ with open("Nik.csv") as f:
 for volume, key in ((1, "Thureau-Dangin1910ITT1"),
                     (2, "Genouillac1910-1911ITT2"),
                     (3, "deGenouillac1912ITT3")):  # Argh!
-  with open(f"TDT{volume}.csv") as f:
+  with open(f"TDT{volume}.csv", encoding="utf-8") as f:
     tdt_volume = {}
     for i, line in enumerate(csv.reader(f)):
       if i == 0:
@@ -130,7 +133,7 @@ for volume, key in ((1, "Thureau-Dangin1910ITT1"),
         raise
       tdt_to_p[volume] = tdt_volume
 
-with open("Nik.csv") as f:
+with open("Nik.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
       continue
@@ -144,7 +147,7 @@ with open("Nik.csv") as f:
       print(line)
       raise
 
-with open("DP.csv") as f:
+with open("DP.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
       continue
@@ -158,7 +161,7 @@ with open("DP.csv") as f:
       print(line)
       raise
 
-with open("RTC.csv") as f:
+with open("RTC.csv", encoding="utf-8") as f:
   heading = []
   for i, line in enumerate(csv.reader(f)):
     if i == 0:
@@ -186,11 +189,11 @@ with open("RTC.csv") as f:
         print(f"{i:2} {heading[i]:30} {field!r}")
       raise
 
-with open("../edsl/lak/etc/lak-refs.tsv") as f:
+with open("../edsl/lak/etc/lak-refs.tsv", encoding="utf-8") as f:
   for line in csv.reader(f, delimiter="\t"):
     refs[line[0].removeprefix("LAK").lstrip("0")] = [int(n) for n in line[1:] if n and n != "TSA_6"]
 
-with open("../edsl/lak/etc/vat.P") as f:
+with open("../edsl/lak/etc/vat.P", encoding="utf-8") as f:
   for line in csv.reader(f, delimiter="\t"):
     _, vat_number = line[0].split()
     vat_number = int(vat_number)
@@ -203,7 +206,7 @@ vat_numbers_seen : set[int] = set()
 artefact_designation_to_p_number : dict[str, str] = {}
 
 max_lak_number = 0
-with open("LAK.html") as f:
+with open("LAK.html", encoding="utf-8") as f:
   for line in f.readlines():
     match = re.search(r'id=\"(\d+)[a-z]?\"', line)
     if match:
@@ -233,7 +236,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
 # (DP(?:-->)? ?\d+</a>, ?\d+; *)(\d+)
 # with $1<!--DP-->$2
 
-with open("LAK.html") as f:
+with open("LAK.html", encoding="utf-8") as f:
   for line in f.readlines():
     if '<table class="signlist">' in line:
       in_signlist = True
@@ -259,8 +262,8 @@ with open("LAK.html") as f:
         artefact_designation = match.group("VAT") or match.group("Linked_VAT") or match.group("Other_Artefact") or match.group("Non_VAT")
         if artefact_designation not in artefact_designation_to_p_number:
           artefact_designation_to_p_number[artefact_designation] = p_number
-        if artefact_designation_to_p_number[artefact_designation] != p_number:
-          raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_p_number[artefact_designation]} then {link}")
+        if artefact_designation_to_p_number[artefact_designation] != p_number and artefact_designation not in KNOWN_AMBIGUITIES:
+          raise ValueError(f"Mismatch for {artefact_designation}: Linked to {artefact_designation_to_p_number[artefact_designation]} then {p_number}")
       else:
         artefact_designation = match.group()
       if artefact_designation.removeprefix("<!--").startswith("DP"):
@@ -366,12 +369,12 @@ with open("LAK.html") as f:
       vat_numbers_seen = set()
     lines.append(line)
 
-with open("LAK.html", "w") as f:
+with open("LAK.html", "w", encoding="utf-8") as f:
   f.writelines(lines)
 
 p_number_to_artefact_designation : dict[str, set[str]] = defaultdict(set)
 
-with open("artefacts.py", "w") as f:
+with open("artefacts.py", "w", encoding="utf-8") as f:
   print("NON_VAT_ARTEFACTS = {", file=f)
   for designation, p_number in sorted(artefact_designation_to_p_number.items(), key=lambda kv: kv[1]):
     p_number_to_artefact_designation[p_number].add(designation)
@@ -379,6 +382,6 @@ with open("artefacts.py", "w") as f:
       print(f"  {designation!r} : {p_number!r},", file=f)
   print("}", file=f)
 
-with open("links.log", "w") as f:
+with open("links.log", "w", encoding="utf-8") as f:
   for p_number, designations in sorted(p_number_to_artefact_designation.items()):
     print(p_number, sorted(designations), file=f)
