@@ -102,6 +102,9 @@ assign("𒈶", "u12238.2")
 add_alternate("𒋤", "uF00BD")
 
 # TODO(egg): This needs an OSL PR.
+add_alternate("𒅾", "uF00D2")
+
+# TODO(egg): This needs an OSL PR.
 add_alternate("𒀮", "uF00BC")
 
 add_alternate("𒊾", "uF00CA")
