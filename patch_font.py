@@ -141,5 +141,8 @@ add_alternate("\U000F00B8", f"uF00AF.1")
 add_ligature("𒆜\U000F0116", "uF3902")
 add_alternate("\U000F0116", "uF3902.1")
 
+# @form
+assign("𒈕", "uF00D4")
+
 font.generate("LAK.ttf")
 font.close()
