@@ -144,5 +144,8 @@ add_alternate("\U000F0116", "uF3902.1")
 # @form
 assign("𒈕", "uF00D4")
 
+# Needs OSL PR.
+assign("𒄱", "uF00D6")
+
 font.generate("LAK.ttf")
 font.close()
