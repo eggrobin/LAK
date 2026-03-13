@@ -22,7 +22,7 @@ NON_VAT_ARTEFACTS = {
   'RTC6' : 'P010560',
   'RTC 7' : 'P010561',
   'RTC 8' : 'P010562',
-  '<span class="diplomatic-column upward from-baseline"><span class="diplomatic-row">RTC,</span><ins class="diplomatic">8</ins></span>' : 'P010562',
+  '<span class="diplomatic-column upward from-baseline"><span class="diplomatic-row">RTC,</span><ins class="diplomatic above">8</ins></span>' : 'P010562',
   'RTC, 8' : 'P010562',
   'CT 1,5' : 'P108393',
   'CT 1,4' : 'P108393',
