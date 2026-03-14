@@ -147,5 +147,8 @@ assign("𒈕", "uF00D4")
 # Needs OSL PR.
 assign("𒄱", "uF00D6")
 
+# @form of a . form of a × sign.  At least needs merging under one @sign.
+assign("𒀚", "uF00DA")
+
 font.generate("LAK.ttf")
 font.close()
