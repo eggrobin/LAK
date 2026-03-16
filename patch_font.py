@@ -150,5 +150,8 @@ assign("𒄱", "uF00D6")
 # @form of a . form of a × sign.  At least needs merging under one @sign.
 assign("𒀚", "uF00DA")
 
+# @form.
+assign("𒁦", "uF00DC")
+
 font.generate("LAK.ttf")
 font.close()
