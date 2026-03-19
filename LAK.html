@@ -683,13 +683,13 @@
     for (var input of document.getElementsByTagName("input")) {
       input.onclick = update;
     }
+    update_from_query();
+    set_top_element();
     window.onscroll = set_top_element;
     window.visualViewport.onresize = () => {
       update_from_query();
       top_element.scrollIntoView();
     };
-    update_from_query();
-    set_top_element();
   }
   </script>
 </head>
