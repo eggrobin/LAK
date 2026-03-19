@@ -309,6 +309,10 @@
       vertical-align: text-top;
     }
 
+    .reflow table.inline-tablet.diplomatic-overhang-bottom {
+      vertical-align: middle;
+    }
+
     .open-damage-right:before {
       display: inline-block;
       width: 0;
@@ -338,6 +342,14 @@
       padding-right: 2px;
     }
 
+    .reflow .case-ruling-right-when-reflowed {
+      border-right: solid;
+    }
+
+    .reflow br {
+      display: none;
+    }
+
     .close {
       line-height: 70%;
     }
@@ -352,6 +364,14 @@
 
     tr.page-header:not(#p1) th {
       border-top: 1px dashed;
+    }
+
+    .reflow tr.page-header {
+      display: none;
+    }
+
+    .reflow tr.page-footer {
+      display: none;
     }
 
     nav.settings {
@@ -409,6 +429,10 @@
       --hyphen-newline: "-\A";
     }
 
+    .reflow span.hyphenated-linebreak {
+      --hyphen-newline: "";
+    }
+
     span.hyphenated-linebreak::before {
       content: var(--hyphen-newline);
       white-space: pre;
@@ -444,6 +468,11 @@
       vertical-align: middle;
     }
 
+    .reflow .diplomatic-column {
+      display: inline;
+      vertical-align: baseline;
+    }
+
     .diplomatic-brace-right > .label::before {
       vertical-align: middle;
       content: var(--brace-label-before);
@@ -454,12 +483,19 @@
       --brace-label-before: "}";
     }
 
+    .reflow .diplomatic-brace-right {
+      --brace-label-before: "";
+    }
+
     .diplomatic-row {
       display: inline-block;
     }
-
     .diplomatic-border-bottom {
       border-bottom: solid;
+    }
+
+    .reflow .diplomatic-border-bottom {
+      border-bottom: none;
     }
 
     .diplomatic-table {
@@ -474,14 +510,34 @@
       display: table-cell;
     }
 
+    .reflow .diplomatic-table {
+      display: inline;
+    }
+
+    .reflow .diplomatic-row {
+      display: inline;
+    }
+
+    .reflow .diplomatic-cell {
+      display: inline;
+    }
+
     .diplomatic-space {
       display: inline-block;
+    }
+
+    .reflow .diplomatic-space {
+      display: none;
     }
 
     .diplomatic-overhang-bottom {
       display: inline-block;
       vertical-align: text-top;
       height: 1rem;
+    }
+
+    .reflow .diplomatic-overhang-bottom {
+      display: inline;
     }
 
     .middle {
@@ -521,6 +577,15 @@
       text-decoration: overline;
     }
 
+    .reflow ins.diplomatic::after {
+      display: none
+    }
+
+    .reflow ins.diplomatic {
+      display: inline;
+      text-decoration: none;
+    }
+
     ul.TODO {
       list-style-type: '\1256B'
     }
@@ -558,65 +623,14 @@
     }
     document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
     document.querySelector("table.signlist").className = reflow ? "signlist reflow" : "signlist";
-    for (const ins of document.querySelectorAll("ins.diplomatic")) {
-      ins.style.display = reflow ? "inline" : "";
-      ins.style["text-decoration"] = reflow ? "none" : "";
-      ins.style.setProperty("--insertion-caret", reflow ? "\"\"" : "");
-    }
-    for (const element of document.querySelectorAll(".diplomatic-column")) {
-      element.style.display = reflow ? "inline" : "";
-      element.style["vertical-align"] = reflow ? "baseline" : "";
-    } reflow ? "none" : "";
-    for (const element of document.querySelectorAll(".diplomatic-table")) {
-      element.style.display = reflow ? "inline" : "";
-    }
-    for (const element of document.querySelectorAll(".diplomatic-border-bottom")) {
-      element.style["border-bottom"] = reflow ? "none" : "";
-    }
-    for (const element of document.querySelectorAll(".case-ruling-right-when-reflowed")) {
-      element.style["border-right"] = reflow ? "solid" : "";
-    }
-    for (const element of document.querySelectorAll(".diplomatic-row")) {
-      element.style.display = reflow ? "inline" : "";
-    }
-    for (const element of document.querySelectorAll(".diplomatic-cell")) {
-      element.style.display = reflow ? "inline" : "";
-    }
-    for (const element of document.querySelectorAll(".diplomatic-space")) {
-      element.style.display = reflow ? "none" : "";
-    }
-    for (const element of document.querySelectorAll(".diplomatic-overhang-bottom")) {
-      element.style.display = reflow ? "inline" : "";
-    }
-    for (const table of document.querySelectorAll("table.inline-tablet.diplomatic-overhang-bottom")) {
-      table.style["vertical-align"] = reflow ? "middle" : "";
-    }
-    for (const br of document.querySelectorAll("br")) {
-      br.style.display = reflow ? "none" : "";
-    }
     for (const span of document.querySelectorAll("span.hyphenated-linebreak")) {
       if (reflow) {
-        span.style.setProperty("--hyphen-newline", "\"\"");
         span.textContent = "\u00AD";
       } else {
-        span.style = "";
         span.textContent = "";
       }
     }
-    for (const element of document.querySelectorAll(".diplomatic-brace-right")) {
-      if (reflow) {
-        element.style.setProperty("--brace-label-before", "\"\"");
-      } else {
-        element.style = "";
-      }
-    }
     if (reflow) {
-      for (const tr of document.querySelectorAll("tr.page-header")) {
-        tr.style.display = "none";
-      }
-      for (const tr of document.querySelectorAll("tr.page-footer")) {
-        tr.style.display = "none";
-      }
       for (const page_header of document.querySelectorAll("tr.page-header")) {
         const next_row = page_header.nextElementSibling;
         if (next_row &&
