@@ -611,7 +611,6 @@
         !params.has("reflow");
     update(false);
   }
-
   function update(push_history = true) {
     facsimile = document.querySelector('input[id="facsimile"]').checked;
     reflow = document.querySelector('input[id="reflow"]').checked;
@@ -626,8 +625,8 @@
       var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + query.join("&");
       window.history.pushState({ path: newurl }, '', newurl);
     }
-    for (const tr of document.querySelectorAll("td.facsimile")) {
-      tr.style.display = facsimile ? "" : "none";
+    for (const td of document.querySelectorAll("td.facsimile")) {
+      td.style.display = facsimile ? "" : "none";
     }
     if (document.querySelector("table.signlist").classList.contains("reflow") === reflow) {
       return;
@@ -650,8 +649,6 @@
           const page_footer = page_header.previousElementSibling;
           const starting_cell = page_footer.previousElementSibling
               .firstElementChild.nextElementSibling.nextElementSibling;
-          console.info(page_header);
-          console.info(next_row);
           starting_cell.innerHTML +=
               '<div class="moved-from-next-page">' +
               next_row.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
@@ -665,11 +662,33 @@
       }
     }
   }
+
+  /**@type {Element}*/
+  let top_element;
+
+  function set_top_element() {
+    for (const e of document.querySelectorAll("p,th")) {
+      let y = e.offsetHeight / 10;
+      for (let element = e; element; element = element.offsetParent) {
+        y += element.offsetTop;
+      }
+      if (window.scrollY <= y) {
+        top_element = e;
+        return;
+      }
+    }
+  }
+
   window.onload = function () {
     for (var input of document.getElementsByTagName("input")) {
       input.onclick = update;
-      window.visualViewport.onresize = update_from_query;
     }
+    window.onscroll = set_top_element;
+    window.visualViewport.onresize = () => {
+      update_from_query();
+      top_element.scrollIntoView();
+    };
+    set_top_element();
     update_from_query();
   }
   </script>
