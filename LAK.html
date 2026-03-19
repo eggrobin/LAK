@@ -660,6 +660,9 @@
       for (const element of document.querySelectorAll(".moved-from-next-page")) {
         element.remove();
       }
+      for (const element of document.querySelectorAll(".signlist>tbody>tr")) {
+        element.style.display = "";
+      }
     }
   }
 
