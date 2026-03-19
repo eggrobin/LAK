@@ -663,18 +663,14 @@
     }
   }
 
-  /**@type {Element}*/
-  let top_element;
-
-  function set_top_element() {
+  function get_top_element() {
     for (const e of document.querySelectorAll("p,th")) {
       let y = e.offsetHeight / 10;
       for (let element = e; element; element = element.offsetParent) {
         y += element.offsetTop;
       }
       if (window.scrollY <= y) {
-        top_element = e;
-        return;
+        return e;
       }
     }
   }
@@ -683,11 +679,16 @@
     for (var input of document.getElementsByTagName("input")) {
       input.onclick = update;
     }
-    window.visualViewport.onresize = () => {
-      set_top_element();
-      update_from_query();
-      top_element.scrollIntoView();
-    };
+    window.visualViewport.onresize = update_from_query;
+    setTimeout(
+      () => {
+        window.visualViewport.onresize = () => {
+          const top_element = get_top_element();
+          update_from_query();
+          top_element.scrollIntoView();
+        };
+      },
+      1000);
     update_from_query();
   }
   </script>
