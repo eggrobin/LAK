@@ -153,5 +153,8 @@ assign("𒀚", "uF00DA")
 # @form.
 assign("𒁦", "uF00DC")
 
+# Needs OSL PR.
+add_ligature("𒋙𒉣𒇬", "uF00DD")
+
 font.generate("LAK.ttf")
 font.close()
