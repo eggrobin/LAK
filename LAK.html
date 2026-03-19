@@ -663,14 +663,18 @@
     }
   }
 
-  function get_top_element() {
+  /**@type {Element}*/
+  let top_element;
+
+  function set_top_element() {
     for (const e of document.querySelectorAll("p,th")) {
       let y = e.offsetHeight / 10;
       for (let element = e; element; element = element.offsetParent) {
         y += element.offsetTop;
       }
       if (window.scrollY <= y) {
-        return e;
+        top_element = e;
+        return;
       }
     }
   }
@@ -682,8 +686,9 @@
     window.visualViewport.onresize = update_from_query;
     setTimeout(
       () => {
+        set_top_element();
+        window.onscroll = set_top_element;
         window.visualViewport.onresize = () => {
-          const top_element = get_top_element();
           update_from_query();
           top_element.scrollIntoView();
         };
