@@ -603,8 +603,12 @@
     params = (new URL(document.location)).searchParams;
     document.querySelector('input[id="facsimile"]').checked =
         params.has("facsimile") ? params.get("facsimile") === "true" : window.matchMedia("(width >= 75rem)").matches;
+    document.querySelector('input[id="facsimile"]').indeterminate =
+        !params.has("facsimile")
     document.querySelector('input[id="reflow"]').checked =
         params.has("reflow") ? params.get("reflow") === "true" : window.matchMedia("(width <= 50rem)").matches;
+    document.querySelector('input[id="reflow"]').indeterminate =
+        !params.has("reflow");
     update(false);
   }
 
@@ -613,16 +617,23 @@
     reflow = document.querySelector('input[id="reflow"]').checked;
     if (push_history) {
       let query = [];
-      query.push(`facsimile=${facsimile}`);
-      query.push(`reflow=${reflow}`);
+      if (!document.querySelector('input[id="facsimile"]').indeterminate) {
+        query.push(`facsimile=${facsimile}`);
+      }
+      if (!document.querySelector('input[id="reflow"]').indeterminate) {
+        query.push(`reflow=${reflow}`);
+      }
       var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + query.join("&");
       window.history.pushState({ path: newurl }, '', newurl);
     }
     for (const tr of document.querySelectorAll("td.facsimile")) {
       tr.style.display = facsimile ? "" : "none";
     }
-    document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
+    if (document.querySelector("table.signlist").classList.contains("reflow") === reflow) {
+      return;
+    }
     document.querySelector("table.signlist").className = reflow ? "signlist reflow" : "signlist";
+    document.querySelector("table.signlist").style.width = reflow ? "95vw" : "";
     for (const span of document.querySelectorAll("span.hyphenated-linebreak")) {
       if (reflow) {
         span.textContent = "\u00AD";
@@ -639,6 +650,8 @@
           const page_footer = page_header.previousElementSibling;
           const starting_cell = page_footer.previousElementSibling
               .firstElementChild.nextElementSibling.nextElementSibling;
+          console.info(page_header);
+          console.info(next_row);
           starting_cell.innerHTML +=
               '<div class="moved-from-next-page">' +
               next_row.firstElementChild.nextElementSibling.nextElementSibling.innerHTML
@@ -655,6 +668,7 @@
   window.onload = function () {
     for (var input of document.getElementsByTagName("input")) {
       input.onclick = update;
+      window.visualViewport.onresize = update_from_query;
     }
     update_from_query();
   }
@@ -3440,9 +3454,7 @@
     </tr>
 
     <tr class="page-footer"><td colspan="3"><td>3*</td><td colspan="2"></td></tr>
-
     <tr class="page-header" id="p20"><th colspan="4">20</th><td colspan="2"></td></tr>
-    <tr class="page-footer"><td colspan="4"></td><td colspan="2"></td></tr>
 
     <tr>
       <th id="171">171</th>
