@@ -203,6 +203,11 @@ with open("../edsl/lak/etc/vat.P", encoding="utf-8") as f:
     if p_number:
       vat_to_p[vat_number] = p_number
 
+# Extra VAT numbers from the notes.
+vat_to_p[4417] = "P020217"
+vat_to_p[4424] = "P020143"
+vat_to_p[4455] = "P020243"
+
 lak_number : str|None = None
 vat_numbers_seen : set[int] = set()
 artefact_designation_to_p_number : dict[str, str] = {}
