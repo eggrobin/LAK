@@ -156,5 +156,7 @@ assign("𒁦", "uF00DC")
 # Needs OSL PR.
 add_ligature("𒋙𒉣𒇬", "uF00DD")
 
+add_ligature("𒉿𒀀", "uF3904")
+
 font.generate("LAK.ttf")
 font.close()
