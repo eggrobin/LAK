@@ -234,7 +234,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   "|" +
-  r"(?:<!--)?CT ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
+  r"(?:<!--)?CT(?:-->)? ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   "|" +
   r"(?:<!--)?TDT(?:-->)? ?\d+(?:,? ?II|,|-->) ?\d+" +
   ")"
@@ -300,7 +300,7 @@ with open("LAK.html", encoding="utf-8") as f:
         nik_number = None
       ct_volume, ct_plate, p_from_ct = None, None, None
       if artefact_designation.removeprefix("<!--").startswith("CT"):
-        m = re.match(r"(?:<!--)?CT ?(\d{1,2})(?:,|-->) ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
+        m = re.match(r"(?:<!--)?CT(?:-->)? ?(\d{1,2})(?:,|-->) ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
         ct_volume, ct_plate, ct_disambiguator = int(m.group(1)), int(m.group(2)), m.group(3)
         candidates = ct_to_p[ct_volume][ct_plate]
         if candidates:
