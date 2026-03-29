@@ -47,6 +47,9 @@ CT_DISAMBIGUATION = {
   ("380" ,  3, 11, None) : ("P108432", 3),
   ("409" ,  7, 21,  "a") : ("P108513", 2),
   ("465" ,  7, 32,  "a") : ("P108535", 2),
+  ("474" , 32,  8, None) : ("P222821", 3), # The reference actually has the BM number but we don’t parse that.
+  ("474" ,  7, 46,  "b") : ("P108562", 2),
+  ("474" ,  7, 45,  "b") : ("P108559", 2), # Maybe? Is he referring to the 𒀛?
 }
 
 KNOWN_AMBIGUITIES = set(("CT 5, 46",))
