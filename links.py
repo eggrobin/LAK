@@ -46,6 +46,7 @@ CT_DISAMBIGUATION = {
   ("353" ,  7, 28,  "a") : ("P108527", 2),
   ("380" ,  3, 11, None) : ("P108432", 3),
   ("409" ,  7, 21,  "a") : ("P108513", 2),
+  ("465" ,  7, 32,  "a") : ("P108535", 2),
 }
 
 KNOWN_AMBIGUITIES = set(("CT 5, 46",))
@@ -135,6 +136,8 @@ for volume, key in ((1, "Thureau-Dangin1910ITT1"),
         print(line)
         raise
       tdt_to_p[volume] = tdt_volume
+
+tdt_to_p[2][3470] = "P110949" # ITT 2, 03470 + ?
 
 with open("Nik.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
