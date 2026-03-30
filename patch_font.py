@@ -118,6 +118,7 @@ add_ligature("𒌑𒌃", "uF00B7")
 # Documented as sequences on https://oracc.museum.upenn.edu/listfontdata/lak/.
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
+add_ligature("𒉿𒀀", "uF3904")
 
 print("# pp. 11–15 corrections")
 add_ligature("𒋀𒆳𒊏", "uF00A5.1")
@@ -156,7 +157,8 @@ assign("𒁦", "uF00DC")
 # Needs OSL PR.
 add_ligature("𒋙𒉣𒇬", "uF00DD")
 
-add_ligature("𒉿𒀀", "uF3904")
+# @form.
+assign("𒁽", "uF00EE")
 
 font.generate("LAK.ttf")
 font.close()
