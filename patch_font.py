@@ -157,6 +157,18 @@ assign("𒁦", "uF00DC")
 # Needs OSL PR.
 add_ligature("𒋙𒉣𒇬", "uF00DD")
 
+# LAK415, Needs OSL PR.
+add_ligature("𒌋𒁇", "uF00E2")
+
+# LAK416, Needs OSL PR.
+add_ligature("𒌋𒌆", "uF00E3")
+
+# LAK431, Needs OSL PR.
+add_ligature("𒅆𒆸", "uF00E4")
+
+#LAK433, @form.
+add_alternate("𒅇", "uF00E5")
+
 # @form.
 assign("𒁽", "uF00EE")
 
