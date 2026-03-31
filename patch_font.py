@@ -129,7 +129,7 @@ add_ligature("𒄑𒋛", f"u{ord('𒌝'):X}.1")
 add_ligature("𒉚𒀀", f"u{ord('𒉚'):X}.6")
 assign("𒉛", f"u{ord('𒉚'):X}.8")
 
-# Needs OSL PR.
+# LAK258, Needs OSL PR.
 add_ligature("𒊾𒁇", f"uF00C7")
 
 print("# pp. 16–18 corrections")
@@ -145,7 +145,7 @@ add_alternate("\U000F0116", "uF3902.1")
 # @form
 assign("𒈕", "uF00D4")
 
-# Needs OSL PR.
+# LAK363, Needs OSL PR.
 assign("𒄱", "uF00D6")
 
 # @form of a . form of a × sign.  At least needs merging under one @sign.
