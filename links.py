@@ -50,9 +50,13 @@ CT_DISAMBIGUATION = {
   ("474" , 32,  8, None) : ("P222821", 3), # The reference actually has the BM number but we don’t parse that.
   ("474" ,  7, 46,  "b") : ("P108562", 2),
   ("474" ,  7, 45,  "b") : ("P108559", 2), # Maybe? Is he referring to the 𒀛?
+  ("505" ,  7, 20,  "b") : ("P108512", 2),
+  ("509" , 32,  8, None) : ("P220655", 3),
+  ("515" ,  7,  4,  "e") : ("P315280", 4),
+  ("516" ,  7, 18,  "b") : ("P108508", 2),
 }
 
-KNOWN_AMBIGUITIES = set(("CT 5, 46",))
+KNOWN_AMBIGUITIES = set(("CT 5, 46", "CT 32, 8"))
 
 with open("CT.csv", encoding="utf-8") as f:
   for i, line in enumerate(csv.reader(f)):
@@ -117,7 +121,8 @@ with open("Nik.csv", encoding="utf-8") as f:
 
 for volume, key in ((1, "Thureau-Dangin1910ITT1"),
                     (2, "Genouillac1910-1911ITT2"),
-                    (3, "deGenouillac1912ITT3")):  # Argh!
+                    (3, "deGenouillac1912ITT3"),  # Argh!
+                    (4, "Delaporte1912ITT4")):  
   with open(f"TDT{volume}.csv", encoding="utf-8") as f:
     tdt_volume = {}
     for i, line in enumerate(csv.reader(f)):
@@ -240,7 +245,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:Nik\.?|<!--Nik-->) ?[0-9]{1,3}" +
   "|" +
-  r"(?:<!--)?CT(?:-->)? ?\d+(?:,|-->) ?\d+(?:(?: |<br>)*[a-z](?:\)|(?=[,\d])))?" +
+  r"(?:<!--)?CT(?:-->)? ?\d+(?:,|-->) ?\d+(?:(?:,? |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   "|" +
   r"(?:<!--)?TDT(?:-->)? ?\d+(?:,? ?II|,|-->) ?\d+" +
   ")"
@@ -306,7 +311,7 @@ with open("LAK.html", encoding="utf-8") as f:
         nik_number = None
       ct_volume, ct_plate, p_from_ct = None, None, None
       if artefact_designation.removeprefix("<!--").startswith("CT"):
-        m = re.match(r"(?:<!--)?CT(?:-->)? ?(\d{1,2})(?:,|-->) ?(\d{1,2})(?:(?: |<br>)*([a-z])\)?)?$", artefact_designation)
+        m = re.match(r"(?:<!--)?CT(?:-->)? ?(\d{1,2})(?:,|-->) ?(\d{1,2})(?:(?:,? |<br>)*([a-z])\)?)?$", artefact_designation)
         ct_volume, ct_plate, ct_disambiguator = int(m.group(1)), int(m.group(2)), m.group(3)
         candidates = ct_to_p[ct_volume][ct_plate]
         if candidates:
@@ -333,7 +338,7 @@ with open("LAK.html", encoding="utf-8") as f:
             p_from_ct, = candidates
       tdt_volume, tdt_number = None, None
       if artefact_designation.removeprefix("<!--").startswith("TDT"):
-        m = re.match(r"(?:<!--)?TDT(?:-->)? ?([123])(?:,? ?II|,|-->) ?(\d+)$", artefact_designation)
+        m = re.match(r"(?:<!--)?TDT(?:-->)? ?([1234])(?:,? ?II|,|-->) ?(\d+)$", artefact_designation)
         if not m:
           raise ValueError(f"Could not parse TDT reference {artefact_designation}")
         tdt_volume, tdt_number = int(m.group(1)), int(m.group(2))
@@ -367,7 +372,7 @@ with open("LAK.html", encoding="utf-8") as f:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:(?<=[a-z])(?=\d)|(?<=\))|\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:(?<=[a-e])(?=\d)|(?<=\))|\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
