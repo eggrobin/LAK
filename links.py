@@ -270,7 +270,7 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   "|" +
   r"(?:<!--)?TDT(?:-->)? ?\d+(?:,? ?II|,|-->) ?\d+" +
   "|" +
-  r"(?:Reisn\. ?TU) ?[0-9]{1,3}" +
+  r"(?:Reisn\. ?TU\.?) ?[0-9]{1,3}" +
   ")"
 )
 
@@ -329,7 +329,7 @@ with open("LAK.html", encoding="utf-8") as f:
         if m:
           reisn_tu_number = int(m.group(1))
         else:
-          reisn_tu_number = int(re.sub(r"^(Reisn\. TU)", "", artefact_designation))
+          reisn_tu_number = int(re.sub(r"^(Reisn\. TU\.?)", "", artefact_designation))
       else:
         reisn_tu_number = None
       if artefact_designation.removeprefix("<!--").startswith("Nik"):

@@ -173,6 +173,7 @@ NON_VAT_ARTEFACTS = {
   'Reisn. TU 16' : 'P135587',
   'Reisn. TU 82' : 'P135653',
   'Reisn. TU 113' : 'P135686',
+  'Reisn. TU. 122' : 'P135695',
   'Reisn. TU 141' : 'P135714',
   'Reisn. TU 158' : 'P135731',
   'Reisn. TU 168' : 'P135762',
