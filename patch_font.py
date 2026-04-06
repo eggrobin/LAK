@@ -165,7 +165,7 @@ add_ligature("𒌋𒁇", "uF00E2")
 # LAK416, https://github.com/oracc/osl/pull/50.
 add_ligature("𒌋𒌆", "uF00E3")
 
-# LAK431, Needs OSL PR.
+# LAK431, https://github.com/oracc/osl/pull/51.
 add_ligature("𒅆𒆸", "uF00E4")
 
 #LAK433, @form.
