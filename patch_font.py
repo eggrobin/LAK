@@ -159,7 +159,7 @@ assign("𒁦", "uF00DC")
 # Needs OSL PR.
 add_ligature("𒋙𒉣𒇬", "uF00DD")
 
-# LAK415, Needs OSL PR.
+# LAK415, https://github.com/oracc/osl/pull/49.
 add_ligature("𒌋𒁇", "uF00E2")
 
 # LAK416, Needs OSL PR.
