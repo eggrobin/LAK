@@ -14,6 +14,7 @@ rtc_to_p : dict[int, str] = {}
 nik_to_p : dict[int, str] = {}
 ct_to_p : dict[int, dict[int, list[str]]] = {}
 tdt_to_p : dict[int, dict[int, str]] = {}
+reisn_tu_to_p : dict[int, str] = {}
 
 ct_keys : list[str] = ["n/a", "King1896CT1"]
 
@@ -177,6 +178,24 @@ with open("DP.csv", encoding="utf-8") as f:
       print(line)
       raise
 
+with open("Reisn. TU.csv", encoding="utf-8") as f:
+  for i, line in enumerate(csv.reader(f)):
+    if i == 0:
+      continue
+    try:
+      publications = [p.strip() for p in line[3].split(";")]
+      number = line[5].split(";")[publications.index("Reisner1901TUT")]
+      tu = int(number)
+      if line[2].startswith("TUT") and line[2] != f"TUT {tu:03}":
+        raise ValueError(line[2])
+      reisn_tu_to_p[tu] = f"P{int(line[0]):06}"
+    except ValueError as e:
+      print(f"TU number {number} = P{int(line[0]):06}")
+      continue
+    except Exception as e:
+      print(line)
+      raise
+
 with open("RTC.csv", encoding="utf-8") as f:
   heading = []
   for i, line in enumerate(csv.reader(f)):
@@ -250,6 +269,8 @@ NON_VAT_ARTEFACT_DESIGNATION = (
   r"(?:<!--)?CT(?:-->)? ?\d+(?:,|-->) ?\d+(?:(?:,? |<br>)*[a-z](?:\)|(?=[,\d])))?" +
   "|" +
   r"(?:<!--)?TDT(?:-->)? ?\d+(?:,? ?II|,|-->) ?\d+" +
+  "|" +
+  r"(?:Reisn\. ?TU) ?[0-9]{1,3}" +
   ")"
 )
 
@@ -303,6 +324,14 @@ with open("LAK.html", encoding="utf-8") as f:
           rtc_number = int(re.sub(r"^(<!--RTC-->|RTC,? *)", "", artefact_designation))
       else:
         rtc_number = None
+      if artefact_designation.removeprefix("<!--").startswith("Reisn"):
+        m = re.search(r"recte (\d+)", artefact_designation)
+        if m:
+          reisn_tu_number = int(m.group(1))
+        else:
+          reisn_tu_number = int(re.sub(r"^(Reisn\. TU)", "", artefact_designation))
+      else:
+        reisn_tu_number = None
       if artefact_designation.removeprefix("<!--").startswith("Nik"):
         m = re.search(r"recte (\d+)", artefact_designation)
         if m:
@@ -354,6 +383,8 @@ with open("LAK.html", encoding="utf-8") as f:
         raise ValueError(f"Mismatch for CT {ct_volume}, {ct_plate}: {match.group('P')} vs. CDLI {p_from_ct}")
       if p_number and tdt_volume and tdt_number and tdt_to_p[tdt_volume][tdt_number] != p_number:
         raise ValueError(f"Mismatch for TDT {tdt_volume}, {tdt_number}: {match.group('P')} vs. CDLI {tdt_to_p[tdt_volume][tdt_number]}")
+      if p_number and reisn_tu_number and reisn_tu_to_p[reisn_tu_number] != p_number:
+        raise ValueError(f"Mismatch for Reisn. TU {reisn_tu_number}: {match.group('P')} vs. CDLI {reisn_tu_to_p[reisn_tu_number]}")
       if p_number and vat_number and vat_to_p[vat_number] != p_number:
         raise ValueError(f"Mismatch for VAT {vat_number}: {match.group('P')} vs. EDSL {vat_to_p[vat_number]}")
       if vat_number and not p_number:
@@ -370,6 +401,8 @@ with open("LAK.html", encoding="utf-8") as f:
         p_number = p_from_ct
       if not p_number and tdt_volume and tdt_number:
         p_number = tdt_to_p[tdt_volume][tdt_number]
+      if not p_number and reisn_tu_number:
+        p_number = reisn_tu_to_p[reisn_tu_number]
       if p_number:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:

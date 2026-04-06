@@ -132,6 +132,8 @@ assign("𒉛", f"u{ord('𒉚'):X}.8")
 # LAK258, Needs OSL PR.
 add_ligature("𒊾𒁇", f"uF00C7")
 
+# TODO(egg): LAK260 is ug 𒊌.
+
 print("# pp. 16–18 corrections")
 assign("𒑎", f"u{ord('𒑀'):X}.1")
 assign("𒑍", f"u{ord('𒄿'):X}.2")
