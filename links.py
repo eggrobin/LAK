@@ -4,6 +4,7 @@ import os
 import re
 
 import artefacts
+import gud_cyl
 
 lines : list[str] = []
 
@@ -408,7 +409,32 @@ with open("LAK.html", encoding="utf-8") as f:
         return f'<a href="http://cdli.earth/{p_number}">{artefact_designation}</a>'
       else:
         return match.group()
-    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:(?<=[a-e])(?=\d)|(?<=\))|\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION, linkify_artefact, line)
+    line = re.sub(r'(?:<a href="https?://cdli.earth/(?P<P>P\d+)">(?:(?P<Linked_VAT>\d{4,})|(?P<Other_Artefact>(?:[^<]|<(?!/a>))*))</a>)|(?:\b|(?=<!--))(?:(?P<VAT>\d{4,})|%s)(?!</a)(?:(?<=[a-e])(?=\d)|(?<=\))|\b|(?=R))' % NON_VAT_ARTEFACT_DESIGNATION,
+                  linkify_artefact,
+                  line)
+    KNOWN_BAD_GUD_CYL = (
+      ("282", ("A", "16", None)),
+      ("499", ("B", "24", "18")),  # recte: 24, 17 (2nd line of the case).
+    )
+    def linkify_location(match: re.Match[str]):
+      p_number = match.group("P")
+      GUDEA_CYLINDERS = {"P232300" : "A", "P232301" : "B"}
+      if p_number in GUDEA_CYLINDERS:
+        location = "Cylinder", GUDEA_CYLINDERS[p_number], match.group("Column"), match.group("Line")
+        if location not in gud_cyl.LOCATIONS:
+          if (lak_number, location[1:]) in KNOWN_BAD_GUD_CYL:
+            return match.group()
+          raise ValueError(f'Bad location {match.group("Artefact_Designation")}, {match.group("Location")} in LAK{lak_number}')
+        url = f"http://oracc.org/etcsri/{gud_cyl.LOCATIONS[location]}"
+        existing = match.group("Existing_Location_URL")
+        if existing and existing != url:
+          raise ValueError(f"Location in {match.group()} is linked to {existing}, but the text suggests {url}")
+        return f'{match.group("Linked_Artefact_Designation")}<a href="{url}">{match.group("Location")}</a>'
+      else:
+        return match.group()
+    line = re.sub(r'(?P<Linked_Artefact_Designation><a href="http://cdli.earth/(?P<P>P\d+)">(?P<Artefact_Designation>(?:[^<]|<(?!/a>))*)</a> *,? *)(?:<a href="(?P<Existing_Location_URL>[^"]+)">)?(?P<Location>(?P<Column>\d+),? *(?P<Line>\d+)?)(?:</a>)?',
+                  linkify_location,
+                  line)
     match = re.search(r'id=\"(\d+[a-z]?)\"', line)
     if match:
       if lak_number:
