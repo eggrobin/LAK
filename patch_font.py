@@ -174,5 +174,8 @@ add_alternate("𒅇", "uF00E5")
 # @form.
 assign("𒁽", "uF00EE")
 
+# @form, LAK654^a.
+add_alternate("𒋯", "uF0109")
+
 font.generate("LAK.ttf")
 font.close()
