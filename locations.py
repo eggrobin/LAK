@@ -4,6 +4,7 @@ import pprint
 import re
 from typing import Optional
 import urllib.request
+import artefacts
 
 def deromanize(s: str) -> int:
   numerals = {'i': 1, 'v': 5, 'x': 10, 'l': 50, 'c': 100, 'd': 500, 'm': 1000}
@@ -62,3 +63,14 @@ def get_line_to_id_map(project: str, artefact: str):
 with open("gud_cyl.py", mode="w") as f:
   print("LOCATIONS =\\", file=f)
   pprint.pp(get_line_to_id_map("etcsri", "Q000377"), stream=f)
+
+gud, p, q = 'A', 232274, 1540
+gud_map : dict[str, dict[tuple[str, ...], str | None]] = {}
+while gud <= 'G':
+  gud_map["P%06d" % p] = get_line_to_id_map("etcsri", "Q%06d" % q)
+  gud = chr(ord(gud) + 1)
+  p += 1
+  q += 1
+with open("gud.py", mode="w") as f:
+  print("LOCATIONS =\\", file=f)
+  pprint.pp(gud_map, stream=f)
