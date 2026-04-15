@@ -4,6 +4,7 @@ import os
 import re
 
 import artefacts
+import gud
 import gud_cyl
 
 lines : list[str] = []
@@ -426,6 +427,17 @@ with open("LAK.html", encoding="utf-8") as f:
             return match.group()
           raise ValueError(f'Bad location {match.group("Artefact_Designation")}, {match.group("Location")} in LAK{lak_number}')
         url = f"http://oracc.org/etcsri/{gud_cyl.LOCATIONS[location]}"
+        existing = match.group("Existing_Location_URL")
+        if existing and existing != url:
+          raise ValueError(f"Location in {match.group()} is linked to {existing}, but the text suggests {url}")
+        return f'{match.group("Linked_Artefact_Designation")}<a href="{url}">{match.group("Location")}</a>'
+      elif p_number in gud.LOCATIONS:
+        location = match.group("Column"), match.group("Line")
+        if match.group("Artefact_Designation") == "Gud. D":
+          location = "statue", *location
+        if location not in gud.LOCATIONS[p_number]:
+          raise ValueError(f'Bad location {match.group("Artefact_Designation")}, {match.group("Location")} in LAK{lak_number}')
+        url = f"http://oracc.org/etcsri/{gud.LOCATIONS[p_number][location]}"
         existing = match.group("Existing_Location_URL")
         if existing and existing != url:
           raise ValueError(f"Location in {match.group()} is linked to {existing}, but the text suggests {url}")
