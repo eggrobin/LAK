@@ -119,6 +119,7 @@ add_ligature("𒌑𒌃", "uF00B7")
 add_ligature("𒄷𒋛𒀀", "uF3900")
 add_ligature("𒑋𒁇", "uF3901")  # Or 𒑋𒁇?
 add_ligature("𒉿𒀀", "uF3904")
+add_ligature("𒈨𒋼", "uF3905") # LAK750
 
 print("# pp. 11–15 corrections")
 add_ligature("𒋀𒆳𒊏", "uF00A5.1")
