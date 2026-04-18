@@ -179,5 +179,11 @@ assign("𒁽", "uF00EE")
 # @form, LAK654^a.
 add_alternate("𒋯", "uF0109")
 
+# KU mentioned under MA in LAK034.
+add_alternate("𒆪", "u12220.5")
+
+# LAK800.
+assign("𒀃", "u12002")
+
 font.generate("LAK.ttf")
 font.close()
