@@ -207,9 +207,11 @@
       hyphens: auto;
     }
 
-    p {
+    div.preamble {
       text-align: justify;
       hyphens: auto;
+      margin-left: 2rem;
+      max-width: 50rem;
     }
 
     .signlist>tbody>tr>td {
@@ -293,7 +295,7 @@
       font-family: 'STIX', 'NotoSansCuneiform-egg', 'ACN', 'PCSL';
       white-space: normal;
       border: none;
-      max-width: 50em;
+      max-width: 25em;
     }
 
     .PcunR {
@@ -477,6 +479,9 @@
     }
 
     @media (width <= 50rem) {
+      div.preamble {
+        margin-left: 0;
+      }
       .signlist.reflow>tbody>tr>th {
         display: inline-block;
         margin-right: 1em;
@@ -508,6 +513,7 @@
       }
       .signlist.reflow>tbody>tr>td.ednote {
         border-bottom: 2px solid;
+        max-width: inherit;
       }
       .signlist.reflow>tbody>tr>td.ednote:not(:empty)::before {
         font-weight: bold;
@@ -711,9 +717,7 @@
   function update_from_query() {
     params = (new URL(document.location)).searchParams;
     document.querySelector('input[id="facsimile"]').checked =
-        params.has("facsimile") ? params.get("facsimile") === "true" : window.matchMedia("(width >= 75rem)").matches;
-    document.querySelector('input[id="facsimile"]').indeterminate =
-        !params.has("facsimile")
+        params.has("facsimile") ? params.get("facsimile") === "true" : false;
     document.querySelector('input[id="reflow"]').checked =
         params.has("reflow") ? params.get("reflow") === "true" : window.matchMedia("(width <= 50rem)").matches;
     document.querySelector('input[id="reflow"]').indeterminate =
@@ -822,7 +826,8 @@
 
 <body>
 
-<p lang="en">
+<div class="preamble" lang="en">
+<p>
   A work-in-progress diplomatic edition of Deimel’s <cite lang="de">Liste der archaischen Keilschriftzeichen von Fara</cite>,
   based on the <a href="http://oracc.org/listfontdata/lak/">Oracc-LAK</a> font by Steve Tinney.
 </p>
@@ -856,16 +861,17 @@
   <div><input id="reflow" name="reflow" type="checkbox">
   <label for="reflow">Reflow</label></div>
 </nav>
+<p>
    TODO:
+</p>
    <ul class="TODO">
-    <li>Finish typing the list…</li>
     <li>The Oracc-LAK font is being expanded to cover the forms shown inline in the text, rather than just the index forms. Missing glyphs in the parts that already have good coverage are highlighted in pink <span class="TODO">like this</span>; they are also called out in highlighted notes to the right. [NOTE: the highlighting used to be yellow, but that is the colour used by the highlighting used by Chrome for in-page search (Ctrl+F) results, so it was confusing when searching the sign list.]</li>
     <li><span class="NA">𒀭𒀝𒌷𒀏𒄴𒋢𒊻</span> needs to be expanded; it is missing 𒉒 and related signs. It also needs some stylistic alternates where Deimel shows multiple NA forms or shows Babylonian forms.</li>
     <li>Not all artefact designations have linked to CDLI; VAT numbers should be systematically linkified, as well as texts from the following publications:
       <ul>
         <li>Thureau-Dangin’s <cite lang="fr">Recueil de tablettes chaldéennes</cite> (RTC);</li>
         <li>Allotte de la Fuÿe’s <cite lang="fr">Documents présargoniques</cite> (DP);</li>
-        <li>Никольскій’s <cite lang="fr">Документы хозяйственной отчетности древнѣйшей эпохи Халдеи изъ собранія Н. П. Лихачева</cite> (Nik.);</li>
+        <li>Никольскій’s <cite lang="ru">Документы хозяйственной отчетности древнѣйшей эпохи Халдеи изъ собранія Н. П. Лихачева</cite> (Nik.);</li>
         <li>The series <cite>Cuneiform Texts from Babylonian Tablets in the British Museum</cite> (CT);</li>
         <li>The series <cite lang="fr">Inventaire des tablettes de Tello conservées au musée impérial ottoman</cite> (TDT, aka ITT).</li>
         <li>Reisner’s <cite lang="de">Tempelurkunden Aus Telloh</cite> (Reisn. TU, aka TUT).</li>
@@ -875,7 +881,7 @@
     <li>Add an option to modernize the transliterations (e.g., lù to lú or lu₂); maybe something to expand the abbreviations as well.</li>
     <li>Mark up links with no photo or no transliteration, I am tired of clicking on the same links pointlessly when trying to figure out if something has a consistent reading…</li>
    </ul>
-<p>&nbsp;</p>
+</div>
 
 <table class="signlist">
   <tbody>
@@ -5553,7 +5559,7 @@
         s. n.
       </td>
       <td><span class="RNA">𒇯</span></td>
-      <td class="ednote TODO">s. welche n.?</td>
+      <td class="ednote"></td>
       <td class="facsimile"><noscript><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK302.png" alt=""></noscript></td>
     </tr>
 
@@ -7996,7 +8002,7 @@
         <span class="TODO">𒋖𒄑</span> <a href="http://cdli.earth/P010670">9130</a>, 1; <a href="http://cdli.earth/P010613">12652</a>,1; <a href="http://cdli.earth/P010647">9108</a>,7. s. REC 307. s. n
       </td>
       <td><span class="RNA"></span></td>
-      <td class="ednote">s. welche n.?</td>
+      <td class="ednote"></td>
       <td class="facsimile"><noscript><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK489.png" alt=""></noscript></td>
     </tr>
 
