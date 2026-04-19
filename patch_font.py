@@ -189,7 +189,7 @@ assign("𒀃", "u12002")
 add_ligature("𒊹𒃲", "uF390B")
 
 # LAK832.
-assign("𒑓", "u12452")
+add_alternate("𒑓", "u12452")
 
 # LAK832.
 assign("𒑕", "u12453")
