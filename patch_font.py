@@ -185,5 +185,14 @@ add_alternate("𒆪", "u12220.5")
 # LAK800.
 assign("𒀃", "u12002")
 
+# LAK828.
+add_ligature("𒊹𒃲", "uF390B")
+
+# LAK832.
+assign("𒑓", "u12452")
+
+# LAK832.
+assign("𒑕", "u12453")
+
 font.generate("LAK.ttf")
 font.close()
