@@ -266,16 +266,10 @@
       border-right: solid;
     }
 
-    .signlist>tbody>tr.double-ruling-above>td:nth-child(2) {
-      border-top: double;
-    }
-
-    .signlist>tbody>tr.double-ruling-above>td:nth-child(3) {
-      border-top: double;
-    }
-
-    .signlist>tbody>tr.double-ruling-above>td:nth-child(4) {
-      border-top: double;
+    .signlist>tbody>tr.double-ruling-below>td:nth-child(2),
+    .signlist>tbody>tr.double-ruling-below>td:nth-child(3),
+    .signlist>tbody>tr.double-ruling-below>td:nth-child(4) {
+      border-bottom: double;
     }
 
     h1 {
@@ -509,8 +503,20 @@
         display: block;
         border: none;
       }
+      .signlist.reflow>tbody>tr.double-ruling-below>td:nth-child(2),
+      .signlist.reflow>tbody>tr.double-ruling-below>td:nth-child(3),
+      .signlist.reflow>tbody>tr.double-ruling-below>td:nth-child(4) {
+        border-bottom: none;
+      }
       .signlist.reflow>tbody>tr>td:nth-child(4):last-child {
         border-bottom: 2px solid;
+      }
+      .signlist.reflow>tbody>tr>td.ednote {
+        border-bottom: 2px solid;
+        max-width: inherit;
+      }
+      .signlist.reflow>tbody>tr.double-ruling-below>td.ednote {
+        border-bottom: double;
       }
       .signlist.reflow>tbody>tr>td.ednote {
         border-bottom: 2px solid;
@@ -519,6 +525,19 @@
       .signlist.reflow>tbody>tr>td.ednote:not(:empty)::before {
         font-weight: bold;
         content: "Note: ";
+      }
+
+      .signlist.reflow>tbody>tr>th:nth-child(2)[colspan="3"] {
+        display: block;
+        border-top: double;
+        border-bottom: double;
+        border-left: none;
+        border-right: none;
+        max-width: inherit;
+      }
+
+      .signlist.reflow h2 {
+        padding-left: 0;
       }
     }
 
@@ -12471,7 +12490,7 @@
       <td class="facsimile"><noscript><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK865.png" alt=""></noscript></td>
     </tr>
 
-    <tr>
+    <tr class="double-ruling-below">
       <th id="866">866</th>
       <td><span class="R salt2">𒊹𒃲</span></td>
       <td>
@@ -12482,7 +12501,7 @@
       <td class="facsimile"><noscript><img src="https://oracc.museum.upenn.edu/osl/images/lak/rows/LAK866.png" alt=""></noscript></td>
     </tr>
 
-    <tr class="double-ruling-above">
+    <tr>
       <th id="867">867</th>
       <td><span class="R salt1">𒇲</span></td>
       <td>
